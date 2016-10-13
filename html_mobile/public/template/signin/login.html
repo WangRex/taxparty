@@ -1,0 +1,60 @@
+<!-- We don't need full layout here, because this page will be parsed with Ajax-->
+<!-- Top Navbar-->
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="left">
+            <a href="#" class="back link">
+                <i class="m-icon m-icon-back"></i>
+            </a>
+        </div>
+        <div class="center sliding">登陆</div>
+    </div>
+</div>
+<div class="pages">
+    <!-- Page, data-page contains page name-->
+    <div data-page="login" class="page">
+        <!-- Scrollable page content-->
+        <div class="page-content main_panl_all">
+            <div class="logo">
+                <img src="/static/images/logo.jpg" alt="">
+            </div>
+            <div class="list-block inset signin">
+                <ul class="input_row">
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media">
+                                <i class="icon icon_phone"></i>
+                            </div>
+                            <div class="item-inner">
+                                <div class="item-input">
+                                    <input type="text" id="user" value="15210044288" placeholder="手机号或者邮箱" class="">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-media">
+                                <i class="icon icon_pswd"></i>
+                            </div>
+                            <div class="item-inner">
+                                <div class="item-input">
+                                    <input type="password" id="pswd" value="123456" placeholder="6位数字密码" class="">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <b class="button button-big button-fill color-main" id="dologin">登陆</b>
+                <div class="row button_link">
+                    <div class="col-50">
+                        <a href="signin/findpswd.html" class="list-button left">忘记密码</a>
+                    </div>
+                    <div class="col-50">
+                        <a href="signin/register.html" class="list-button right">注册</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

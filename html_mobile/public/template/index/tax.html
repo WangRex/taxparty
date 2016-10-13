@@ -1,0 +1,441 @@
+<!-- We don't need full layout here, because this page will be parsed with Ajax-->
+<!-- Top Navbar-->
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="left">
+            <a href="#" class="back link"> <i class="m-icon m-icon-back"></i>
+            </a>
+        </div>
+        <div class="center sliding">国际税收鉴定</div>
+    </div>
+</div>
+<div class="pages">
+    <!-- Page, data-page contains page name-->
+    <div  data-page="tax_sui" class="page">
+        <!-- Scrollable page content-->
+        <div style="padding: 40px 0px 17px 0px;" class="page-content ">
+                <!-- Buttons row as tabs controller -->
+                <div class="buttons-row revenue-top" >
+                    <!-- Link to 1st tab, active -->
+                    <a href="#tab1"  class="tab-link active button">非贸汇款</a>
+                    <!-- Link to 2nd tab -->
+                    <a href="#tab2" class="tab-link button">协定待遇</a>
+                    <!-- Link to 3rd tab -->
+                    <a href="#tab3" class="tab-link button">大额关联支付</a>
+                    <!-- Link to 4rd tab -->
+                    <a href="#tab4" class="tab-link button">税收情报交换</a>
+
+                    <a href="#tab5" class="tab-link button">间接财产转让</a>
+                </div>
+
+            <!-- Tabs, tabs wrapper -->
+            <div class="tabs">
+                <!-- 非贸汇款,1 active by default -->
+                <div id="tab1" class="tab active">
+
+                    <div class="content-block tqkb">
+                        <div class="row no-gutter">
+                            <div class="col-50 box_ bd-r">
+                                <h1 class="data-title"><i class="data-box-left-lcon"></i>案例</h1>
+                                <img id="img-slide" src="/static/images/jpg.jpg" width="110" height="90">
+                            </div>
+                            <div class="col-50 box_ rue-">
+                                <h1  class="data-title"><i class="data-box-right-lcon"></i>报价</h1>
+                                <div>基础价<span class="data-box-value">22212</span></div>
+                                <div>加急价<span class="data-box-value">22212</span></div>
+                                <div>发票费用<span class="data-box-value">22212</span></div>
+                                <div class="data-total">合计<span class="data-box-value">22212</span></div>
+                            </div>
+                        </div>
+                        <div class="content-block-inner answer-gai">
+                            <div class="list-block">
+                                <h1 class="data-title"><i class="data-box-tener-lcon"></i>信息采集</h1>
+
+                                <div class="item-content" id="problem-none">
+                                    <div class="item-inner">
+                                        <div class="item-title haolou">同期资料财年</div>
+                                        <div class="item-input">
+                                            <input   type="text" placeholder="2016-04-13" class="" id="showDataPickers" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row no-gutter">
+                                    <div class="col-20">可比公司</div>
+                                    <div class="col-35">
+                                        <input type="text" placeholder="2015-2016" class="" id="years-show" readonly>
+                                    </div>
+                                    <div class="col-45">三年加权数据对比</div>
+                                </div>
+
+                                <div>公司行业及产品</div>
+                                <div class="item-input " id="data-product">
+                                    <textarea placeholder="请尽可能的准确，不要用营业范围代替，否则无法精准的筛选可比企业"></textarea>
+                                </div>
+                                <div class="row">
+                                    <div class="col-50">可比数据接收邮箱</div>
+                                    <div class="col-50">
+                                        <div class="item-input search-gai " >
+                                            <input type="email" placeholder="xxxx@xxxx.com" id="data-briebly">
+                                        </div>
+                                    </div>
+                                </div>
+                                <p><a>所需数据</a><span>《企业年度关联交易财务状态分析表》</span></p>
+                                <div class="data-prompt">提交后请线下支付，所需数据会发送到你的邮箱</div>
+                            </div>
+                        </div>
+                        <div class="content-block-inner data-fooer">
+                            <h1 class="data-title"><i class="data-box-fooer-lcon"></i>其他要求</h1>
+                            <p>对比指标<span>完全成本加成率</span></p>
+                            <p>对比结果<span>完全成本加成率</span>
+                                <select style="border:0px;">
+                                    <option value ="volvo">中立值</option>
+                                    <option value ="saab">2</option>
+                                    <option value="opel">3</option>
+                                    <option value="audi">4</option>
+                                </select>
+                            </p>
+                            <p>草稿时间<span><a>4</a>个工作日</span><abbr class="data-fooer-prompt">每减少一天加急增加200.00元</abbr></p>
+                            <div class="mask_box"  ></div>
+                            <p class="yes_button"id="mask_box"><label>需要发票</label><input type="button" value="是" name="yes" class="active"><input type="button" value="否" name="no"></p>
+                            <div class="data-fooer-bottom">
+                                <p class="data-supplement">需要完整同期资料报告，请联系</p>
+                                <img src="/static/images/img/data-fooer-lcon.gif" width="38" height="40" >
+                                <b class="button button-big button-fill color-main data-button" id="post_btn_1">提交确认</b>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <!-- 协定待遇 2 -->
+                <div id="tab2" class="tab">
+
+                    <div class="content-block tqkb">
+                        <div class="row no-gutter">
+                            <div class="col-50 box_ bd-r">
+                                <h1 class="data-title"><i class="data-box-left-lcon"></i>案例</h1>
+                                <img id="img-slide" src="/static/images/jpg.jpg" width="110" height="90">
+                            </div>
+                            <div class="col-50 box_ rue-">
+                                <h1  class="data-title"><i class="data-box-right-lcon"></i>报价</h1>
+                                <div>基础价<span class="data-box-value">22212</span></div>
+                                <div>加急价<span class="data-box-value">22212</span></div>
+                                <div>发票费用<span class="data-box-value">22212</span></div>
+                                <div class="data-total">合计<span class="data-box-value">22212</span></div>
+                            </div>
+                        </div>
+                        <div class="content-block-inner answer-gai">
+                            <div class="list-block">
+                                <h1 class="data-title"><i class="data-box-tener-lcon"></i>信息采集</h1>
+
+                                <div class="item-content" id="problem-none">
+                                    <div class="item-inner">
+                                        <div class="item-title haolou">同期资料财年</div>
+                                        <div class="item-input">
+                                            <input   type="text" placeholder="2016-04-13" class="" id="showDataPickers" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row no-gutter">
+                                    <div class="col-20">可比公司</div>
+                                    <div class="col-35">
+                                        <input type="text" placeholder="2015-2016" class="" id="years-show" readonly>
+                                    </div>
+                                    <div class="col-45">三年加权数据对比</div>
+                                </div>
+
+                                <div>公司行业及产品</div>
+                                <div class="item-input " id="data-product">
+                                    <textarea placeholder="请尽可能的准确，不要用营业范围代替，否则无法精准的筛选可比企业"></textarea>
+                                </div>
+                                <div class="row">
+                                    <div class="col-50">可比数据接收邮箱</div>
+                                    <div class="col-50">
+                                        <div class="item-input search-gai " >
+                                            <input type="email" placeholder="xxxx@xxxx.com" id="data-briebly">
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <p><a>所需数据</a><span>《企业年度关联交易财务状态分析表》</span></p>
+                                <div class="data-prompt">提交后请线下支付，所需数据会发送到你的邮箱</div>
+                            </div>
+                        </div>
+
+                        <div class="content-block-inner data-fooer">
+                            <h1 class="data-title"><i class="data-box-fooer-lcon"></i>其他要求</h1>
+                            <p>对比指标<span>完全成本加成率</span></p>
+                            <p>对比结果<span>完全成本加成率</span>
+                                <select style="border:0px;">
+                                    <option value ="volvo">中立值</option>
+                                    <option value ="saab">2</option>
+                                    <option value="opel">3</option>
+                                    <option value="audi">4</option>
+                                </select>
+
+
+                            </p>
+                            <p>草稿时间<span><a>4</a>个工作日</span><abbr class="data-fooer-prompt">每减少一天加急增加200.00元</abbr></p>
+                            <div class="mask_box"  ></div>
+                            <p class="yes_button"id="mask_box"><label>需要发票</label><input type="button" value="是" name="yes" class="active"><input type="button" value="否" name="no"></p>
+                            <div class="data-fooer-bottom">
+                                <p class="data-supplement">需要完整同期资料报告，请联系</p>
+                                <img src="/static/images/img/data-fooer-lcon.gif" width="38" height="40" >
+                                <b class="button button-big button-fill color-main data-button" id="post_btn_2">提交确认</b>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!-- 大额关联支付 3 -->
+                <div id="tab3" class="tab">
+
+                    <div class="content-block tqkb">
+                        <div class="row no-gutter">
+                            <div class="col-50 box_ bd-r">
+                                <h1 class="data-title"><i class="data-box-left-lcon"></i>案例</h1>
+                                <img id="img-slide" src="/static/images/jpg.jpg" width="110" height="90">
+                            </div>
+                            <div class="col-50 box_ rue-">
+                                <h1  class="data-title"><i class="data-box-right-lcon"></i>报价</h1>
+                                <div>基础价<span class="data-box-value">22212</span></div>
+                                <div>加急价<span class="data-box-value">22212</span></div>
+                                <div>发票费用<span class="data-box-value">22212</span></div>
+                                <div class="data-total">合计<span class="data-box-value">22212</span></div>
+                            </div>
+                        </div>
+                        <div class="content-block-inner answer-gai">
+                            <div class="list-block">
+                                <h1 class="data-title"><i class="data-box-tener-lcon"></i>信息采集</h1>
+
+                                <div class="item-content" id="problem-none">
+                                    <div class="item-inner">
+                                        <div class="item-title haolou">同期资料财年</div>
+                                        <div class="item-input">
+                                            <input   type="text" placeholder="2016-04-13" class="" id="showDataPickers" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row no-gutter">
+                                    <div class="col-20">可比公司</div>
+                                    <div class="col-35">
+                                        <input type="text" placeholder="2015-2016" class="" id="years-show" readonly>
+                                    </div>
+                                    <div class="col-45">三年加权数据对比</div>
+                                </div>
+
+                                <div>公司行业及产品</div>
+                                <div class="item-input " id="data-product">
+                                    <textarea placeholder="请尽可能的准确，不要用营业范围代替，否则无法精准的筛选可比企业"></textarea>
+                                </div>
+                                <div class="row">
+                                    <div class="col-50">可比数据接收邮箱</div>
+                                    <div class="col-50">
+                                        <div class="item-input search-gai " >
+                                            <input type="email" placeholder="xxxx@xxxx.com" id="data-briebly">
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <p><a>所需数据</a><span>《企业年度关联交易财务状态分析表》</span></p>
+                                <div class="data-prompt">提交后请线下支付，所需数据会发送到你的邮箱</div>
+                            </div>
+                        </div>
+
+                        <div class="content-block-inner data-fooer">
+                            <h1 class="data-title"><i class="data-box-fooer-lcon"></i>其他要求</h1>
+                            <p>对比指标<span>完全成本加成率</span></p>
+                            <p>对比结果<span>完全成本加成率</span>
+                                <select style="border:0px;">
+                                    <option value ="volvo">中立值</option>
+                                    <option value ="saab">2</option>
+                                    <option value="opel">3</option>
+                                    <option value="audi">4</option>
+                                </select>
+
+
+                            </p>
+                            <p>草稿时间<span><a>4</a>个工作日</span><abbr class="data-fooer-prompt">每减少一天加急增加200.00元</abbr></p>
+                            <div class="mask_box"  ></div>
+                            <p class="yes_button"id="mask_box"><label>需要发票</label><input type="button" value="是" name="yes" class="active"><input type="button" value="否" name="no"></p>
+                            <div class="data-fooer-bottom">
+                                <p class="data-supplement">需要完整同期资料报告，请联系</p>
+                                <img src="/static/images/img/data-fooer-lcon.gif" width="38" height="40" >
+                                <b class="button button-big button-fill color-main data-button" id="post_btn_3">提交确认</b>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <!--税收情报交换 4-->
+                <div id="tab4" class="tab">
+
+                    <div class="content-block tqkb">
+                        <div class="row no-gutter">
+                            <div class="col-50 box_ bd-r">
+                                <h1 class="data-title"><i class="data-box-left-lcon"></i>案例</h1>
+                                <img id="img-slide" src="/static/images/jpg.jpg" width="110" height="90">
+                            </div>
+                            <div class="col-50 box_ rue-">
+                                <h1  class="data-title"><i class="data-box-right-lcon"></i>报价</h1>
+                                <div>基础价<span class="data-box-value">22212</span></div>
+                                <div>加急价<span class="data-box-value">22212</span></div>
+                                <div>发票费用<span class="data-box-value">22212</span></div>
+                                <div class="data-total">合计<span class="data-box-value">22212</span></div>
+                            </div>
+                        </div>
+                        <div class="content-block-inner answer-gai">
+                            <div class="list-block">
+                                <h1 class="data-title"><i class="data-box-tener-lcon"></i>信息采集</h1>
+
+                                <div class="item-content" id="problem-none">
+                                    <div class="item-inner">
+                                        <div class="item-title haolou">同期资料财年</div>
+                                        <div class="item-input">
+                                            <input   type="text" placeholder="2016-04-13" class="" id="showDataPickers" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row no-gutter">
+                                    <div class="col-20">可比公司</div>
+                                    <div class="col-35">
+                                        <input type="text" placeholder="2015-2016" class="" id="years-show" readonly>
+                                    </div>
+                                    <div class="col-45">三年加权数据对比</div>
+                                </div>
+
+                                <div>公司行业及产品</div>
+                                <div class="item-input " id="data-product">
+                                    <textarea placeholder="请尽可能的准确，不要用营业范围代替，否则无法精准的筛选可比企业"></textarea>
+                                </div>
+                                <div class="row">
+                                    <div class="col-50">可比数据接收邮箱</div>
+                                    <div class="col-50">
+                                        <div class="item-input search-gai " >
+                                            <input type="email" placeholder="xxxx@xxxx.com" id="data-briebly">
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <p><a>所需数据</a><span>《企业年度关联交易财务状态分析表》</span></p>
+                                <div class="data-prompt">提交后请线下支付，所需数据会发送到你的邮箱</div>
+                            </div>
+                        </div>
+
+                        <div class="content-block-inner data-fooer">
+                            <h1 class="data-title"><i class="data-box-fooer-lcon"></i>其他要求</h1>
+                            <p>对比指标<span>完全成本加成率</span></p>
+                            <p>对比结果<span>完全成本加成率</span>
+                                <select style="border:0px;">
+                                    <option value ="volvo">中立值</option>
+                                    <option value ="saab">2</option>
+                                    <option value="opel">3</option>
+                                    <option value="audi">4</option>
+                                </select>
+
+
+                            </p>
+                            <p>草稿时间<span><a>4</a>个工作日</span><abbr class="data-fooer-prompt">每减少一天加急增加200.00元</abbr></p>
+                            <div class="mask_box"  ></div>
+                            <p class="yes_button"id="mask_box"><label>需要发票</label><input type="button" value="是" name="yes" class="active"><input type="button" value="否" name="no"></p>
+                            <div class="data-fooer-bottom">
+                                <p class="data-supplement">需要完整同期资料报告，请联系</p>
+                                <img src="/static/images/img/data-fooer-lcon.gif" width="38" height="40" >
+                                <b class="button button-big button-fill color-main data-button" id="post_btn_4">提交确认</b>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div id="tab5" class="tab">
+
+                    <div class="content-block tqkb">
+                        <div class="row no-gutter">
+                            <div class="col-50 box_ bd-r">
+                                <h1 class="data-title"><i class="data-box-left-lcon"></i>案例</h1>
+                                <img id="img-slide" src="/static/images/jpg.jpg" width="110" height="90">
+                            </div>
+                            <div class="col-50 box_ rue-">
+                                <h1  class="data-title"><i class="data-box-right-lcon"></i>报价</h1>
+                                <div>基础价<span class="data-box-value">22212</span></div>
+                                <div>加急价<span class="data-box-value">22212</span></div>
+                                <div>发票费用<span class="data-box-value">22212</span></div>
+                                <div class="data-total">合计<span class="data-box-value">22212</span></div>
+                            </div>
+                        </div>
+                        <div class="content-block-inner answer-gai">
+                            <div class="list-block">
+                                <h1 class="data-title"><i class="data-box-tener-lcon"></i>信息采集</h1>
+
+                                <div class="item-content" id="problem-none">
+                                    <div class="item-inner">
+                                        <div class="item-title haolou">同期资料财年</div>
+                                        <div class="item-input">
+                                            <input   type="text" placeholder="2016-04-13" class="" id="showDataPickers" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row no-gutter">
+                                    <div class="col-20">可比公司</div>
+                                    <div class="col-35">
+                                        <input type="text" placeholder="2015-2016" class="" id="years-show" readonly>
+                                    </div>
+                                    <div class="col-45">三年加权数据对比</div>
+                                </div>
+
+                                <div>公司行业及产品</div>
+                                <div class="item-input " id="data-product">
+                                    <textarea placeholder="请尽可能的准确，不要用营业范围代替，否则无法精准的筛选可比企业"></textarea>
+                                </div>
+                                <div class="row">
+                                    <div class="col-50">可比数据接收邮箱</div>
+                                    <div class="col-50">
+                                        <div class="item-input search-gai " >
+                                            <input type="email" placeholder="xxxx@xxxx.com" id="data-briebly">
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <p><a>所需数据</a><span>《企业年度关联交易财务状态分析表》</span></p>
+                                <div class="data-prompt">提交后请线下支付，所需数据会发送到你的邮箱</div>
+                            </div>
+                        </div>
+
+                        <div class="content-block-inner data-fooer">
+                            <h1 class="data-title"><i class="data-box-fooer-lcon"></i>其他要求</h1>
+                            <p>对比指标<span>完全成本加成率</span></p>
+                            <p>对比结果<span>完全成本加成率</span>
+                                <select style="border:0px;">
+                                    <option value ="volvo">中立值</option>
+                                    <option value ="saab">2</option>
+                                    <option value="opel">3</option>
+                                    <option value="audi">4</option>
+                                </select>
+
+
+                            </p>
+                            <p>草稿时间<span><a>4</a>个工作日</span><abbr class="data-fooer-prompt">每减少一天加急增加200.00元</abbr></p>
+                            <div class="mask_box"  ></div>
+                            <p class="yes_button"id="mask_box"><label>需要发票</label><input type="button" value="是" name="yes" class="active"><input type="button" value="否" name="no"></p>
+                            <div class="data-fooer-bottom">
+                                <p class="data-supplement">需要完整同期资料报告，请联系</p>
+                                <img src="/static/images/img/data-fooer-lcon.gif" width="38" height="40" >
+                                <b class="button button-big button-fill color-main data-button" id="post_btn_5">提交确认</b>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

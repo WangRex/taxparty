@@ -1,0 +1,71 @@
+<!-- We don't need full layout here, because this page will be parsed with Ajax-->
+<!-- Top Navbar-->
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="left">
+            <a href="" class="back link">
+                <i class="m-icon m-icon-back"></i>
+            </a>
+        </div>
+        <div class="center sliding">忘记密码</div>
+    </div>
+</div>
+<div class="pages">
+    <!-- Page, data-page contains page name-->
+    <div data-page="findpswd_input" class="page">
+        <!-- Scrollable page content-->
+        <div class="page-content">
+            <div class="buttons-row find_pass_tab">
+                <a href="#tab1" class="button tab-link button-big active">手机号找回</a>
+                <a href="#tab2" class="button tab-link button-big">邮箱找回</a>
+            </div>
+            <div class="tabs">
+                <div id="tab1" class="tab active">
+                    <div class="list-block">
+                        <ul class="input_row find_row">
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-input">
+                                            <input type="password" id="sixnum" placeholder="六位数字密码" class="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-input">
+                                            <input type="password" id="sixnum2" placeholder="确认密码" class="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="list-block inset">
+                        <a href="#" id="telcomplete" class="button button-big button-fill color-main">完成</a>
+                    </div>
+                </div>
+                <div id="tab2" class="tab">
+                    <div class="list-block">
+                        <ul class="input_row find_row">
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-input">
+                                            <input type="email" id="email" placeholder="请输入邮箱" class="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="list-block inset">
+                        <a href="#" id="emailcomplete" class="button button-big button-fill color-main">完成</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

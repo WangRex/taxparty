@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>taxparty</title>
+    <!-- Path to Framework7 Library CSS-->
+    <link rel="stylesheet" href="/static/lib/css/framework7.ios.min.css">
+    <link rel="stylesheet" href="/static/lib/css/framework7.ios.colors.min.css">
+    <link rel="stylesheet" href="/static/lib/css/framework7.icon.plus.css">
+    <link rel="stylesheet" href="/static/lib/swiper/swiper.min.css">
+    <link rel="stylesheet" href="/static/lib/mui/mui.picker.all.css">
+    <!-- Path to your custom app styles-->
+    <link rel="stylesheet" href="/static/css/app.css">
+    <link rel="stylesheet" href="/static/css/subsidiary.css">
+</head>
+
+<body>
+    <!-- Status bar overlay for fullscreen mode-->
+    <div class="statusbar-overlay"></div>
+    <!-- Panels overlay-->
+    <div class="panel-overlay"></div>
+    <!-- Views-->
+    <div class="views tabs toolbar-through">
+        <div id="home" class="view tab active">
+            <div class="navbar header">
+                <div class="navbar-inner">
+                    <div class="center sliding">税聚</div>
+                    <div class="right">
+                        <a href="index/msg.html" class="link"><span class="m-icon m-icon-chatbubble"></span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="pages navbar-through toolbar-through">
+                <div data-page="home" class="page">
+                    <div class="page-content">
+                        <div class="content-block home_pnel" id="home_pnel">
+                            <div class="content-block-inner">
+                                <div class="row">
+                                    <div class="col-50">
+                                        <a href="signin/login.html" class="button button-big button-fill color-red">登录</a>
+                                    </div>
+                                    <div class="col-50">
+                                        <a href="signin/register.html" class="button button-big color-red">注册</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-block home_matter">
+                            <div class="content-block-inner">
+                                <div class="item-list" id="ask_list">
+                                    <div class="not">等待解答中...</div>
+                                </div>
+                                <div class="item-list" id="answer_list">
+                                    <div class="not">无待解决的问题</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="home_main_mod">
+                            <div class="row no-gutter">
+                                <a href="index/services.html" class="col-33">
+                                    <span>同期资料<br>可比数据</span>
+                                </a>
+                                <a href="index/tax.html" f class="col-33">
+                                    <span>国际税收<br>鉴定</span>
+                                </a>
+                                <a href="index/query.html" class="col-33">
+                                    <span>法规查询</span>
+                                </a>
+                            </div>
+                            <div class="row no-gutter">
+                                <a href="#index/calculator.html" class="col-33">
+                                    <span>计算器</span>
+                                </a>
+                                <a href="index/ask.html" class="col-66">
+                                    <span>ASK</span>
+                                </a>
+                            </div>
+                            <div class="row no-gutter">
+                                <a href="index/add.html" class="col-33">
+                                    <span>+</span>
+                                </a>
+                                <a href="index/answer-plus.html" class="col-66">
+                                    <span>ANSWER</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="seek" class="view tab">
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <div class="center sliding">寻TA</div>
+                    <div class="right">
+                        <a href="seek/order.html" class="link">订单</a>
+                    </div>
+                </div>
+            </div>
+            <div class="pages navbar-through toolbar-through">
+                <div data-page="seek" class="page">
+                    <div class="page-content seek_mod">
+                        <div class="buttons-row find_me_tab">
+                            <a href="#tab1_find" class="button tab-link button-big active">寻Ta</a>
+                            <a href="#tab2_find" id="findme" class="button tab-link button-big ">寻我</a>
+                        </div>
+                        <div class="tabs">
+                            <div id="tab1_find" class="tab active">
+                                <div class="content-block">
+                                    <div class="s_head">
+                                        <div class="bar_title">您好，您现在需要什么？</div>
+                                        <p>附近有<span class="mark" id="total">36</span>位财税人士</p>
+                                    </div>
+                                    <div class="list-block">
+                                        <ul>
+                                            <li class="align-top">
+                                                <div class="item-content">
+
+                                                    <div class="item-inner">
+                                                        <div class="item-title label">需求概要</div>
+                                                        <div class="item-input">
+                                                            <textarea class="" placeholder="请简单描述您需要他人协助的事项内容" id="problem_des"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="item-content">
+                                                    <div class="item-inner">
+                                                        <div class="item-title label">服务地点</div>
+                                                        <div class="item-input">
+                                                            <input type="text" placeholder="选择服务地点" id="showCityPicker3" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="item-content">
+                                                    <div class="item-inner">
+                                                        <div class="item-title label">服务时间</div>
+                                                        <div class="item-input">
+                                                            <input type="text" placeholder="选择服务时间" class="" id="showDataPicker" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="item-content">
+                                                    <div class="item-inner">
+                                                        <div class="item-title label">出价金额</div>
+                                                        <div class="item-input">
+                                                            <input type="text" placeholder="0.00" class="mo" id="offer">
+                                                        </div>
+                                                        <span style="width:150%;padding-left: 10px;">元</span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="item-content">
+                                                    <div class="item-inner">
+                                                        <div class="item-title label">&nbsp;</div>
+                                                        <div class="item-input">
+                                                            <p class="tips"></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div style="height:20px"></div>
+                                                <b class="button button-big button-fill color-main" id="submitFounds">叫人</b>
+                                                <p style="font-size:13px">税聚已为您验证每位财税人士的三证：身份证、工作证和专业等级证书</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tab2_find" class="tab ">
+                                <div class="content-block" id="card_container">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="news" class="view tab">
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <div class="center sliding">资讯</div>
+                    <div class="right">
+                        <a href="news/collect.html" class="link">收藏</a>
+                    </div>
+                </div>
+            </div>
+            <div class="pages navbar-through toolbar-through">
+                <div data-page="info" class="page">
+                    <div class="page-content news">
+                        <div class="list-block media-list">
+                            <ul id="news_list">
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="about" class="view tab">
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <div class="center sliding">我的</div>
+                    <div class="right">
+                        <a href="about/set.html" class="link">
+                            <span class="m-icon m-icon-gear"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="pages navbar-through toolbar-through">
+                <div data-page="about" class="page">
+                    <div class="page-content about">
+                        <div class="about_banner">
+                            <div class="header">
+                                <div class="avatar">
+                                    <div id="fileup" class="row image-list">
+                                        <div class="image-item space">
+                                            <input type="file" accept="image/*" id="image">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="username">
+                                    <span class="name" id="user_name">张三</span>
+                                    <span class="dashed"></span>
+                                    <span class="signboard">SVIP</span>
+                                    <button id="saveUserLevel">saveUserLevel</button>
+                                </div>
+                                <div class="userlike">
+                                    <i class="m-icon m-icon-star-filled"></i>
+                                    <i class="m-icon m-icon-star-filled"></i>
+                                    <i class="m-icon m-icon-star-filled"></i>
+                                    <i class="m-icon m-icon-star-filled"></i>
+                                    <i class="m-icon m-icon-star-filled"></i>
+                                </div>
+                                <div class="item-subtitle">
+                                    <a href="" class="tags">程序员</a> <a href="" class="tags">程序员</a>
+                                    <a href="" class="tags">律师</a>
+                                    <a href="" class="tags">公务员</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-block">
+                            <div class="row" id="radio_tab">
+                                <div class="col-33">
+                                    <label class="label-radio item-content">
+                                        <input type="radio" name="radio" value="SVIP" checked>
+                                        <b class="button">SVIP</b>
+                                    </label>
+                                </div>
+                                <div class="col-33">
+                                    <label class="label-radio item-content">
+                                        <input type="radio" name="radio" value="VIP" >
+                                        <b class="button">VIP</b>
+                                    </label>
+                                </div>
+                                <div class="col-33">
+                                    <label class="label-radio item-content">
+                                        <input type="radio" name="radio" value="card" >
+                                        <b class="button">储值卡</b>
+                                    </label>
+                                </div>
+                            </div>
+                            <p>无时间限制，多充多送，满200送20，截止日期2016年7月1日，<a href="">更多权限》</a>
+                            </p>
+                            <div class="row">
+                                <div class="col-60">
+                                    <div class="list-block">
+                                        <div class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title label">金额</div>
+                                                <div class="item-input">
+                                                    <input type="text" placeholder="金额" id="index-pay-money">
+                                                </div>
+                                                <span style="width:30%;font-size:14px;color:#999">元</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-40">
+                                    <b class="button button-big button-fill color-main" id="index-pay-btn">支付</b>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="about_btn">
+                            <div class="row no-gutter">
+                                <a class="col-33" id="Eject">
+                                    <span>邀请</span>
+                                </a>
+                                <a href="about/problem.html" class="col-33">
+                                    <span>问答</span>
+                                </a>
+                                <a href="about/personal-uestions.html" class="col-33">
+                                    <span>题库</span>
+                                </a>
+                            </div>
+                            <div class="row no-gutter">
+                                <a href="about/expert.html" class="col-33">
+                                    <span>专家</span>
+                                </a>
+                                <a href="about/ticket.html" class="col-33">
+                                    <span>发票</span>
+                                </a>
+                                <a href="about/withdrawals.html" class="col-33">
+                                    <span>提现</span>
+                                </a>
+                            </div>
+                            <div class="row no-gutter">
+                                <a href="about/capital.html" class="col-50">
+                                    <span>资金</span>
+                                </a>
+                                <a href="about/custom.html" class="col-50">
+                                    <span>客服</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bottom Toolbar-->
+        <div class="toolbar tabbar tabbar-labels tabsbar">
+            <div class="toolbar-inner">
+                <a href="#home" class="tab-link active">
+                    <i class="icon_index"></i>
+                    <span class="tabbar-label">咨询</span>
+                </a>
+                <a href="#seek" class="tab-link">
+                    <i class="icon_seek"></i>
+                    <span class="tabbar-label">寻他</span>
+                </a>
+                <a href="#news" class="tab-link">
+                    <i class="icon_news"></i>
+                    <span class="tabbar-label">资讯</span>
+                </a>
+                <a href="#about" class="tab-link">
+                    <i class="icon_about"></i>
+                    <span class="tabbar-label">我的</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/lib/lab/LAB.min.js"></script>
+    <script type="text/javascript">
+        $LAB.script('/static/js/init.js').wait();
+
+    </script>
+    <script type="text/template7" id="home_tpl">
+        <div class="row withdrawals-row">
+            <div class="col-50 withdrawals-money">
+                <span>{{gross_income}}元</span>
+            </div>
+            <div class="col-15 money-cont">
+                <span>from</span>
+            </div>
+            <div class="col-35 withdrawals-time">
+                <div><i class="withdrawals-lcon-1"></i>题库<span>{{question_income}}</span></div>
+                <div><i class="withdrawals-lcon-2"></i>好友<span>{{friend_income}}</span></div>
+                <div><i class="withdrawals-lcon-3"></i>解答<span>{{answer_income}}</span></div>
+                <div><i class="withdrawals-lcon-4"></i>平台<span>{{platform_income}}</span></div>
+            </div>
+        </div>
+    </script>
+    <script type="text/template7" id="ask_list_tpl">
+        <a href="index/questions.html">
+            <div class="bar ask_bar">
+                <b>问</b><span>{{questions}}</span>
+            </div>
+        </a>
+    </script>
+    <script type="text/template7" id="answer_list_tpl">
+        <a href="index/questions.html">
+            <div class="bar answer_bar">
+                <b>答</b><span>{{answer_context}}</span>
+            </div>
+        </a>
+    </script>
+
+    <!-- 寻我 抢单template -->
+    <script type="text/template7" id="order_list_tpl">
+        {{#each this}}
+        <div class="card {{_before}}" id="card{{help_id}}" data-id="{{help_id}}">
+            <div class="card-content">
+                <div class="row no-gutter">
+                    <div class="col-75">
+                        <div class="card-content-inner">
+                            <div class="rows">
+                                <div class="name">时间</div>
+                                <div class="conts">{{service_date}}</div>
+                            </div>
+                            <div class="rows">
+                                <div class="name">地点</div>
+                                <div class="conts">{{name}}</div>
+                            </div>
+                            <div class="rows">
+                                <div class="name">出价</div>
+                                <div class="conts">{{offer}}</div>
+                            </div>
+                            <p class="info">{{problem_des}}</p>
+                        </div>
+                    </div>
+                    <div class="col-25">
+                        <div class="panl">
+                            <div id="status{{help_id}}">{{status}}</div>
+                            <b class="button" id="grabOrder{{help_id}}" onclick="app.grabOrderBtn({{help_id}})">抢单</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="list-block media-list">
+                    <div class="item-content">
+                        <div class="item-media">
+                            <img src="/static/images/jpg.jpg" width="44">
+                        </div>
+                        <div class="item-inner">
+                            <div class="item-title-row">
+                                <div class="item-title">
+                                    <span class="name">{{username}}</span>
+                                    <span class="tel"><i class="m-icon m-icon-phone"></i>{{phone_number}}</span>
+                                </div>
+                            </div>
+                            <div class="item-subtitle">
+                                {{#each major}}
+                                <a href="" class="tags">{{this}}</a> {{/each}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </script>
+
+
+
+    <!-- 资讯列表template -->
+    <script type="text/template7" id="news_list_tpl">
+        {{#each this}}
+        <li class="swipeout " data-id="{{new_id}} ">
+            <div class="swipeout-content ">
+                <a href="news/newsDetails.html?id={{new_id}} " class="item-content ">
+                    <div class="item-inner ">
+                        <div class="item-title "><b>{{new_title}}</b></div>
+                        <div class="item-text ">{{new_content}}</div>
+                    </div>
+                </a>
+                <div class="item-subtitle ">
+                    <div class="row no-gutter ">
+                        <div class="col-40 ">
+                            <span class="time-md ">{{time_y}}年{{time_m}}月{{time_d}}日</span>
+                            <span class="time-h ">{{time_mi}}</span>
+                        </div>
+                        <div class="col-60 ">
+                            <span>阅读:&nbsp;{{new_hits}}</span>
+                            <span><i class="m-icon m-icon-star "></i>{{new_like}}</span>
+                            <span><i class="m-icon m-icon-chatbubble "></i>{{new_reviews}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+        {{/each}}
+    </script>
+
+    <script type="text/template7 " id="collect_news_list_tpl">
+        {{#each this}}
+        <li class="swipeout ">
+            <div class="swipeout-content ">
+                <a href="news/newsDetails.html " class="item-content ">
+                    <div class="item-inner ">
+                        <div class="item-title ">{{new_title}}</div>
+                        <div class="item-text ">{{new_content}}</div>
+                    </div>
+                    <div class="item-media ">
+                        <img src="/static/images/jpg.jpg " alt=" " width="80 ">
+                    </div>
+                </a>
+                <div class="item-subtitle ">
+                    <div class="row no-gutter ">
+                        <div class="col-40 ">
+                            <span class="time-md ">{{new_subtime}}</span>
+                        </div>
+                        <div class="col-60 ">
+                            <span>阅读:2262</span>
+                            <span><i class="m-icon m-icon-star "></i>223</span>
+                            <span><i class="m-icon m-icon-chatbubble "></i>102</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="swipeout-actions-right ">
+                <a href="# " data-confirm="你确定要删除此收藏? " class="swipeout-delete swipeout-overswipe ">删除</a>
+            </div>
+        </li>
+        {{/each}}
+    </script>
+
+    <script type="text/template7 " id="news_data_tpl">
+        <div class="act_post ">
+            <h3>{{new_title}}</h3>
+            <p>{{new_content}}</p>
+        </div>
+        <div class="act_time ">
+            <span class="time-md ">{{time_m}}月{{time_d}}日</span>
+            <span class="time-h ">{{time_mi}}</span>
+        </div>
+        <div class="list-block ">
+            <ul class="right ">
+                <li>
+                    <span>阅读:&nbsp;{{new_hits}}</span>
+                    <span id="likeBtn " data-id="{{new_id}} "><i class="m-icon m-icon-star "></i>{{new_like}}</span>
+                    <span id="commonBtn "><i class="m-icon m-icon-chatbubble "></i>{{new_reviews}}</span>
+                </li>
+            </ul>
+        </div>
+    </script>
+
+    <script type="text/template7 " id="common_tpl">
+        <div class="list-block ">
+            <ul>
+                <li class="align-top ">
+                    <div class="item-content ">
+                        <div class="item-inner ">
+                            <div class="item-input ">
+                                <textarea class=" " id="textarea_val "></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="list-block inset ">
+            <a class="button button-big button-fill color-red " data-id="{{new_id}} " id="commonBtn ">提交</a>
+        </div>
+    </script>
+    
+      <!-- 资金一览-->
+    <script type="text/template7" id="duanlist">
+        {{#each this}}
+        <div class="row capital-list">
+            <div class="col-1"></div>
+            <div class="col-25"><span>{{send_host_time}}</span></div>
+            <div class="col-20"><span>{{tran_uasge}}</span></div>
+            <div class="col-20"><span>{{tran_amt}}</span></div>
+        </div>
+        {{/each}}
+    </script>
+
+<!-- 详情列表 待定 -->
+    <script type="text/template7 " id="detailsr_list_tpl">
+        {{#each this}}
+        <li>
+            <a href="index/queryDetails.html " class="item-content " onclick="app.queryDetails({{law_id}}) ">
+                <div class="item-inner ">
+                    <div class="item-subtitle ">{{law_att}}</div>
+                    <div class="item-subbox ">
+                        <div class="item-title ">{{law_name}}</div>
+                        <div class="item-text ">{{law_cont}}</div>
+                    </div>
+                </div>
+            </a>
+        </li>
+        {{/each}}
+    </script>
+    
+     <!--题库一览-->
+    <script type="text/template7" id="perstik">
+        <div class="buttons-row consult_tab">
+            <a class="btn_tab"><b>{{count}}</b></br><span>题库总数（条）</span></a>
+            <a class="btn_tab"><b>{{total}}</b></br><span>题库收益（元）</span></a>
+        </div>
+    </script>
+    <script type="text/template7" id="perstikxsa">
+        {{#each this}}
+        <div  class="item-title list-box-cont ques-fine">
+            <div><span>编号:</span1>{{bank_id}}</span></div>
+            <div><span>来源:</span><span>{{source}}</span></div>
+            <div><span>入库时间:</span> <span>{{submit_time}}</span></div>
+        </div>
+        <div  class="item-title list-box-cont ques-fine">
+            <div><span>预览数:</span1>{{adoption_count}}</span></div>
+            <div><span>适用地区:</span><span>{{area}}</span></div>
+            <div><span>类型:</span> <span>{{tax_type}}</span></div>
+        </div>
+        <div  class="ques-fine-cont">
+            <img class="person-cont" src="/static/images/img/ques-fine.png"  width="40"><span>{{ask_title}}</span>
+
+            <div>
+                答：<span>{{answer}}</span>
+            </div>
+        </div>
+        {{/each}}
+    </script>
+  <!-- 问答咨询-->
+    <script type="text/template7" id="tationzans">
+            <div class="col-50">
+                <div class="buttons-ro problem-top">
+                    <i class="problem-lcon"></i><b>{{count}}</b>
+                    </br><span>支付金额</span>
+                </div>
+            </div>
+            <div class="col-50 problem-top problem-top-2">
+                <div>解答总数：<span>{{keyTotal}}</span>
+                </div>
+                <div>采纳数量：<span>{{total}}</span>
+                </div>
+            </div>
+    </script>
+    <script type="text/template7" id="tationzans_lsit">
+        {{#each this}}
+
+        <div class="list-block media-list ansyer-list " >
+            <div class="item-content ansyer-list-locn problem-location">
+                <div class=" item-media ">
+                    <img src="/static/images/jpg.jpg" width="60">
+                </div>
+                <div class="ansyer-list-box">
+                    <div class="item-title-row">
+                        <div class="item-title list-box-cont">
+                            <span>{{ask_time}}</span>
+                        </div>
+                    </div>
+                    <div class=" list-box-cont">
+                        <img class="person-cont" src="/static/images/img/answer_03.png" width="20"> <span>{{state}}</span>
+                    </div>
+                    <div class="ansyer-Label">
+                        <span>{{types}}</span>
+                    </div>
+                </div>
+                <img class="zuomian" src="/static/images/img/ansyer-lcon.png" width="23" height="30"> <span class="ansyer-number">{{cost}}</span>
+
+                </br>
+                <div class="problem-location-son">完</div>
+                <!--   <div class="problem-location-son problem-location-son-2">待</div>-->
+            </div>
+        </div>
+        <div class="answer-plus-data"><b>{{questions}}</b> </div>
+         <p class="xsjxxs"></p>
+         </div>
+        {{/each}}
+    </script>
+    <!-- 问答解答-->
+    <script type="text/template7" id="tationzans_2">
+        <div id="problem-bj" class="row">
+        <div class="col-50">
+            <div class="buttons-ro problem-top">
+                <i class="problem-lcon"></i><b>{{count}}</b>
+                </br><span>支付金额</span>
+            </div>
+        </div>
+        <div class="col-50 problem-top problem-top-2">
+            <div>解答总数：<span>{{noCheck}}</span>
+            </div>
+            <div>采纳数量：<span>{{total}}</span>
+            </div>
+        </div>
+        </div>
+    </script>
+    <script type="text/template7" id="tationzans_lsit_2">
+        {{#each this}}
+        <div class="list-block media-list ansyer-list " >
+            <div class="item-content ansyer-list-locn problem-location">
+                <div class=" item-media ">
+                    <img src="/static/images/jpg.jpg" width="60">
+                </div>
+                <div class="ansyer-list-box">
+                    <div class="item-title-row">
+                        <div class="item-title list-box-cont">
+                            <span>{{ask_time}}</span>
+                        </div>
+                    </div>
+                    <div class=" list-box-cont">
+                        <img class="person-cont" src="/static/images/img/answer_03.png" width="20"> <span>{{state}}</span>
+                    </div>
+                    <div class="ansyer-Label">
+                        <span>{{businesses}}</span>
+                    </div>
+                </div>
+                <img class="zuomian" src="/static/images/img/ansyer-lcon.png" width="23" height="30"> <span class="ansyer-number">{{region_id}}</span>
+
+                </br>
+                <div class="problem-location-son">完</div>
+                <!--   <div class="problem-location-son problem-location-son-2">待</div>-->
+            </div>
+        </div>
+        <div class="answer-plus-data"><b>{{questions}}</b> </div>
+        <p class="xsjxxs"></p>
+        </div>
+        {{/each}}
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,79 @@
+<!-- We don't need full layout here, because this page will be parsed with Ajax-->
+<!-- Top Navbar-->
+<div class="navbar">
+    <div class="navbar-inner">
+        <div class="left">
+            <a href="#" class="back link"> <i class="m-icon m-icon-back"></i>
+            </a>
+        </div>
+        <div class="center sliding">发票</div>
+        <div class="right sliding">
+            <a href="about/list.html" class="link">发票列表</a>
+        </div>
+    </div>
+</div>
+<div class="pages">
+    <!-- Page, data-page contains page name-->
+    <div data-page="ticket" class="page">
+        <!-- Scrollable page content-->
+        <div class="page-content withdrawals-bj">
+            <div class="content-block home_pnel">
+                <div class="row no-gutter content-block-about-inner">
+                    <a href="" class="col-50 color-white">
+                        <span>本次开票金额</span>
+                    </a>
+                    <a class="col-50  ticket-lest-2 ticket-lest-top">
+
+                        <span><input id="money" placeholder="金额" type="number"></span>
+                    </a>
+                </div>
+
+            </div>
+            <div class="content-block home_pnel ">
+                <p class="detail">截至目前,您可开具发票金额为<span>30.00元</span>
+                </p>
+            </div>
+
+            <div class="row no-gutter ticket-box">
+                <div class="col-15 ticket-lest">
+                    <p>发票信息</p>
+                </div>
+                <div class="col-35 ticket-lest-2">
+                    <div class="ticket-tex">发票抬头</div>
+                    <div class="ticket-tex">纳税人识别号</div>
+                    <div class="ticket-tex">发票内容</div>
+                </div>
+                <div class="col-50 ticket-lest-2 ticket-lest-3">
+                    <input id="rise" type="text">
+                    <input id="Distinguish" class="ticket-lest-syai" type="text">
+                    <input id="content" class="ticket-lest-syai" type="text">
+                </div>
+            </div>
+            <div class="row no-gutter ticket-box">
+                <div class="col-15 ticket-lest">
+                    <p>收件信息</p>
+                </div>
+                <div class="col-35 ticket-lest-2">
+                    <div  class="ticket-tex">快递地址</div>
+                    <div  class="ticket-tex">收件人</div>
+                    <div  class="ticket-tex">联系电话</div>
+                </div>
+                <div class="col-50 ticket-lest-2 ticket-lest-3">
+
+                    <input id="address" type="text">
+                    <input id="Addressee" class="ticket-lest-syai" type="text">
+                    <input id="Telephone" class="ticket-lest-syai" type="text">
+                </div>
+            </div>
+            <div class="content-block home_pnel answer-gai ">
+                <div class="detail">快递费用：<span>10.00元</span></br>非储蓄卡支付的快递将计入可开发票金额
+                </div>
+            </div>
+
+
+            <a href="#" class="button  button-fill color-main ticket-lest-button"  id="tick">提交</a>
+
+        </div>
+    </div>
+</div>
+</div>
