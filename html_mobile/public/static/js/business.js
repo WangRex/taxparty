@@ -1,13 +1,13 @@
 //登陆
-app.login = (function () {
-    return function (user, pass) {
+app.login = (function() {
+    return function(user, pass) {
 
         var param = {
             "username": user,
             "user_password": pass,
         }
 
-        var succCallBack = function (data, status, response) {
+        var succCallBack = function(data, status, response) {
             var data = JSON.parse(data);
             console.log(data)
             if (data.errCode == '0') {
@@ -21,7 +21,7 @@ app.login = (function () {
 
                 app.toast('登陆成功!')
 
-                setTimeout(function () {
+                setTimeout(function() {
                     view.main.router.loadPage('index.html');
                 }, 2000)
 
@@ -35,9 +35,9 @@ app.login = (function () {
 })()
 
 //注册
-app.register = (function () {
+app.register = (function() {
 
-    return function (i_code, user, pass, v_code) {
+    return function(i_code, user, pass, v_code) {
 
         var param = {
             invite_code: i_code,
@@ -46,7 +46,7 @@ app.register = (function () {
             check_errorCode: v_code,
         }
 
-        var succCallBack = function (data, status, response) {
+        var succCallBack = function(data, status, response) {
             var data = JSON.parse(data);
 
             console.log(data);
@@ -63,7 +63,7 @@ app.register = (function () {
 
 
 //校验
-app.isLR = (function () {
+app.isLR = (function() {
 
     //登陆校验
     function islogin() {
@@ -126,15 +126,15 @@ app.isLR = (function () {
 })()
 
 //获取验证码
-app.verifyCode = (function () {
-    return function (type, user) {
+app.verifyCode = (function() {
+    return function(type, user) {
 
         var param = {
             flag: type,
             userAcc: user
         }
 
-        var succCallBack = function (data, status, response) {
+        var succCallBack = function(data, status, response) {
             var data = JSON.parse(data);
 
             console.log(data)
@@ -146,14 +146,14 @@ app.verifyCode = (function () {
 
 
 //获取手机邮箱验证码
-app.verifyTelCode = (function () {
-    return function (tel) {
+app.verifyTelCode = (function() {
+    return function(tel) {
 
         var param = {
             tel_num: tel,
         }
 
-        var succCallBack = function (data, status, response) {
+        var succCallBack = function(data, status, response) {
             var data = JSON.parse(data);
 
             console.log(data)
@@ -167,15 +167,15 @@ app.verifyTelCode = (function () {
 
 
 //上传头像
-app.upUserImg = (function () {
+app.upUserImg = (function() {
 
-    return function (userImg) {
+    return function(userImg) {
         var param = {
             "username": app.storage.get("userArr").username,
             "img": userImg
         }
 
-        var succCallBack = function (data, status, response) {
+        var succCallBack = function(data, status, response) {
             var data = JSON.parse(data);
 
             console.log(data)
@@ -186,27 +186,27 @@ app.upUserImg = (function () {
 })()
 
 // 资讯一览
-app.newsList = (function () {
-    return function () {
+app.newsList = (function() {
+    return function() {
 
         var param = {
-            "token": app.storage.get("userArr").token,
+            "token": /*app.storage.get("userArr").token*/"Yzk5NzQ0NTMtZDJhNi00ZWUyLTkyOTItZjI3MDM1MDIzMzZl",
         }
 
-        var succCallBack = function (data, status, response) {
+        var succCallBack = function(data, status, response) {
             var data = JSON.parse(data);
             console.log(data)
             if (data.data != null) {
                 var nodes = data.data;
 
-                $$.each(nodes, function (index, value) {
+                $$.each(nodes, function(index, value) {
                     value["time_y"] = value.new_subtime.substr(0, 4);
                     value["time_m"] = value.new_subtime.substr(5, 2);
                     value["time_d"] = value.new_subtime.substr(8, 3);
                     value["time_mi"] = value.new_subtime.substr(11, 5)
                 })
 
-            console.log(nodes)
+                console.log(nodes)
                 var news_list_tpl = $$('script#news_list_tpl').html();
                 var tpl = Template7.compile(news_list_tpl);
                 $$("#news_list").html(tpl(nodes))
@@ -224,14 +224,14 @@ app.newsList = (function () {
 })()
 
 // 资讯详情
-app.newsDetails = (function () {
-    return function (listId) {
+app.newsDetails = (function() {
+    return function(listId) {
         var param = {
             "token": app.storage.get("userArr").token,
             "inform_id": listId
         }
 
-        var succCallBack = function (data, status, response) {
+        var succCallBack = function(data, status, response) {
             var data = JSON.parse(data);
             var nodes = data.data;
             console.log(nodes)
@@ -254,15 +254,15 @@ app.newsDetails = (function () {
 })()
 
 // 资讯详情点赞
-app.newslikeInform = (function () {
-    return function (listId) {
+app.newslikeInform = (function() {
+    return function(listId) {
 
         var param = {
             "token": app.storage.get("userArr").token,
             "inform_id": listId
         }
 
-        var succCallBack = function (data, status, response) {
+        var succCallBack = function(data, status, response) {
             var data = JSON.parse(data);
 
             console.log(data)
@@ -277,18 +277,18 @@ app.newslikeInform = (function () {
 
 
 // 资讯评论
-app.commentInform = (function () {
+app.commentInform = (function() {
 
-    return function (listId, val, time) {
+    return function(listId, val, time) {
         var param = {
             "token": app.storage.get("userArr").token,
             "inform_id": listId,
             "comment": val,
             "time": time + '',
-            "username":'15210044288'
+            "username": '15210044288'
         }
 
-        var succCallBack = function (data, status, response) {
+        var succCallBack = function(data, status, response) {
             var data = JSON.parse(data);
 
             console.log(data)
@@ -301,20 +301,20 @@ app.commentInform = (function () {
     }
 })()
 
-app.collectList = (function () {
-    return function () {
+app.collectList = (function() {
+    return function() {
 
         var param = {
             "token": app.storage.get("userArr").token
         }
 
-        var succCallBack = function (data, status, response) {
+        var succCallBack = function(data, status, response) {
             var data = JSON.parse(data);
             var nodes = data.data;
 
             var collect_news_list_tpl = $$('script#collect_news_list_tpl').html();
             var tpl = Template7.compile(collect_news_list_tpl);
-            $$("#collect_list").html(tpl(nodes))
+            $$("#collect_list").html(tpl(nodes));
 
             console.log(data)
 
