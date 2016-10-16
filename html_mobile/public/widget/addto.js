@@ -100,7 +100,7 @@ app.setmoney = (function() {
         var succCallBack = function(data, status, response) {
             var data = JSON.parse(data);
 
-            console.log(data)
+            console.log(data);
 
             /*    if (data.errorCode == '0') {
                 app.toast(data.errorMessage);
@@ -112,9 +112,9 @@ app.setmoney = (function() {
             }*/
         }
 
-        return app.doAjax(root.interFace.saveBestPrice, 'post', param, succCallBack)
+        return app.doAjax(root.interFace.saveBestPrice, 'post', param, succCallBack);
     }
-})()
+})();
 
 
 //个人最低价
@@ -129,7 +129,7 @@ f7app.onPageInit('set-money', function(page) {
             app.toast("请输入大与0的数字");
             return false
         } else {
-            var token = app.storage.get("userArr").token
+            var token = app.storage.get("userArr").token;
             app.setmoney(token, duan);
         }
     })
@@ -306,8 +306,14 @@ app.answerplus = (function() {
 
         var succCallBack = function(data, status, response) {
             var data = JSON.parse(data);
-
-            console.log(data)
+            console.log(data);
+            var ansquelisttpl = $$("script#answer_questions_list_tpl").html();
+            var lesul = Template7.compile(ansquelisttpl);
+            $$("#answer_questions_list").html(lesul(data.data));
+            $$(".answerQuestionBtn").on("click", function() {
+                var askId = $$(this).attr("data-askid");
+                view.main.router.loadPage('index/answer.html?askId=' + askId + '');
+            });
         }
 
         return app.doAjax(root.interFace.getAllQuestions, 'post', param, succCallBack)
@@ -316,8 +322,7 @@ app.answerplus = (function() {
 
 /* nasyer所有待回答的问题*/
 f7app.onPageInit('answerplus', function(page) {
-    // var token = app.storage.get("userArr").token;
-    var token = "1111";
+    var token = app.storage.get("userArr").token;
     console.log(token);
     app.checkIdentityAnswer(token);
 });
@@ -334,7 +339,7 @@ app.checkIdentityAnswer = (function() {
         var succCallBack = function(data, status, response) {
             var data = JSON.parse(data);
             console.log(data);
-            if (data.data[0].identity === 0 || data.data[0].identity === 1) {
+            if (data.data[0] === 0 || data.data[0] === 1) {
                 app.answerplus(token);
             }
         };
@@ -490,6 +495,7 @@ f7app.onPageInit('ticket', function(page) {
 
     });
 });
+
 //专家一览方法
 app.expert = (function() {
     return function(token, region, name, Expertise) {
@@ -503,12 +509,12 @@ app.expert = (function() {
         var succCallBack = function(data, status, response, address) {
             var data = JSON.parse(data);
 
-            console.log(data)
+            console.log(data);
         }
 
-        return app.doAjax(root.interFace.getAllexpert, 'post', param, succCallBack)
+        return app.doAjax(root.interFace.getAllexpert, 'post', param, succCallBack);
     }
-})()
+})();
 
 //专家一览
 f7app.onPageInit('expert', function(page) {
@@ -528,107 +534,112 @@ f7app.onPageInit('expert', function(page) {
         app.expert(token, region, name, Expertise);
     })
 });
+
 //问答-咨询方法
 app.Consultation = (function() {
-        return function(token) {
-            var param = {
-                "token": token
+    return function(token) {
+        var param = {
+            "token": token
 
-            }
-            var succCallBack = function(data, status, response, address) {
-                var data = JSON.parse(data);
-
-
-                console.log(data)
-                var perstik = $$("script#tationzans").html();
-                var lesu = Template7.compile(perstik);
-                $$("#problem-bj").html(lesu(data));
-
-                var perstikl = $$("script#tationzans_lsit").html();
-                var lesul = Template7.compile(perstikl);
-                $$("#tation_chlsit").html(lesul(data.data));
-
-            }
-
-            return app.doAjax(root.interFace.getAllAsks, 'post', param, succCallBack)
         }
-    })()
-    //问答-解答方法
+        var succCallBack = function(data, status, response, address) {
+            var data = JSON.parse(data);
+
+
+            console.log(data);
+            var perstik = $$("script#tationzans").html();
+            var lesu = Template7.compile(perstik);
+            $$("#problem-bj").html(lesu(data));
+
+            var perstikl = $$("script#tationzans_lsit").html();
+            var lesul = Template7.compile(perstikl);
+            $$("#tation_chlsit").html(lesul(data.data));
+
+        }
+
+        return app.doAjax(root.interFace.getAllAsks, 'post', param, succCallBack);
+    }
+})();
+
+//问答-解答方法
 app.Answer = (function() {
-        return function(token) {
-            var param = {
-                "token": token
+    return function(token) {
+        var param = {
+            "token": token
 
-            }
-
-            var succCallBack = function(data, status, response, address) {
-                var data = JSON.parse(data);
-                console.log(data)
-                var perstik = $$("script#tationzans_2").html();
-                var lesu = Template7.compile(perstik);
-                $$("#problem-bj_2").html(lesu(data));
-
-                var perstikl = $$("script#tationzans_lsit_2").html();
-                var lesul = Template7.compile(perstikl);
-                $$("#tation_chlsit_2").html(lesul(data.askList));
-
-            }
-
-            return app.doAjax(root.interFace.getAllAnswers, 'post', param, succCallBack)
         }
-    })()
-    //问答-求助方法
+
+        var succCallBack = function(data, status, response, address) {
+            var data = JSON.parse(data);
+            console.log(data);
+            var perstik = $$("script#tationzans_2").html();
+            var lesu = Template7.compile(perstik);
+            $$("#problem-bj_2").html(lesu(data));
+
+            var perstikl = $$("script#tationzans_lsit_2").html();
+            var lesul = Template7.compile(perstikl);
+            $$("#tation_chlsit_2").html(lesul(data.askList));
+
+        }
+
+        return app.doAjax(root.interFace.getAllAnswers, 'post', param, succCallBack);
+    }
+})();
+
+//问答-求助方法
 app.Seekhelp = (function() {
-        return function(token) {
-            var param = {
-                "token": token
+    return function(token) {
+        var param = {
+            "token": token
 
-            }
-
-            var succCallBack = function(data, status, response, address) {
-                var data = JSON.parse(data);
-
-                console.log(data)
-            }
-
-            return app.doAjax(root.interFace.queryHelpListInfo, 'post', param, succCallBack)
         }
-    })()
-    //问答-求援方法
+
+        var succCallBack = function(data, status, response, address) {
+            var data = JSON.parse(data);
+
+            console.log(data);
+        }
+
+        return app.doAjax(root.interFace.queryHelpListInfo, 'post', param, succCallBack);
+    }
+})();
+
+//问答-求援方法
 app.help = (function() {
-        return function(token) {
-            var param = {
-                "token": token
+    return function(token) {
+        var param = {
+            "token": token
 
-            }
-
-            var succCallBack = function(data, status, response, address) {
-                var data = JSON.parse(data);
-
-                console.log(data)
-            }
-
-            return app.doAjax(root.interFace.getAllHelps, 'post', param, succCallBack)
         }
-    })()
-    //问答
+
+        var succCallBack = function(data, status, response, address) {
+            var data = JSON.parse(data);
+
+            console.log(data);
+        }
+
+        return app.doAjax(root.interFace.getAllHelps, 'post', param, succCallBack);
+    }
+})();
+
+//问答
 f7app.onPageInit('problem', function(page) {
 
-    console.log("咨询")
+    console.log("咨询");
     var token = app.storage.get("userArr").token;
-    app.Consultation(token)
+    app.Consultation(token);
 
     $$("#tab1").on("show", function() {
-        console.log("咨询")
+        console.log("咨询");
         var token = app.storage.get("userArr").token;
-        app.Consultation(token)
-    })
+        app.Consultation(token);
+    });
 
     $$("#tab2").on("show", function() {
 
-        console.log("解答")
+        console.log("解答");
         var token = app.storage.get("userArr").token;
-        app.Answer(token)
+        app.Answer(token);
     })
 
     $$("#tab3").on("show", function() {
@@ -640,17 +651,17 @@ f7app.onPageInit('problem', function(page) {
         });
 
 
-        console.log("求助")
+        console.log("求助");
         var token = app.storage.get("userArr").token;
-        app.Seekhelp(token)
+        app.Seekhelp(token);
     })
 
 
     $$("#tab4").on("show", function() {
 
-        console.log("求援")
+        console.log("求援");
         var token = app.storage.get("userArr").token;
-        app.help(token)
+        app.help(token);
     })
 
 });
@@ -1011,30 +1022,30 @@ f7app.onPageInit('withdrawals', function(page) {
 });
 //提问方法
 app.asklsit = (function() {
-        return function(token, account, cash) {
-            var param = {
-                "token": token,
-                "ask_type": "1",
-                "asked_id": "[01,02]",
-                "region": "北京",
-                "propertys": "[财务会计类]",
-                "types": "[增值税,消费税,企业所得税]",
-                "procedures": "[税务登记,税务认定,发票管理]",
-                "businesses": "[税收优惠,非居民税收]",
-                "questions": "个税计算方式",
-                "cost": 100,
-                "post_type": "1"
-            }
-            var succCallBack = function(data, status, response) {
-                var data = JSON.parse(data);
+    return function(token, account, cash) {
+        var param = {
+            "token": token,
+            "ask_type": "1",
+            "asked_id": "[01,02]",
+            "region": "北京",
+            "propertys": "[财务会计类]",
+            "types": "[增值税,消费税,企业所得税]",
+            "procedures": "[税务登记,税务认定,发票管理]",
+            "businesses": "[税收优惠,非居民税收]",
+            "questions": "个税计算方式",
+            "cost": 100,
+            "post_type": "1"
+        };
+        var succCallBack = function(data, status, response) {
+            var data = JSON.parse(data);
 
-                console.log(data)
-            }
-
-            return app.doAjax(root.interFace.ask, 'post', param, succCallBack)
+            console.log(data);
         }
-    })()
-    //提问
+
+        return app.doAjax(root.interFace.ask, 'post', param, succCallBack);
+    }
+})();
+//提问
 f7app.onPageInit('asklsit', function(page) {
     $$("#askdi").on("click", function() {
         var token = app.storage.get("userArr").token;
@@ -1044,23 +1055,24 @@ f7app.onPageInit('asklsit', function(page) {
 });
 //回答方法
 app.answersj = (function() {
-        return function(token, account, cash) {
-            var param = {
-                "token": token,
-                "ask_id": "1010",
-                "answer": "这个问题不是很好回答",
-                "files": "1.mp3,2.doc,3.xls,4.pdf"
-            }
-            var succCallBack = function(data, status, response) {
-                var data = JSON.parse(data);
-
-                console.log(data)
-            }
-
-            return app.doAjax(root.interFace.ask, 'post', param, succCallBack)
+    return function(token, account, cash) {
+        var param = {
+            "token": token,
+            "ask_id": "6",
+            "answer": "这个问题不是很好回答",
+            // "files": "1.mp3,2.doc,3.xls,4.pdf"
         }
-    })()
-    //回答
+        var succCallBack = function(data, status, response) {
+            var data = JSON.parse(data);
+
+            console.log(data);
+        }
+
+        return app.doAjax(root.interFace.ask, 'post', param, succCallBack);
+    }
+})();
+
+//回答
 f7app.onPageInit('answersj', function(page) {
     $$("#answer_click").on("click", function() {
         var token = app.storage.get("userArr").token;

@@ -5,6 +5,7 @@ app.login = (function() {
         var param = {
             "username": user,
             "user_password": pass,
+            "verify_code": ""
         }
 
         var succCallBack = function(data, status, response) {
@@ -32,7 +33,7 @@ app.login = (function() {
 
         return app.doAjax(root.interFace.login, 'post', param, succCallBack)
     }
-})()
+})();
 
 //注册
 app.register = (function() {
@@ -190,7 +191,7 @@ app.newsList = (function() {
     return function() {
 
         var param = {
-            "token": /*app.storage.get("userArr").token*/"Yzk5NzQ0NTMtZDJhNi00ZWUyLTkyOTItZjI3MDM1MDIzMzZl",
+            "token": app.storage.get("userArr").token,
         }
 
         var succCallBack = function(data, status, response) {
@@ -233,16 +234,20 @@ app.newsDetails = (function() {
 
         var succCallBack = function(data, status, response) {
             var data = JSON.parse(data);
-            var nodes = data.data;
-            console.log(nodes)
+            var nodes = data.data[0][0];
+            nodes["time_y"] = nodes.new_subtime.substr(0, 4);
+            nodes["time_m"] = nodes.new_subtime.substr(5, 2);
+            nodes["time_d"] = nodes.new_subtime.substr(8, 3);
+            nodes["time_mi"] = nodes.new_subtime.substr(11, 5);
+            console.log(nodes);
 
             var news_data_tpl = $$('script#news_data_tpl').html();
             var tpl = Template7.compile(news_data_tpl);
-            $$("#news_data").html(tpl(nodes))
+            $$("#news_data").html(tpl(nodes));
 
             var common_tpl = $$('script#common_tpl').html();
             var tpl = Template7.compile(common_tpl);
-            $$("#common_c").html(tpl(nodes))
+            $$("#common_c").html(tpl(nodes));
 
         }
 
@@ -260,20 +265,20 @@ app.newslikeInform = (function() {
         var param = {
             "token": app.storage.get("userArr").token,
             "inform_id": listId
-        }
+        };
 
         var succCallBack = function(data, status, response) {
             var data = JSON.parse(data);
 
-            console.log(data)
+            console.log(data);
 
-        }
+        };
 
-        var likeInform = root.interFace.likeInform
+        var likeInform = root.interFace.likeInform;
 
-        return app.doAjax(likeInform, 'post', param, succCallBack)
+        return app.doAjax(likeInform, 'post', param, succCallBack);
     }
-})()
+})();
 
 
 // 资讯评论
@@ -286,20 +291,20 @@ app.commentInform = (function() {
             "comment": val,
             "time": time + '',
             "username": '15210044288'
-        }
+        };
 
         var succCallBack = function(data, status, response) {
             var data = JSON.parse(data);
 
-            console.log(data)
+            console.log(data);
 
-        }
+        };
 
-        var commentInform = root.interFace.commentInform
+        var commentInform = root.interFace.commentInform;
 
-        return app.doAjax(commentInform, 'post', param, succCallBack)
+        return app.doAjax(commentInform, 'post', param, succCallBack);
     }
-})()
+})();
 
 app.collectList = (function() {
     return function() {

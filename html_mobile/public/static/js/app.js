@@ -1,4 +1,10 @@
-var INTERFACE_URL = "http://192.168.1.126:8080/tz-core";
+var INTERFACE_URL = "http://remote.clps.com.cn:14780/tz-core";
+//袁媛
+// INTERFACE_URL = "http://remote.clps.com.cn:16080/tz-core";
+//任伟杰
+// INTERFACE_URL = "http://remote.clps.com.cn:14780/tz-core";
+//David
+// INTERFACE_URL = "http://remote.clps.com.cn:17880/tz-core";
 
 var root = {
     interFace: {
@@ -25,7 +31,7 @@ var root = {
         chooseServiceUser: INTERFACE_URL+'/rest/search/chooseServiceUser.do', //确认由他帮助我
         completeFound: INTERFACE_URL + '/rest/search/completeFound.do', //订单结束时
         complaintFound: INTERFACE_URL + '/rest/search/complaintFound.do', //订单投诉
-        checkIdentity: INTERFACE_URL + '/answer/checkIdentity.do', //用户身份的验证0：普通用户，1：解答者，2：线下求助者
+        checkIdentity: INTERFACE_URL + '/rest/answer/checkIdentity.do', //用户身份的验证0：普通用户，1：解答者，2：线下求助者
         getAllOrder: INTERFACE_URL + '/rest/search/getHelpListByArea.do', //线下服务订单一览
         grabOrder: INTERFACE_URL + '/rest/search/saveServiceUserInfo.do', //抢单
         submitLargePay: 'submitLargePay', //国际税收-大额关联支付
@@ -316,4 +322,7 @@ mui.init();
 })(mui, window)
 
 
-console.log(app)
+console.log(app);
+var data = {};
+data.token = "ODM1ZDYxODAtYmE2NC00NmY5LTg5MTUtZWM2NDMyOGQ0NzRi";
+app.storage.set('userArr', data);

@@ -1,21 +1,21 @@
 $$("#news").on("show", function () {
     app.newsList();
-})
+});
 
 f7app.onPageInit('newsDetails', function (page) {
     var id = page.query.id;
     console.log(id.trim());
-    app.newsDetails(id.trim())
-})
+    app.newsDetails(id.trim());
+});
 
 f7app.onPageInit('collect', function (page) {
     app.collectList();
-})
+});
 
 $$(document).on("click", "#likeBtn", function () {
     var id = $$(this).attr('data-id');
     app.newslikeInform(id);
-})
+});
 
 $$(document).on("click", "#commonBtn", function () {
     var id = $$(this).attr('data-id');

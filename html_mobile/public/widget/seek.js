@@ -2,12 +2,12 @@
 
 
 
-/*//寻我tab触发事件
+//寻我tab触发事件
 $$("#tab2_find").on("show", function () {
     //获取token
     var token = app.storage.get("userArr").token;
     app.findMe(token);
-});*/
+});
 
 
 //寻我列表ajax请求
@@ -46,7 +46,7 @@ app.findMe = (function () {
                 "avatar": "/C:/touxiang.jpg",
                 "problem_des": "测试描述",
                 "major": ["律师", "公务员", "税务师"]
-    }]
+    }];
             $$.each(data.data, function (i, e) {
 
                 if (e.tof_stt == '0') {
@@ -62,20 +62,20 @@ app.findMe = (function () {
                     e["status"] = '忽略'
                 }
 
-            })
+            });
 
             var order_tpl = $$('script#order_list_tpl').html();
             var tpl = Template7.compile(order_tpl);
-            $$("#card_container").html(tpl(data.data))
+            $$("#card_container").html(tpl(data.data));
 
             //console.log(data.data)
         }
 
-        var getHelpListByArea = root.interFace.getHelpListByArea
+        var getHelpListByArea = root.interFace.getHelpListByArea;
 
-        return app.doAjax(getHelpListByArea, 'post', param, succCallBack)
+        return app.doAjax(getHelpListByArea, 'post', param, succCallBack);
     }
-})()
+})();
 
 
 
@@ -233,7 +233,7 @@ app.checkIdentity = (function () {
 
     }
 
-})()
+})();
 
 //寻我权限ajax请求
 app.checkIdentity1 = (function () {
@@ -255,11 +255,11 @@ app.checkIdentity1 = (function () {
         };
 
         var checkIdentity = root.interFace.checkIdentity;
-        return app.doAjax(checkIdentity, 'post', param, succCallBack)
+        return app.doAjax(checkIdentity, 'post', param, succCallBack);
 
     }
 
-})()
+})();
 
 //叫人按钮触发事件
 $$(document).on('click', '#submitFounds', function () {
@@ -272,7 +272,7 @@ $$(document).on('click', '#submitFounds', function () {
 
     app.submitFounds(token, problem_des, tof_gps, offer, region_id, service_date);
 
-})
+});
 
 //提交寻他首页ajax请求
 app.submitFounds = (function () {
@@ -296,11 +296,11 @@ app.submitFounds = (function () {
         };
 
         var submitFounds = root.interFace.submitFounds;
-        return app.doAjax(submitFounds, 'post', param, succCallBack)
+        return app.doAjax(submitFounds, 'post', param, succCallBack);
 
     }
 
-})()
+})();
 
 /* ===== 寻Ta - 订单 ===== */
 
