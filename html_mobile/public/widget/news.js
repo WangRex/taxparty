@@ -17,6 +17,11 @@ $$(document).on("click", "#likeBtn", function () {
     app.newslikeInform(id);
 });
 
+$$(document).on("click", "#collectBtn", function () {
+    var id = $$(this).attr('data-id');
+    app.newsCollectInform(id);
+});
+
 $$(document).on("click", "#commonBtn", function () {
     var id = $$(this).attr('data-id');
     var val = $$("#textarea_val").val();

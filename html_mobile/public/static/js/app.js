@@ -27,7 +27,7 @@ var root = {
         queryServicesByArea: INTERFACE_URL + '/rest/myApp/queryServicesByArea.do', //寻他订单时，根据选择的服务地点或者GPS定位，查询所在注册的线下服务人员
         submitFounds: INTERFACE_URL + '/rest/search/saveHelpInfo.do', //寻他订单提交
         getAllFounds: INTERFACE_URL + '/rest/search/queryHelpListByHUID.do', //其他订单一览
-        getServiceInfoByUID: INTERFACE_URL+'/rest/search/getServiceInfoByUID.do', //专家详情
+        getServiceInfoByUID: INTERFACE_URL + '/rest/search/getServiceInfoByUID.do', //专家详情
         chooseServiceUser: INTERFACE_URL+'/rest/search/chooseServiceUser.do', //确认由他帮助我
         completeFound: INTERFACE_URL + '/rest/search/completeFound.do', //订单结束时
         complaintFound: INTERFACE_URL + '/rest/search/complaintFound.do', //订单投诉
@@ -52,7 +52,8 @@ var root = {
         getUserInfo: INTERFACE_URL+'/rest/myApp/getUserInfo.do', //个人信息的展示，用于在我的页面显示
         getAllInvoice: INTERFACE_URL + '/rest/myApp/queryUserInvoiceList.do', //发票一览
         saveInvoiceInfo: INTERFACE_URL + '/rest/myApp/saveInvoiceInfo.do', //申请发票
-        getInvoiceHistory: 'getInvoiceHistory', //取得可开票的金额和历史信息
+        getInvoiceHistory: '/rest/myApp/getInvoiceHistory', //取得可开票的金额和历史信息
+        queryUserInvoiceCount: INTERFACE_URL + '/rest/myApp/queryUserInvoiceCount.do',//可开票的金额和历史信息
         submitReceipt: INTERFACE_URL + '/rest/myApp/submitReceipt.do', //确认发票收货
         checkInvitation: INTERFACE_URL + '/rest/myApp/checkInvitation.do', //邀请验证
         submitInvierrorCode: INTERFACE_URL + '/rest/myApp/submitInvierrorCode.do', //重新提交邀请码
@@ -79,7 +80,6 @@ var root = {
         updateCollectionByCID: INTERFACE_URL + '/rest/news/updateCollectionByCID.do', //用户取消收藏的信息
         //sendUserPsdMail: INTERFACE_URL + '/rest/sendUserPsdMail.do', //发送密码到用户邮箱
         getHelpListByArea: INTERFACE_URL + '/rest/search/getHelpListByArea.do', //获取用户本地求助列表-寻我订单列表
-        getServiceInfoByUID: INTERFACE_URL + '/search/getServiceInfoByUID.do', //获取服务者信息
         selectSearchInfo: INTERFACE_URL + '/rest/search/selectSearchInfo.do', //获取寻他的显示信息
         saveHelpInfo: INTERFACE_URL + '/rest/search/saveHelpInfo.do', //保存求助信息
         queryHelpListByHUID: INTERFACE_URL + '/rest/search//queryHelpListByHUID.do', //查询用户求助信息列表--寻他目录
@@ -105,6 +105,7 @@ var root = {
         updateUserLevel: INTERFACE_URL + '/rest/myApp/updateUserLevel.do', //用户申请等级-解答者或线下服务者
         saveInternationalInfo: INTERFACE_URL + '/rest/home/saveInternationalInfo.do', //保存国际税收信息
         saveCollectionInfo: INTERFACE_URL + '/home/saveCollectionInfo.do', //保存收藏信息
+        saveCollection: INTERFACE_URL + '/rest/news/saveCollection.do', //新闻收藏
         updateCollectionInfoSttByCID: INTERFACE_URL + '/home/updateCollectionInfoSttByCID.do', //更新用户收藏信息
     },
     error: {
@@ -287,6 +288,15 @@ mui.init();
                     console.log(items[0].value + '---' + items[1].value + '----' + items[2].value)
                 });
             }, false);
+            $$("#region").on('click', function (event) {
+                console.log(this)
+                var self = this;
+                cityPicker3.show(function (items) {
+                    var t = (items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
+                    self.value = t;
+                    console.log(items[0].value + '---' + items[1].value + '----' + items[2].value)
+                });
+            }, false);
         })();
 
         //选择服务时间
@@ -323,6 +333,3 @@ mui.init();
 
 
 console.log(app);
-var data = {};
-data.token = "ODM1ZDYxODAtYmE2NC00NmY5LTg5MTUtZWM2NDMyOGQ0NzRi";
-app.storage.set('userArr', data);

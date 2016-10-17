@@ -500,8 +500,8 @@
     </script>
     <script type="text/template7 " id="news_data_tpl">
         <div class="act_post ">
-            <h3>{{new_title}}</h3>
-            <p>{{new_content}}</p>
+            <h3>{{title}}</h3>
+            <p>{{context}}</p>
         </div>
         <div class="act_time ">
             <span class="time-md ">{{time_m}}月{{time_d}}日</span>
@@ -510,11 +510,34 @@
         <div class="list-block ">
             <ul class="right ">
                 <li>
-                    <span>阅读:&nbsp;{{new_hits}}</span>
-                    <span id="likeBtn" data-id="{{new_id}}"><i class="m-icon m-icon-star "></i>{{new_like}}</span>
-                    <!-- <span id="likeBtn " data-id="{{new_id}} "><i class="m-icon m-icon-star "></i>{{new_like}}</span> -->
-                    <span id="commonBtn"><i class="m-icon m-icon-chatbubble "></i>{{new_reviews}}</span>
+                    <span>阅读:&nbsp;{{reads}}</span>
+                    <span id="collectBtn" data-id="{{inform_id}}"><i class="m-icon m-icon-star "></i>收藏</span>
+                    <span id="likeBtn" data-id="{{inform_id}}"><img src="/static/images/img/shou_03.png" width="13px;" alt="点赞">{{likes}}</span>
+                    <span id="commonBtn"><i class="m-icon m-icon-chatbubble "></i>{{comments}}</span>
                 </li>
+            </ul>
+        </div>
+    </script>
+    <script type="text/template7 " id="comment_list_tpl">
+        <div class="list-block ">
+            <ul>
+                {{#each this}}
+                <li class="align-top ">
+                    <div class="item-content ">
+                        <div class="item-inner ">
+                            <div class="item-input ">
+                                <p>
+                                    <span>{{username}}</span>
+                                    <span>{{time}}</span>
+                                </p>
+                                <p>
+                                    <span>{{comment}}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                {{/each}}
             </ul>
         </div>
     </script>
@@ -533,7 +556,7 @@
             </ul>
         </div>
         <div class="list-block inset ">
-            <a class="button button-big button-fill color-red" data-id="{{new_id}}" id="commonBtn">提交</a>
+            <a class="button button-big button-fill color-red" data-id="{{inform_id}}" id="commonBtn">提交</a>
         </div>
     </script>
     <!-- 资金一览-->
@@ -684,6 +707,7 @@
         </div>
         {{/each}}
     </script>
+
     <!-- 问答-回答-问题列表 -->
     <script type="text/template7 " id="answer_questions_list_tpl">
         {{#each this}}
@@ -717,6 +741,83 @@
                 <span class="m-icon m-icon-compose"></span> <a href="javascript:void(0);" data-askid="{{ask_id}}" class="answerQuestionBtn"><span class="m-icon m-icon-chatbubble chatbubble-icn"></span> </a>
             </div>
         </div>
+        {{/each}}
+    </script>
+    
+    <!-- 我的-专家列表 -->
+    <script type="text/template7" id="expert_list_tpl">
+        {{#each this}}
+        <li data-serviceid="{{services_id}}">
+            <div class="item-content item-width">
+                <div class="item-media item-round">
+                    <img class="ft-movielist-item-img" src="/static/images/jpg.jpg">
+                </div>
+                <div  class="item-inner item-no expert-zize">
+                    <div class="item-title-row">
+                        <div class="item-title item-name">{{real_name}}<span class="level_x">★★★★</span></div>
+                        <div class="item-address">专家地区：<span>{{region_name}}</span></div>
+                        <div class="item-address">咨询费：<span class="monery_span">{{lowest_amt}}元</span>起</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-items">
+                <span class="cpa">注册会计师</span><span class="a_cpa">美国注册会计师</span><span class="cpv">注册资产评估师</span><span class="cta">注册税务师</span><span class="bar">律师</span><span class="cpa_g">特许公认会计师</span><span class="other">其他</span>
+            </div>
+        </li>
+        {{/each}}
+    </script>
+    
+    <!-- 我的-发票-发票列表 -->
+    <script type="text/template7" id="ticket_list_tpl">
+        {{#each this}}
+         <div class="postmsg">
+             <div class="content-block home_pnel listpostinfo">
+                <p class="detail">圆通快递:12234545555800<span>达</span></p>                     
+             </div>
+            <div class="postdetail">
+                <div class="recivername">
+                    <p class="reciver">
+                        <span>收件人:</span>
+                        <span>张小姐</span>
+                    </p>
+                    <p class="listmoneycount">
+                        <span>发票金额:</span>
+                        <span>600.00</span>
+                    </p>
+                </div>
+                <div class="linnum"><span>联系电话:</span><span>15512785036</span></div>    
+                <div class="linnum"><span>地址:</span><span>北京海淀区天通苑</span></div> 
+            </div>
+            <div class="postmessage">
+                <div class="prod">
+                    <p class="product">
+                        <span class="prodfee">合计:
+                            <span class="tranfee">￥10.00元</span>
+                            <span class="zongfee">(含运费￥0.00元)</span>
+                        </span>
+                        <span class="countnum">共1件商品</span>
+                    </p>
+                </div>
+                <div class="poststatus"><p><span>交易成功</span></p></div>
+            </div>
+        </div>
+        <li data-serviceid="{{services_id}}">
+            <div class="item-content item-width">
+                <div class="item-media item-round">
+                    <img class="ft-movielist-item-img" src="/static/images/jpg.jpg">
+                </div>
+                <div  class="item-inner item-no expert-zize">
+                    <div class="item-title-row">
+                        <div class="item-title item-name">{{real_name}}<span class="level_x">★★★★</span></div>
+                        <div class="item-address">专家地区：<span>{{region_name}}</span></div>
+                        <div class="item-address">咨询费：<span class="monery_span">{{lowest_amt}}元</span>起</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row-items">
+                <span class="cpa">注册会计师</span><span class="a_cpa">美国注册会计师</span><span class="cpv">注册资产评估师</span><span class="cta">注册税务师</span><span class="bar">律师</span><span class="cpa_g">特许公认会计师</span><span class="other">其他</span>
+            </div>
+        </li>
         {{/each}}
     </script>
 </body>

@@ -438,7 +438,7 @@ app.list_fang = (function() {
 
             return app.doAjax(root.interFace.submitReceipt, 'post', param, succCallBack)
         }
-    })()
+    })();
     //个人发票列表
 f7app.onPageInit('ticketlist', function(page) {
     var token = app.storage.get("userArr").token;
@@ -452,32 +452,64 @@ f7app.onPageInit('ticketlist', function(page) {
     })
 
 });
+    //可开发票金额
+f7app.onPageInit('ticket', function(page) {
+    var token = app.storage.get("userArr").token;
+    console.log(token);
+    app.queryUserInvoiceCount(token);
+});
+
+app.queryUserInvoiceCount = (function() {
+    return function(token) {
+        var param = {
+            "token": token
+        }
+
+        var succCallBack = function(data, status, response) {
+            var data = JSON.parse(data);
+            var cash = data.data[0].cash;
+            $$("#userInvoiceCount").html(cash);
+            $$("#money").on("change", function() {
+                var token = app.storage.get("userArr").token;
+                console.log(token);
+                var money = $$(this).val();
+                if (money > cash) {
+                    app.toast('本次开发票金额不能大于可开发票总金额！');
+                    $$("#money").val(0);
+                }
+            });
+            console.log(data);
+        }
+
+        return app.doAjax(root.interFace.queryUserInvoiceCount, 'post', param, succCallBack)
+    }
+})();
 
 //申请发票方法
 app.ticket = (function() {
-        return function(token, money, rise, Distinguish, content, address, Addressee, Telephone, kuai) {
-            var param = {
-                "token": token,
-                "invoice_amount": money,
-                "invoice_header": rise,
-                "taxpayer_code": Distinguish,
-                "invoice_context": content,
-                "express_address": address,
-                "recipient": Addressee,
-                "telephone": Telephone,
-                "express_fee": kuai
-            }
-
-            var succCallBack = function(data, status, response) {
-                var data = JSON.parse(data);
-
-                console.log(data)
-            }
-
-            return app.doAjax(root.interFace.saveInvoiceInfo, 'post', param, succCallBack)
+    return function(token, money, rise, Distinguish, content, address, Addressee, Telephone, kuai) {
+        var param = {
+            "token": token,
+            "invoice_amount": money,
+            "invoice_header": rise,
+            "taxpayer_code": Distinguish,
+            "invoice_context": content,
+            "express_address": address,
+            "recipient": Addressee,
+            "telephone": Telephone,
+            "express_fee": kuai
         }
-    })()
-    //申请发票
+
+        var succCallBack = function(data, status, response) {
+            var data = JSON.parse(data);
+
+            console.log(data)
+        }
+
+        return app.doAjax(root.interFace.saveInvoiceInfo, 'post', param, succCallBack)
+    }
+})();
+//申请发票
 f7app.onPageInit('ticket', function(page) {
     var token = app.storage.get("userArr").token;
     console.log(token);
@@ -501,14 +533,42 @@ app.expert = (function() {
     return function(token, region, name, Expertise) {
         var param = {
             "token": token,
-            "region": region,
+            "region_code": region,
             "realName": name,
-            "taxs": Expertise
+            "tax_id": Expertise
         }
 
         var succCallBack = function(data, status, response, address) {
             var data = JSON.parse(data);
 
+            var expertList = $$("script#expert_list_tpl").html();
+            var lesul = Template7.compile(expertList);
+            $$("#expertList").html(lesul(data.data));
+
+            /* ===== Mui PopPicker ===== */
+            mui.init();
+            //选择服务地点
+            var cityPicker3 = new mui.PopPicker({
+                layer: 3
+            });
+
+            cityPicker3.setData(cityData3);
+            $$("#region").on('click', function (event) {
+                console.log(this)
+                var self = this;
+                cityPicker3.show(function (items) {
+                    var t = (items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
+                    self.value = t;
+                    console.log(items[0].value + '---' + items[1].value + '----' + items[2].value)
+                });
+            }, false);
+            $$("#expertList").find("li").on("click", function() {
+                var serviceId = $$(this).attr("data-serviceid");
+                console.log(serviceId);
+                var token = app.storage.get("userArr").token;
+                console.log(token);
+                app.getServiceInfoByUID(token, serviceId);
+            });
             console.log(data);
         }
 
@@ -520,7 +580,7 @@ app.expert = (function() {
 f7app.onPageInit('expert', function(page) {
     var region = "";
     var name = "";
-    var Expertise = ""
+    var Expertise = "";
     var token = app.storage.get("userArr").token;
     app.expert(token, region, name, Expertise);
 
@@ -528,11 +588,11 @@ f7app.onPageInit('expert', function(page) {
         var region = $$("#region").val();
         var name = $$("#name").val();
         var Expertise = $$("#Expertise").val();
-        console.log(region, name, Expertise)
+        console.log(region, name, Expertise);
         var token = app.storage.get("userArr").token;
         console.log(token);
         app.expert(token, region, name, Expertise);
-    })
+    });
 });
 
 //问答-咨询方法

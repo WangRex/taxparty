@@ -234,20 +234,26 @@ app.newsDetails = (function() {
 
         var succCallBack = function(data, status, response) {
             var data = JSON.parse(data);
-            var nodes = data.data[0][0];
-            nodes["time_y"] = nodes.new_subtime.substr(0, 4);
-            nodes["time_m"] = nodes.new_subtime.substr(5, 2);
-            nodes["time_d"] = nodes.new_subtime.substr(8, 3);
-            nodes["time_mi"] = nodes.new_subtime.substr(11, 5);
+            var nodes = data.data;
+            nodes["time_y"] = nodes.date.substr(0, 4);
+            nodes["time_m"] = nodes.date.substr(5, 2);
+            nodes["time_d"] = nodes.date.substr(8, 3);
+            nodes["time_mi"] = nodes.date.substr(11, 5);
             console.log(nodes);
 
             var news_data_tpl = $$('script#news_data_tpl').html();
             var tpl = Template7.compile(news_data_tpl);
             $$("#news_data").html(tpl(nodes));
 
+            var comment_list_tpl = $$('script#comment_list_tpl').html();
+            var tpl = Template7.compile(comment_list_tpl);
+            $$("#comment_list").html(tpl(data.data.comment));
+
             var common_tpl = $$('script#common_tpl').html();
             var tpl = Template7.compile(common_tpl);
             $$("#common_c").html(tpl(nodes));
+
+
 
         }
 
@@ -256,7 +262,7 @@ app.newsDetails = (function() {
         return app.doAjax(getInform, 'post', param, succCallBack)
 
     }
-})()
+})();
 
 // 资讯详情点赞
 app.newslikeInform = (function() {
@@ -277,6 +283,28 @@ app.newslikeInform = (function() {
         var likeInform = root.interFace.likeInform;
 
         return app.doAjax(likeInform, 'post', param, succCallBack);
+    }
+})();
+
+// 资讯详情收藏
+app.newsCollectInform = (function() {
+    return function(inform_id) {
+
+        var param = {
+            "token": app.storage.get("userArr").token,
+            "inform_id": inform_id
+        };
+
+        var succCallBack = function(data, status, response) {
+            var data = JSON.parse(data);
+
+            console.log(data);
+
+        };
+
+        var saveCollection = root.interFace.saveCollection;
+
+        return app.doAjax(saveCollection, 'post', param, succCallBack);
     }
 })();
 
