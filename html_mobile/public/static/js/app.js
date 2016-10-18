@@ -4,7 +4,7 @@ var INTERFACE_URL = "http://remote.clps.com.cn:14780/tz-core";
 //任伟杰
 // INTERFACE_URL = "http://remote.clps.com.cn:14780/tz-core";
 //David
-// INTERFACE_URL = "http://remote.clps.com.cn:17880/tz-core";
+INTERFACE_URL = "http://remote.clps.com.cn:17880/tz-core";
 
 var root = {
     interFace: {

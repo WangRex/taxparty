@@ -382,8 +382,26 @@ f7app.onPageInit('personaluestions', function(page) {
     console.log(token);
     app.personaluestions(token);
 });
+
 //题库添加方法
 app.uestionsaddto = (function() {
+    return function(token) {
+        var param = {
+            "token": token
+        }
+
+        var succCallBack = function(data, status, response) {
+            var data = JSON.parse(data);
+
+            console.log(data)
+        }
+
+        return app.doAjax(root.interFace.insertBank, 'post', param, succCallBack)
+    }
+})();
+
+//题库添加数据初始化
+app.uestionsaddtoInit = (function() {
     return function(token) {
         var param = {
             "token": token
@@ -403,8 +421,9 @@ app.uestionsaddto = (function() {
 f7app.onPageInit('uestionsaddto', function(page) {
     var token = app.storage.get("userArr").token;
     console.log(token);
-    app.uestionsaddto(token);
+    app.uestionsaddtoInit(token);
 });
+
 //个人发票列表方法
 app.ticketlist = (function() {
     return function(token) {
@@ -535,7 +554,7 @@ app.expert = (function() {
             "token": token,
             "region_code": region,
             "realName": name,
-            "tax_id": Expertise
+            "taxproperty_code": Expertise
         }
 
         var succCallBack = function(data, status, response, address) {

@@ -270,6 +270,7 @@ app.newslikeInform = (function() {
 
         var param = {
             "token": app.storage.get("userArr").token,
+            "flag": "1",
             "inform_id": listId
         };
 

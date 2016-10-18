@@ -1037,3 +1037,6 @@ b.button {
 .about_btn .row:nth-child(3) a:last-child {
     background-color: #C5BD98
 }
+.hide {
+    display: none;
+}
