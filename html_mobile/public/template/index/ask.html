@@ -18,53 +18,82 @@
                 <!--main-->
                 <!--头部切换-->
                 <div class="buttons-row consult_tab">
-                    <a href="index/tax-bureau.html"  class="btn_tab"><img src="/static/images/img/ask_03.png" alt="请教当地税局">请教当地税局</a>
-                    <a href="index/questions.html" class="btn_tab"><img src="/static/images/img/ask_06.png" alt="题库查询">题库查询</a>
-                    <a href="index/bigshot-item.html" class="btn_tab"><img src="/static/images/img/ask_08.png" alt="直问财税大咖">直问财税大咖</a>
+                    <a href="index/tax-bureau.html" class="btn_tab" id="selectTaxBureau">
+                        <img src="../static/images/img/ask_03.png" alt="请教当地税局">请教当地税局
+                    </a>
+                    <a href="index/askResult.html" class="btn_tab" id="askResult" style="display: none;">
+                        <img src="../static/images/img/ask_03.png" alt="">
+                    </a>
+                    <a href="index/questions.html" id="questions_tab" class="btn_tab">
+                        <img src="../static/images/img/ask_06.png" alt="题库查询">题库查询
+                    </a>
+                    <a href="index/bigshot-item.html" class="btn_tab" id="askBigShotBtn">
+                        <img src="../static/images/img/ask_08.png" alt="直问财税大咖">直问财税大咖
+                    </a>
                 </div>
                 <!--头部切换-->
                 <p class="nature_p"><span>!</span>问题属性：为使您的咨询得到最准确的答复</p>
                 <div class="select_div">
-                    <select>
-                        <option>所属地区</option>
-                        <option>所属地区</option>
-                        <option>所属地区</option>
-                    </select>
-                    <select>
-                        <option>问题属性</option>
-                        <option>所属地区</option>
-                        <option>所属地区</option>
-                        <option>所属地区</option>
-                    </select>
-                    <select>
-                        <option>税种类型</option>
-                        <option>所属地区</option>
-                        <option>所属地区</option>
-                    </select>
-                    <select>
-                        <option>征管程序</option>
-                        <option>所属地区</option>
-                        <option>所属地区</option>
-                    </select>
-                    <select>
-                        <option>业务类型</option>
-                        <option>所属地区</option>
-                        <option>所属地区</option>
-                    </select>
+                    <div class="content-block">
+                        <div class="row">
+                            <div class="col-50">
+                                <div class="item-input">
+                                    <input type="text" placeholder="所属地区" class="expert-input" id="ask_region" readonly>
+                                </div>
+                            </div>
+                            <div class="col-50">
+                                <input type="text" placeholder="问题属性" class="expert-input" id="ask_ask_attribute" readonly>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-50">
+                                <input type="text" placeholder="税种类型" class="expert-input" id="ask_tax_type" readonly>
+                            </div>
+                            <div class="col-50">
+                                <input type="text" placeholder="征管程序" class="expert-input" id="ask_collection_procedure" readonly>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <input type="text" placeholder="业务类型" class="expert-input" id="ask_business_type" readonly>
+                        </div>
+                    </div>
                 </div>
                 <div class="textarea_box">
-                    <textarea>请输入您的问题，可以发送附件。</textarea>
-                    <p class="input_p">
-                        <img src="/static/images/img/answer_07.png" alt="上传图片" class="icon_sc">
-                        <input type="file" class="file_input">
-                        <a href="mailto:uej@163.com" class="emali_a"><img src="/static/images/img/answer_09.png" alt="邮箱"></a>
-                        <input type=”text” speech x-webkit-speech class="voice_input"/>
-                    </p>
-                    <p class="monery_p" id="mister_p">打赏金额&nbsp;&nbsp;<span>0.00元</span></p>
-                    <p class="monery_p">您的储蓄卡余额为<span>10.00元</span></p>
-                    <button class="button button-big button-fill color-main true_btn" id="askdi">确认提交</button>
+                    <div class="list-block" style="margin:0">
+                        <ul>
+                            <li class="align-top">
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-input">
+                                            <textarea id="questions" placeholder="请输入您的问题，可以发送附件。"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="content-block" style="margin:5px 0">
+                        <span class="icons file_input_up">
+                            <img src="../static/images/img/answer_07.png" alt="上传图片" class="icon_sc">
+                            <input type="file" class="file_input">
+                        </span>
+                        <span class="icons send_emali">
+                            <img src="../static/images/img/answer_09.png" alt="邮箱">
+                        </span>
+                        <span class="icons y_speech">
+                            <img src="../static/images/img/answer_11.png" alt="">
+                        </span>
+                    </div>
+                    <div class="content-block" style="margin:5px 0">
+                        <p class="monery_p" id="mister_p">
+                            打赏金额<span id="lowest_amt_sum"></span><input type="number" id="reward_money" style="display: none;" />元
+                        </p>
+                        <p class="monery_p">您的储蓄卡余额为<span id="total_money"></span>元</p>
+                    </div>
+                    <div class="content-block" style="margin:15px 0">
+                        <button class="button button-big button-fill color-main" style="width:100%;background-color: #e3e3e3 !important;" id="askdi">确认提交</button>
+                    </div>
                 </div>
-
                 <!--弹出框-->
                 <!--
                 <div class="black_up"></div>
@@ -90,7 +119,7 @@
                 </div>
                 -->
                 <!--弹出框-->
-             <!--main-->
+                <!--main-->
             </div>
         </div>
     </div>

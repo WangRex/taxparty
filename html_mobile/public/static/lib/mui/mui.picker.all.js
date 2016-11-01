@@ -475,8 +475,10 @@
 			var layer = self.options.layer || 1;
 			var width = (100 / layer) + '%';
 			self.pickers = [];
+			self.pickerElement = [];
 			for (var i = 1; i <= layer; i++) {
 				var pickerElement = $.dom(pickerBuffer)[0];
+				self.pickerElement.push(pickerElement);
 				pickerElement.style.width = width;
 				self.body.appendChild(pickerElement);
 				var picker = $(pickerElement).picker();

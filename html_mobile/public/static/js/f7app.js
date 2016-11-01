@@ -69,3 +69,58 @@ var view = {
 
 // Export selectors engine
 var $$ = Dom7;
+
+Dom7.ajax({
+    url: 'http://shsj.clpsgroup.com.cn/tz-core/novalidate/queryAdList.do',
+    type: 'get',
+    async: true,
+    data: '',
+    contentType: "application/json;charset=UTF-8",
+    timeout: 1000000,
+    beforeSend: function (request) {},
+    success: function (data, status, response) {
+        var data = JSON.parse(data);
+        var options = {
+            'bgcolor': '#0da6ec',
+            'fontcolor': '#fff',
+            'closeButtonText': '跳过'
+        };
+        var welcomescreen_slides = new Array();
+        if (data.data.length > 0) {
+            for (var item in data.data) {
+
+                var item = {
+                    id: 'slide0',
+                    picture: '<div class="tutorialicon" style="position:absolute; width:100%;height:100%; background:url(' + data.data[item] + ') no-repeat;background-size:cover;"></div>',
+                    text: ''
+                };
+
+                welcomescreen_slides.push(item);
+            }
+
+            welcomescreen = f7app.welcomescreen(welcomescreen_slides, options);
+        }
+    },
+    complete: function () {},
+    error: function (xhr, type, errorThrown) {
+        console.log(xhr);
+    }
+});
+window.localStorage["backStatus"] = true;//初始化返回键状态 
+window.localStorage["page"] = 'main';
+document.addEventListener("backbutton", function () {
+	var backStatus = window.localStorage["backStatus"];
+    if(backStatus == "true"){
+        if(window.localStorage["page"] == 'main')
+        view.main.router.back();
+        if(window.localStorage["page"] == 'seek')
+        view.seek.router.back();
+        if(window.localStorage["page"] == 'news')
+        view.news.router.back();
+        if(window.localStorage["page"] == 'about')
+        view.about.router.back();
+        
+    }else{
+    	window.localStorage["backStatus"] = true;
+    }
+}, false); // 返回键

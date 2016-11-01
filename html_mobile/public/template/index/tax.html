@@ -1,5 +1,6 @@
 <!-- We don't need full layout here, because this page will be parsed with Ajax-->
 <!-- Top Navbar-->
+
 <div class="navbar">
     <div class="navbar-inner">
         <div class="left">
@@ -11,118 +12,1025 @@
 </div>
 <div class="pages">
     <!-- Page, data-page contains page name-->
-    <div  data-page="tax_sui" class="page">
+    <div data-page="tax_sui" class="page">
         <!-- Scrollable page content-->
-        <div style="padding: 40px 0px 17px 0px;" class="page-content ">
-                <!-- Buttons row as tabs controller -->
-                <div class="buttons-row revenue-top" >
-                    <!-- Link to 1st tab, active -->
-                    <a href="#tab1"  class="tab-link active button">非贸汇款</a>
-                    <!-- Link to 2nd tab -->
-                    <a href="#tab2" class="tab-link button">协定待遇</a>
-                    <!-- Link to 3rd tab -->
-                    <a href="#tab3" class="tab-link button">大额关联支付</a>
-                    <!-- Link to 4rd tab -->
-                    <a href="#tab4" class="tab-link button">税收情报交换</a>
-
-                    <a href="#tab5" class="tab-link button">间接财产转让</a>
+        <div class="page-content tax_sui_box">
+            <div class="swiper-container order">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="list-block media-list">
+                            <div class="item-content">
+                                <div class="item-media">
+                                    <a href="#tab1" class="tab-link active">非贸汇款</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="list-block media-list">
+                            <div class="item-content">
+                                <div class="item-media">
+                                    <a href="#tab2" class="tab-link">协定待遇</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="list-block media-list">
+                            <div class="item-content">
+                                <div class="item-media">
+                                    <a href="#tab3" class="tab-link">大额关联支付</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="list-block media-list">
+                            <div class="item-content">
+                                <div class="item-media">
+                                    <a href="#tab4" class="tab-link">税收情报交换</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="list-block media-list">
+                            <div class="item-content">
+                                <div class="item-media">
+                                    <a href="#tab5" class="tab-link">间接财产转让</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <div class="in_height"></div>
+            </div>
 
             <!-- Tabs, tabs wrapper -->
-            <div class="tabs">
+            <div class="tabs" id="guojishuishou">
                 <!-- 非贸汇款,1 active by default -->
                 <div id="tab1" class="tab active">
-
-                    <div class="content-block tqkb">
+                    <div class="content-block tqkb" style="margin:0">
                         <div class="row no-gutter">
                             <div class="col-50 box_ bd-r">
-                                <h1 class="data-title"><i class="data-box-left-lcon"></i>案例</h1>
-                                <img id="img-slide" src="/static/images/jpg.jpg" width="110" height="90">
+                                <h2 class="data-title">
+                                    <i class="data-box-left-lcon"></i>
+                                    <span>范例</span>
+                                </h2>
+                                <img id="img-slide1" src="../static/images/data/tqzl/tqzl1-sm.png" style="width:100%;height:90px;">
                             </div>
                             <div class="col-50 box_ rue-">
-                                <h1  class="data-title"><i class="data-box-right-lcon"></i>报价</h1>
-                                <div>基础价<span class="data-box-value">22212</span></div>
-                                <div>加急价<span class="data-box-value">22212</span></div>
-                                <div>发票费用<span class="data-box-value">22212</span></div>
-                                <div class="data-total">合计<span class="data-box-value">22212</span></div>
+                                <h2 class="data-title">
+                                    <i class="data-box-right-lcon"></i>
+                                    <span>报价</span>
+                                </h2>
+                                <div class="data-boxs">
+                                    <div class="row">
+                                        <div class="col-50">基础价</div>
+                                        <div class="col-50"><span id="base_price1">5000.00</span></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-50">加急价</div>
+                                        <div class="col-50"><span id="worry_fee1">0.00</span></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-50">发票费用</div>
+                                        <div class="clo-50"><span id="bill_fee1">300.00</span></div>
+                                    </div>
+                                    <div class="data-total"></div>
+                                    <div class="row">
+                                        <div class="col-50" style="color: #ffa70e">合计</div>
+                                        <div class="col-50"><span id="count_sum1">5300.00</span></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="content-block-inner answer-gai">
+                        <div class="content-block-inner inter_post">
+                            <span class="border"></span>
                             <div class="list-block">
-                                <h1 class="data-title"><i class="data-box-tener-lcon"></i>信息采集</h1>
-
-                                <div class="item-content" id="problem-none">
-                                    <div class="item-inner">
-                                        <div class="item-title haolou">同期资料财年</div>
-                                        <div class="item-input">
-                                            <input   type="text" placeholder="2016-04-13" class="" id="showDataPickers" readonly>
+                                <h2 class="data-title">
+                                    <i class="data-box-tener-lcon"></i>
+                                    <span>信息采集</span>
+                                </h2>
+                                <div class="data-boxs">
+                                    <div class="row no-gutter">
+                                        <div class="col-60">
+                                            <div class="inner center">
+                                                <input type="text" placeholder="主管税局" id="tit_tax1" readonly>
+                                                <img src="../static/images/img/select-sm.png" class="s_icon">
+                                            </div>
+                                        </div>
+                                        <div class="col-40">
+                                            <div class="inner">
+                                                <input type="text" placeholder="所在年度" id="data_year1" readonly>
+                                                <img src="../static/images/img/select-sm.png" class="s_icon">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row no-gutter">
+                                        <div class="col-60">
+                                            <div class="inner center">
+                                                <input type="text" placeholder="支付类型" id="pay_type1" readonly>
+                                                <img src="../static/images/img/select-sm.png" class="s_icon">
+                                            </div>
+                                        </div>
+                                    <div class="col-40">
+                                        <div class="inner"></div>
+                                    </div>
+                                    </div>
+                                    <div class="row no-gutter">
+                                        <div class="col-50">
+                                            <div class="inner">鉴定报告接收邮箱</div>
+                                        </div>
+                                        <div class="col-50">
+                                            <div class="inner item-input" style="margin-top:-5px">
+                                                <input type="email" placeholder="xxxx@xxxx.com" name="user_email" id="tit_email1" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-100">
+                                            <div class="inner last">
+                                                所需数据<a id="require_data1">《企业年度关联交易财务状态分析表》</a>
+                                                <div class="data-prompt">提交后请线下支付，所需数据会发送到您的邮箱</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row no-gutter">
-                                    <div class="col-20">可比公司</div>
-                                    <div class="col-35">
-                                        <input type="text" placeholder="2015-2016" class="" id="years-show" readonly>
-                                    </div>
-                                    <div class="col-45">三年加权数据对比</div>
-                                </div>
-
-                                <div>公司行业及产品</div>
-                                <div class="item-input " id="data-product">
-                                    <textarea placeholder="请尽可能的准确，不要用营业范围代替，否则无法精准的筛选可比企业"></textarea>
-                                </div>
-                                <div class="row">
-                                    <div class="col-50">可比数据接收邮箱</div>
-                                    <div class="col-50">
-                                        <div class="item-input search-gai " >
-                                            <input type="email" placeholder="xxxx@xxxx.com" id="data-briebly">
-                                        </div>
-                                    </div>
-                                </div>
-                                <p><a>所需数据</a><span>《企业年度关联交易财务状态分析表》</span></p>
-                                <div class="data-prompt">提交后请线下支付，所需数据会发送到你的邮箱</div>
                             </div>
                         </div>
-                        <div class="content-block-inner data-fooer">
-                            <h1 class="data-title"><i class="data-box-fooer-lcon"></i>其他要求</h1>
-                            <p>对比指标<span>完全成本加成率</span></p>
-                            <p>对比结果<span>完全成本加成率</span>
-                                <select style="border:0px;">
-                                    <option value ="volvo">中立值</option>
-                                    <option value ="saab">2</option>
-                                    <option value="opel">3</option>
-                                    <option value="audi">4</option>
-                                </select>
-                            </p>
-                            <p>草稿时间<span><a>4</a>个工作日</span><abbr class="data-fooer-prompt">每减少一天加急增加200.00元</abbr></p>
-                            <div class="mask_box"  ></div>
-                            <p class="yes_button"id="mask_box"><label>需要发票</label><input type="button" value="是" name="yes" class="active"><input type="button" value="否" name="no"></p>
+                        <div class="content-block-inner inter_post">
+                            <span class="border"></span>
+                            <div class="list-bolck">
+                                <h2 class="data-title">
+                                    <i class="data-box-fooer-lcon"></i>
+                                    <span>其他要求</span>
+                                </h2>
+                                <div class="data-boxs">
+                                    <div class="row no-gutter">
+                                        <div class="col-50">
+                                            <div class="inner center">
+                                                <input type="text" class="" id="tit_state1" placeholder="收汇方所在国家" readonly>
+                                                <img src="../static/images/img/select-sm.png" class="s_icon">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row no-gutter">
+                                        <div class="col-50">
+                                            <div class="row">
+                                                <div class="col-50">
+                                                    <div class="inner">报告书时间</div>
+                                                </div>
+                                                <div class="col-50">
+                                                    <div class="inner">
+                                                        <input style="color:#e46b09;width:10px;border:0px;" value="4" id="expect_date1">个工作日
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-50">
+                                            <div class="inner" style="font-size:10px;color:#ccc">每减少一天加急增加200.00元</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row no-gutter">
+                                        <div class="col-70">
+                                            <div class="inner">是否需要发票</div>
+                                        </div>
+                                        <div class="col-30">
+                                            <div class="row inner yes_button" id="mask_box">
+                                                <div class="col-50">
+                                                    <div class="inner">
+                                                        <input type="button" value="是" name="yes" class="active" id="draw_billy1">
+                                                    </div>
+                                                </div>
+                                                <div class="col-50">
+                                                    <div class="inner">
+                                                        <input type="button" value="否" name="no" id="draw_billn1">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="content-block-inner inner_post">
                             <div class="data-fooer-bottom">
-                                <p class="data-supplement">需要完整同期资料报告，请联系</p>
-                                <img src="/static/images/img/data-fooer-lcon.gif" width="38" height="40" >
-                                <b class="button button-big button-fill color-main data-button" id="post_btn_1">提交确认</b>
+                                <br>
+                                <div class="row no-gutter">
+                                    <div class="col-50">
+                                        <div class="row no-gutter">
+                                            <div class="col-70">
+                                                <div class="inner">需要完整非贸汇款报告，请联系</div>
+                                            </div>
+                                            <div class="col-30">
+                                                <img class="QQ" src="../static/images/img/data-fooer-lcon.gif" width="38" height="40">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-50">
+                                        <b class="button button-big button-fill color-main data-button" id="post_btn_1">提交确认</b>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
 
 
                 <!-- 协定待遇 2 -->
                 <div id="tab2" class="tab">
+                    <div class="content-block tqkb" style="margin:0">
+                        <div class="row no-gutter">
+                            <div class="col-50 box_ bd-r">
+                                <h2 class="data-title">
+                                    <i class="data-box-left-lcon"></i>
+                                    <span>范例</span>
+                                </h2>
+                                <img id="img-slide2" src="../static/images/data/tqzl/tqzl1-sm.png" style="width:100%;height:90px;">
+                            </div>
+                            <div class="col-50 box_ rue-">
+                                <h2 class="data-title">
+                                    <i class="data-box-right-lcon"></i>
+                                    <span>报价</span>
+                                </h2>
+                                <div class="data-boxs">
+                                    <div class="row">
+                                        <div class="col-50">基础价</div>
+                                        <div class="col-50"><span id="base_price2">5000.00</span></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-50">加急价</div>
+                                        <div class="col-50"><span id="worry_fee2">0.00</span></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-50">发票费用</div>
+                                        <div class="clo-50"><span id="bill_fee2">300.00</span></div>
+                                    </div>
+                                    <div class="data-total"></div>
+                                    <div class="row">
+                                        <div class="col-50" style="color: #ffa70e">合计</div>
+                                        <div class="col-50"><span id="count_sum2">5300.00</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-block-inner inter_post">
+                            <span class="border"></span>
+                            <div class="list-block">
+                                <h2 class="data-title">
+                                    <i class="data-box-tener-lcon"></i>
+                                    <span>信息采集</span>
+                                </h2>
+                                <div class="data-boxs">
+                                    <div class="row no-gutter">
+                                        <div class="col-60">
+                                            <div class="inner center">
+                                                <input type="text" placeholder="主管税局" id="tit_tax2" readonly>
+                                                <img src="../static/images/img/select-sm.png" class="s_icon">
+                                            </div>
+                                        </div>
+                                        <div class="col-40">
+                                            <div class="inner">
+                                                <input type="text" placeholder="所在年度" id="data_year2" readonly>
+                                                <img src="../static/images/img/select-sm.png" class="s_icon">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row no-gutter">
+                                        <div class="col-60">
+                                            <div class="inner center">
+                                                <input type="text" placeholder="支付类型" id="pay_type2" readonly>
+                                                <img src="../static/images/img/select-sm.png" class="s_icon">
+                                            </div>
+                                        </div>
+                                    <div class="col-40">
+                                        <div class="inner"></div>
+                                    </div>
+                                    </div>
+                                    <div class="row no-gutter">
+                                        <div class="col-50">
+                                            <div class="inner">鉴定报告接收邮箱</div>
+                                        </div>
+                                        <div class="col-50">
+                                            <div class="inner item-input" style="margin-top:-5px">
+                                                <input type="email" placeholder="xxxx@xxxx.com" name="user_email" id="tit_email2" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-100">
+                                            <div class="inner last">
+                                                所需数据<a id="require_data2">《企业年度关联交易财务状态分析表》</a>
+                                                <div class="data-prompt">提交后请线下支付，所需数据会发送到您的邮箱</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-block-inner inter_post">
+                            <span class="border"></span>
+                            <div class="list-bolck">
+                                <h2 class="data-title">
+                                    <i class="data-box-fooer-lcon"></i>
+                                    <span>其他要求</span>
+                                </h2>
+                                <div class="data-boxs">
+                                    <div class="row no-gutter">
+                                        <div class="col-50">
+                                            <div class="inner center">
+                                                <input type="text" class="" id="tit_state2" placeholder="收汇方所在国家" readonly>
+                                                <img src="../static/images/img/select-sm.png" class="s_icon">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row no-gutter">
+                                        <div class="col-50">
+                                            <div class="row">
+                                                <div class="col-50">
+                                                    <div class="inner">报告书时间</div>
+                                                </div>
+                                                <div class="col-50">
+                                                    <div class="inner">
+                                                        <input style="color:#e46b09;width:10px;border:0px;" value="4" id="expect_date2">个工作日
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-50">
+                                            <div class="inner" style="font-size:10px;color:#ccc">每减少一天加急增加200.00元</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row no-gutter">
+                                        <div class="col-70">
+                                            <div class="inner">是否需要发票</div>
+                                        </div>
+                                        <div class="col-30">
+                                            <div class="row inner yes_button" id="mask_box">
+                                                <div class="col-50">
+                                                    <div class="inner">
+                                                        <input type="button" value="是" name="yes" class="active" id="draw_billy2">
+                                                    </div>
+                                                </div>
+                                                <div class="col-50">
+                                                    <div class="inner">
+                                                        <input type="button" value="否" name="no" id="draw_billn2">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row no-gutter">
+                                        <div class="col-70">
+                                            <div class="inner">需要协定待遇享受全流程服务</div>
+                                        </div>
+                                        <div class="col-30">
+                                            <div class="row inner yes_button" id="mask_box">
+                                                <div class="col-50">
+                                                    <div class="inner">
+                                                        <input type="button" value="是" name="yes" class="active" id="whole_flow_servicey2">
+                                                    </div>
+                                                </div>
+                                                <div class="col-50">
+                                                    <div class="inner">
+                                                        <input type="button" value="否" name="no" id="whole_flow_servicen2">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="content-block-inner inner_post">
+                            <div class="data-fooer-bottom">
+                                <br>
+                                <div class="row no-gutter">
+                                    <div class="col-50">
+                                        <div class="row no-gutter">
+                                            <div class="col-70">
+                                                <div class="inner">需要完整协定待遇报告，请联系</div>
+                                            </div>
+                                            <div class="col-30">
+                                                <img class="QQ" src="../static/images/img/data-fooer-lcon.gif" width="38" height="40">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-50">
+                                        <b class="button button-big button-fill color-main data-button" id="post_btn_2">提交确认</b>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 大额关联支付 3 -->
+                <div id="tab3" class="tab">
+                    <div class="content-block tqkb" style="margin:0">
+                        <div class="row no-gutter">
+                            <div class="col-50 box_ bd-r">
+                                <h2 class="data-title">
+                                    <i class="data-box-left-lcon"></i>
+                                    <span>范例</span>
+                                </h2>
+                                <img id="img-slide3" src="../static/images/data/tqzl/tqzl1-sm.png" style="width:100%;height:90px;">
+                            </div>
+                            <div class="col-50 box_ rue-">
+                                <h2 class="data-title">
+                                    <i class="data-box-right-lcon"></i>
+                                    <span>报价</span>
+                                </h2>
+                                <div class="data-boxs">
+                                    <div class="row">
+                                        <div class="col-50">基础价</div>
+                                        <div class="col-50"><span id="base_price3">5000.00</span></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-50">加急价</div>
+                                        <div class="col-50"><span id="worry_fee3">0.00</span></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-50">发票费用</div>
+                                        <div class="clo-50"><span id="bill_fee3">300.00</span></div>
+                                    </div>
+                                    <div class="data-total"></div>
+                                    <div class="row">
+                                        <div class="col-50" style="color: #ffa70e">合计</div>
+                                        <div class="col-50"><span id="count_sum3">5300.00</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-block-inner inter_post">
+                            <span class="border"></span>
+                            <div class="list-block">
+                                <h2 class="data-title">
+                                    <i class="data-box-tener-lcon"></i>
+                                    <span>信息采集</span>
+                                </h2>
+                                <div class="data-boxs">
+                                    <div class="row no-gutter">
+                                        <div class="col-60">
+                                            <div class="inner center">
+                                                <input type="text" placeholder="主管税局" id="tit_tax3" readonly>
+                                                <img src="../static/images/img/select-sm.png" class="s_icon">
+                                            </div>
+                                        </div>
+                                        <div class="col-40">
+                                            <div class="inner">
+                                                <input type="text" placeholder="所在年度" id="data_year3" readonly>
+                                                <img src="../static/images/img/select-sm.png" class="s_icon">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row no-gutter">
+                                        <div class="col-60">
+                                            <div class="inner center">
+                                                <input type="text" placeholder="支付类型" id="pay_type3" readonly>
+                                                <img src="../static/images/img/select-sm.png" class="s_icon">
+                                            </div>
+                                        </div>
+                                    <div class="col-40">
+                                        <div class="inner"></div>
+                                    </div>
+                                    </div>
+                                    <div class="row no-gutter">
+                                        <div class="col-50">
+                                            <div class="inner">鉴定报告接收邮箱</div>
+                                        </div>
+                                        <div class="col-50">
+                                            <div class="inner item-input" style="margin-top:-5px">
+                                                <input type="email" placeholder="xxxx@xxxx.com" name="user_email" id="tit_email3" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-100">
+                                            <div class="inner last">
+                                                所需数据<a id="require_data3">《企业年度关联交易财务状态分析表》</a>
+                                                <div class="data-prompt">提交后请线下支付，所需数据会发送到您的邮箱</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-block-inner inter_post">
+                            <span class="border"></span>
+                            <div class="list-bolck">
+                                <h2 class="data-title">
+                                    <i class="data-box-fooer-lcon"></i>
+                                    <span>其他要求</span>
+                                </h2>
+                                <div class="data-boxs">
+                                    <div class="row no-gutter">
+                                        <div class="col-50">
+                                            <div class="inner center">
+                                                <input type="text" class="" id="tit_state3" placeholder="收汇方所在国家" readonly>
+                                                <img src="../static/images/img/select-sm.png" class="s_icon">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row no-gutter">
+                                        <div class="col-50">
+                                            <div class="row">
+                                                <div class="col-50">
+                                                    <div class="inner">报告书时间</div>
+                                                </div>
+                                                <div class="col-50">
+                                                    <div class="inner">
+                                                        <input style="color:#e46b09;width:10px;border:0px;" value="4" id="expect_date3">个工作日
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-50">
+                                            <div class="inner" style="font-size:10px;color:#ccc">每减少一天加急增加200.00元</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row no-gutter">
+                                        <div class="col-70">
+                                            <div class="inner">是否需要发票</div>
+                                        </div>
+                                        <div class="col-30">
+                                            <div class="row inner yes_button" id="mask_box">
+                                                <div class="col-50">
+                                                    <div class="inner">
+                                                        <input type="button" value="是" name="yes" class="active" id="draw_billy3">
+                                                    </div>
+                                                </div>
+                                                <div class="col-50">
+                                                    <div class="inner">
+                                                        <input type="button" value="否" name="no" id="draw_billn3">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row no-gutter">
+                                        <div class="col-70">
+                                            <div class="inner">需要失联大额支付全流程服务</div>
+                                        </div>
+                                        <div class="col-30">
+                                            <div class="row inner yes_button" id="mask_box">
+                                                <div class="col-50">
+                                                    <div class="inner">
+                                                        <input type="button" value="是" name="yes" class="active" id="whole_flow_servicey3">
+                                                    </div>
+                                                </div>
+                                                <div class="col-50">
+                                                    <div class="inner">
+                                                        <input type="button" value="否" name="no" id="whole_flow_servicen3">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="content-block-inner inner_post">
+                            <div class="data-fooer-bottom">
+                                <br>
+                                <div class="row no-gutter">
+                                    <div class="col-50">
+                                        <div class="row no-gutter">
+                                            <div class="col-70">
+                                                <div class="inner">需要完整大额关联支付报告，请联系</div>
+                                            </div>
+                                            <div class="col-30">
+                                                <img class="QQ" src="../static/images/img/data-fooer-lcon.gif" width="38" height="40">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-50">
+                                        <b class="button button-big button-fill color-main data-button" id="post_btn_3">提交确认</b>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--税收情报交换 4-->
+                <div id="tab4" class="tab">
+                    <div class="content-block tqkb" style="margin:0">
+                        <div class="row no-gutter">
+                            <div class="col-50 box_ bd-r">
+                                <h2 class="data-title">
+                                    <i class="data-box-left-lcon"></i>
+                                    <span>范例</span>
+                                </h2>
+                                <img id="img-slide4" src="../static/images/data/tqzl/tqzl1-sm.png" style="width:100%;height:90px;">
+                            </div>
+                            <div class="col-50 box_ rue-">
+                                <h2 class="data-title">
+                                    <i class="data-box-right-lcon"></i>
+                                    <span>报价</span>
+                                </h2>
+                                <div class="data-boxs">
+                                    <div class="row">
+                                        <div class="col-50">基础价</div>
+                                        <div class="col-50"><span id="base_price4">5000.00</span></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-50">加急价</div>
+                                        <div class="col-50"><span id="worry_fee4">0.00</span></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-50">发票费用</div>
+                                        <div class="clo-50"><span id="bill_fee4">300.00</span></div>
+                                    </div>
+                                    <div class="data-total"></div>
+                                    <div class="row">
+                                        <div class="col-50" style="color: #ffa70e">合计</div>
+                                        <div class="col-50"><span id="count_sum4">5300.00</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-block-inner inter_post">
+                            <span class="border"></span>
+                            <div class="list-block">
+                                <h2 class="data-title">
+                                    <i class="data-box-tener-lcon"></i>
+                                    <span>信息采集</span>
+                                </h2>
+                                <div class="data-boxs">
+                                    <div class="row no-gutter">
+                                        <div class="col-60">
+                                            <div class="inner center">
+                                                <input type="text" placeholder="主管税局" id="tit_tax4" readonly>
+                                                <img src="../static/images/img/select-sm.png" class="s_icon">
+                                            </div>
+                                        </div>
+                                        <div class="col-40">
+                                            <div class="inner">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row no-gutter">
+                                        <div class="col-60">
+                                            <div class="inner center">
+                                                <input type="text" placeholder="涉税主体" id="main_tax4" readonly>
+                                                <img src="../static/images/img/select-sm.png" class="s_icon">
+                                            </div>
+                                        </div>
+                                    <div class="col-40">
+                                        <div class="inner"></div>
+                                    </div>
+                                    </div>
+                                    <div class="row no-gutter">
+                                        <div class="col-50">
+                                            <div class="inner">鉴定报告接收邮箱</div>
+                                        </div>
+                                        <div class="col-50">
+                                            <div class="inner item-input" style="margin-top:-5px">
+                                                <input type="email" placeholder="xxxx@xxxx.com" name="user_email" id="tit_email4" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-100">
+                                            <div class="inner last">
+                                                所需数据<a id="require_data4">《企业年度关联交易财务状态分析表》</a>
+                                                <div class="data-prompt">提交后请线下支付，所需数据会发送到您的邮箱</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-block-inner inter_post">
+                            <span class="border"></span>
+                            <div class="list-bolck">
+                                <h2 class="data-title">
+                                    <i class="data-box-fooer-lcon"></i>
+                                    <span>其他要求</span>
+                                </h2>
+                                <div class="data-boxs">
+                                    <div class="row no-gutter">
+                                        <div class="col-50">
+                                            <div class="inner center">
+                                                <input type="text" class="" id="tit_state4" placeholder="海外投资国" readonly>
+                                                <img src="../static/images/img/select-sm.png" class="s_icon">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row no-gutter">
+                                        <div class="col-50">
+                                            <div class="row">
+                                                <div class="col-50">
+                                                    <div class="inner">报告书时间</div>
+                                                </div>
+                                                <div class="col-50">
+                                                    <div class="inner">
+                                                        <input style="color:#e46b09;width:20px;border:0px;" value="10" id="expect_date4">个工作日
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-50">
+                                            <div class="inner" style="font-size:10px;color:#ccc">每减少一天加急增加200.00元</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row no-gutter">
+                                        <div class="col-70">
+                                            <div class="inner">是否需要发票</div>
+                                        </div>
+                                        <div class="col-30">
+                                            <div class="row inner yes_button" id="mask_box">
+                                                <div class="col-50">
+                                                    <div class="inner">
+                                                        <input type="button" value="是" name="yes" class="active" id="draw_billy4">
+                                                    </div>
+                                                </div>
+                                                <div class="col-50">
+                                                    <div class="inner">
+                                                        <input type="button" value="否" name="no" id="draw_billn4">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row no-gutter">
+                                        <div class="col-70">
+                                            <div class="inner">是否被情报调查</div>
+                                        </div>
+                                        <div class="col-30">
+                                            <div class="row inner yes_button" id="mask_box">
+                                                <div class="col-50">
+                                                    <div class="inner">
+                                                        <input type="button" value="是" name="yes" class="active" id="is_researchy4">
+                                                    </div>
+                                                </div>
+                                                <div class="col-50">
+                                                    <div class="inner">
+                                                        <input type="button" value="否" name="no" id="is_researchn4">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row no-gutter">
+                                        <div class="col-70">
+                                            <div class="inner">需要情报应对全流程代理服务</div>
+                                        </div>
+                                        <div class="col-30">
+                                            <div class="row inner yes_button" id="mask_box">
+                                                <div class="col-50">
+                                                    <div class="inner">
+                                                        <input type="button" value="是" name="yes" class="active" id="whole_flow_servicey4">
+                                                    </div>
+                                                </div>
+                                                <div class="col-50">
+                                                    <div class="inner">
+                                                        <input type="button" value="否" name="no" id="whole_flow_servicen4">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="content-block-inner inner_post">
+                            <div class="data-fooer-bottom">
+                                <br>
+                                <div class="row no-gutter">
+                                    <div class="col-50">
+                                        <div class="row no-gutter">
+                                            <div class="col-70">
+                                                <div class="inner">需要完整税收情报交换报告，请联系</div>
+                                            </div>
+                                            <div class="col-30">
+                                                <img class="QQ" src="../static/images/img/data-fooer-lcon.gif" width="38" height="40">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-50">
+                                        <b class="button button-big button-fill color-main data-button" id="post_btn_4">提交确认</b>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!--间接财产转让-->
+<div id="tab5" class="tab">
+                    <div class="content-block tqkb" style="margin:0">
+                        <div class="row no-gutter">
+                            <div class="col-50 box_ bd-r">
+                                <h2 class="data-title">
+                                    <i class="data-box-left-lcon"></i>
+                                    <span>范例</span>
+                                </h2>
+                                <img id="img-slide5" src="../static/images/data/tqzl/tqzl1-sm.png" style="width:100%;height:90px;">
+                            </div>
+                            <div class="col-50 box_ rue-">
+                                <h2 class="data-title">
+                                    <i class="data-box-right-lcon"></i>
+                                    <span>报价</span>
+                                </h2>
+                                <div class="data-boxs">
+                                    <div class="row">
+                                        <div class="col-50">基础价</div>
+                                        <div class="col-50"><span id="base_price5">5000.00</span></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-50">加急价</div>
+                                        <div class="col-50"><span id="worry_fee5">0.00</span></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-50">发票费用</div>
+                                        <div class="clo-50"><span id="bill_fee5">300.00</span></div>
+                                    </div>
+                                    <div class="data-total"></div>
+                                    <div class="row">
+                                        <div class="col-50" style="color: #ffa70e">合计</div>
+                                        <div class="col-50"><span id="count_sum5">5300.00</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-block-inner inter_post">
+                            <span class="border"></span>
+                            <div class="list-block">
+                                <h2 class="data-title">
+                                    <i class="data-box-tener-lcon"></i>
+                                    <span>信息采集</span>
+                                </h2>
+                                <div class="data-boxs">
+                                    <div class="row no-gutter">
+                                        <div class="col-60">
+                                            <div class="inner center">
+                                                <input type="text" placeholder="主管税局" id="tit_tax5" readonly>
+                                                <img src="../static/images/img/select-sm.png" class="s_icon">
+                                            </div>
+                                        </div>
+                                        <div class="col-40">
+                                            <div class="inner">
+                                                <input type="text" placeholder="交易年度" id="data_year5" readonly>
+                                                <img src="../static/images/img/select-sm.png" class="s_icon">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row no-gutter">
+                                        <div class="col-50">
+                                            <div class="inner">鉴定报告接收邮箱</div>
+                                        </div>
+                                        <div class="col-50">
+                                            <div class="inner item-input" style="margin-top:-5px">
+                                                <input type="email" placeholder="xxxx@xxxx.com" name="user_email" id="tit_email5" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-100">
+                                            <div class="inner last">
+                                                所需数据<a id="require_data5">《企业年度关联交易财务状态分析表》</a>
+                                                <div class="data-prompt">提交后请线下支付，所需数据会发送到您的邮箱</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="content-block-inner inter_post">
+                            <span class="border"></span>
+                            <div class="list-bolck">
+                                <h2 class="data-title">
+                                    <i class="data-box-fooer-lcon"></i>
+                                    <span>其他要求</span>
+                                </h2>
+                                <div class="data-boxs">
+                                    <div class="row no-gutter">
+                                        <div class="col-50">
+                                            <div class="inner center">
+                                                <input type="text" class="" id="tit_state5" placeholder="转让方所在国" readonly>
+                                                <img src="../static/images/img/select-sm.png" class="s_icon">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row no-gutter">
+                                        <div class="col-50">
+                                            <div class="row">
+                                                <div class="col-50">
+                                                    <div class="inner">报告书时间</div>
+                                                </div>
+                                                <div class="col-50">
+                                                    <div class="inner">
+                                                        <input style="color:#e46b09;width:20px;border:0px;" value="10" id="expect_date5">个工作日
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-50">
+                                            <div class="inner" style="font-size:10px;color:#ccc">每减少一天加急增加200.00元</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row no-gutter">
+                                        <div class="col-70">
+                                            <div class="inner">是否需要发票</div>
+                                        </div>
+                                        <div class="col-30">
+                                            <div class="row inner yes_button" id="mask_box">
+                                                <div class="col-50">
+                                                    <div class="inner">
+                                                        <input type="button" value="是" name="yes" class="active" id="draw_billy5">
+                                                    </div>
+                                                </div>
+                                                <div class="col-50">
+                                                    <div class="inner">
+                                                        <input type="button" value="否" name="no" id="draw_billn5">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row no-gutter">
+                                        <div class="col-70">
+                                            <div class="inner">是否被税局立案</div>
+                                        </div>
+                                        <div class="col-30">
+                                            <div class="row inner yes_button" id="mask_box">
+                                                <div class="col-50">
+                                                    <div class="inner">
+                                                        <input type="button" value="是" name="yes" class="active" id="is_researchy5">
+                                                    </div>
+                                                </div>
+                                                <div class="col-50">
+                                                    <div class="inner">
+                                                        <input type="button" value="否" name="no" id="is_researchn5">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="content-block-inner inner_post">
+                            <div class="data-fooer-bottom">
+                                <br>
+                                <div class="row no-gutter">
+                                    <div class="col-50">
+                                        <div class="row no-gutter">
+                                            <div class="col-70">
+                                                <div class="inner">需要完整间接财产转让报告，请联系</div>
+                                            </div>
+                                            <div class="col-30">
+                                                <img class="QQ" src="../static/images/img/data-fooer-lcon.gif" width="38" height="40">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-50">
+                                        <b class="button button-big button-fill color-main data-button" id="post_btn_5">提交确认</b>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--  <div id="tab2" class="tab">
 
                     <div class="content-block tqkb">
                         <div class="row no-gutter">
                             <div class="col-50 box_ bd-r">
-                                <h1 class="data-title"><i class="data-box-left-lcon"></i>案例</h1>
-                                <img id="img-slide" src="/static/images/jpg.jpg" width="110" height="90">
+                                <h1 class="data-title"><i class="data-box-left-lcon"></i>范例</h1>
+                                <img id="img-slide2" src="../static/images/jpg.jpg" width="110" height="90">
                             </div>
                             <div class="col-50 box_ rue-">
-                                <h1  class="data-title"><i class="data-box-right-lcon"></i>报价</h1>
-                                <div>基础价<span class="data-box-value">22212</span></div>
-                                <div>加急价<span class="data-box-value">22212</span></div>
-                                <div>发票费用<span class="data-box-value">22212</span></div>
-                                <div class="data-total">合计<span class="data-box-value">22212</span></div>
+                                <h1 class="data-title"><i class="data-box-right-lcon"></i>报价</h1>
+                                <div>基础价<span class="data-box-value" id="base_price2">5000.00</span></div>
+                                <div>加急价<span class="data-box-value" id="worry_fee2">0.00</span></div>
+                                <div>发票费用<span class="data-box-value" id="bill_fee2">300.00</span></div>
+                                <div class="data-total">合计<span class="data-box-value" id="count_sum2">5300.00</span></div>
                             </div>
                         </div>
                         <div class="content-block-inner answer-gai">
@@ -131,80 +1039,88 @@
 
                                 <div class="item-content" id="problem-none">
                                     <div class="item-inner">
-                                        <div class="item-title haolou">同期资料财年</div>
+                                        <div class="item-title haolou">主管税局 <img src="../static/images/img/select-sm.png">&nbsp;
+                                        </div>
                                         <div class="item-input">
-                                            <input   type="text" placeholder="2016-04-13" class="" id="showDataPickers" readonly>
+                                            <input type="text" class="" id="tit_tax2" style="font-size:12px;width:87px;" readonly>
+                                        </div>
+                                        <div class="item-title haolou" style="margin-left:30px;">所在年度 <img src="../static/images/img/select-sm.png">&nbsp;</div>
+                                        <div class="item-input">
+                                            <input type="text" class="" id="data_year2" style="font-size:12px;" readonly>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row no-gutter">
-                                    <div class="col-20">可比公司</div>
-                                    <div class="col-35">
-                                        <input type="text" placeholder="2015-2016" class="" id="years-show" readonly>
+                                <div class="item-content" id="problem-none">
+                                    <div class="item-inner">
+                                        <div class="item-title haolou">支付类型 <img src="../static/images/img/select-sm.png">&nbsp;
+                                        </div>
+                                        <div class="item-input">
+                                            <input type="text" readonly id="pay_type2" style="font-size:12px;">
+                                        </div>
                                     </div>
-                                    <div class="col-45">三年加权数据对比</div>
                                 </div>
 
-                                <div>公司行业及产品</div>
-                                <div class="item-input " id="data-product">
-                                    <textarea placeholder="请尽可能的准确，不要用营业范围代替，否则无法精准的筛选可比企业"></textarea>
-                                </div>
+
                                 <div class="row">
-                                    <div class="col-50">可比数据接收邮箱</div>
+                                    <div class="col-50">鉴定报告接收邮箱</div>
                                     <div class="col-50">
-                                        <div class="item-input search-gai " >
-                                            <input type="email" placeholder="xxxx@xxxx.com" id="data-briebly">
+                                        <div class="item-input search-gai ">
+                                            <input type="email" placeholder="xxxx@xxxx.com" style="background: #f3f3f3;border: 0px;
+        line-height: 20px;
+        padding-left: 10px;
+        height: 30px;" id="tit_email2">
                                         </div>
 
                                     </div>
                                 </div>
-
-                                <p><a>所需数据</a><span>《企业年度关联交易财务状态分析表》</span></p>
-                                <div class="data-prompt">提交后请线下支付，所需数据会发送到你的邮箱</div>
+                                <p>所需资料<a id='require_data2'>《企业年度关联交易财务状态分析表》</a></p>
+                                <div class="data-prompt">提交后请线下支付，所需数据会发送到您的邮箱</div>
                             </div>
                         </div>
-
                         <div class="content-block-inner data-fooer">
                             <h1 class="data-title"><i class="data-box-fooer-lcon"></i>其他要求</h1>
-                            <p>对比指标<span>完全成本加成率</span></p>
-                            <p>对比结果<span>完全成本加成率</span>
-                                <select style="border:0px;">
-                                    <option value ="volvo">中立值</option>
-                                    <option value ="saab">2</option>
-                                    <option value="opel">3</option>
-                                    <option value="audi">4</option>
-                                </select>
-
-
+                            <p>
+                                <span style="padding:0 0 0 0">收汇方所在国家 <img src="../static/images/img/select-sm.png">&nbsp;</span>
+                                <input type="text" class="" id="tit_state2" style="font-size:12px;border:0px;" readonly>
                             </p>
-                            <p>草稿时间<span><a>4</a>个工作日</span><abbr class="data-fooer-prompt">每减少一天加急增加200.00元</abbr></p>
-                            <div class="mask_box"  ></div>
-                            <p class="yes_button"id="mask_box"><label>需要发票</label><input type="button" value="是" name="yes" class="active"><input type="button" value="否" name="no"></p>
+                            <p>报告书时间<span><input style="color:#ecb6b3;width:10px;border:0px;margin-left:-20px;" value="4" id="expect_date2">个工作日</span><abbr class="data-fooer-prompt">每减少一天加急增加200.00元</abbr></p>
+                            <div class="mask_box"></div>
+                            <p class="yes_button" id="mask_box">
+                                <label>需要发票</label>
+                                <input type="button" value="是" name="yes" class="active" style="margin-left:90px;" id="draw_billy2">
+                                <input type="button" value="否" name="no" id="draw_billn2">
+                            </p>
+
+                            <p class="yes_button" id="mask_box">
+                                <label>需要协定待遇享受全流程服务</label>
+                                <input type="button" value="是" name="yes" class="active" style="margin-left:-36px;" id="whole_flow_servicey2">
+                                <input type="button" value="否" name="no" id="whole_flow_servicen2">
+                            </p>
+
                             <div class="data-fooer-bottom">
-                                <p class="data-supplement">需要完整同期资料报告，请联系</p>
-                                <img src="/static/images/img/data-fooer-lcon.gif" width="38" height="40" >
+                                <p class="data-supplement" style="width:100px;">需要完整协定待遇报告，请联系</p>
+                                <img class="QQ" src="../static/images/img/data-fooer-lcon.gif" width="38" height="40">
                                 <b class="button button-big button-fill color-main data-button" id="post_btn_2">提交确认</b>
                             </div>
                         </div>
 
                     </div>
-
-                </div>
-                <!-- 大额关联支付 3 -->
+                </div>-->
+                <!--
                 <div id="tab3" class="tab">
 
                     <div class="content-block tqkb">
                         <div class="row no-gutter">
                             <div class="col-50 box_ bd-r">
-                                <h1 class="data-title"><i class="data-box-left-lcon"></i>案例</h1>
-                                <img id="img-slide" src="/static/images/jpg.jpg" width="110" height="90">
+                                <h1 class="data-title"><i class="data-box-left-lcon"></i>范例</h1>
+                                <img id="img-slide3" src="../static/images/jpg.jpg" width="110" height="90">
                             </div>
                             <div class="col-50 box_ rue-">
-                                <h1  class="data-title"><i class="data-box-right-lcon"></i>报价</h1>
-                                <div>基础价<span class="data-box-value">22212</span></div>
-                                <div>加急价<span class="data-box-value">22212</span></div>
-                                <div>发票费用<span class="data-box-value">22212</span></div>
-                                <div class="data-total">合计<span class="data-box-value">22212</span></div>
+                                <h1 class="data-title"><i class="data-box-right-lcon"></i>报价</h1>
+                                <div>基础价<span class="data-box-value" id="base_price3">5000.00</span></div>
+                                <div>加急价<span class="data-box-value" id="worry_fee3">0.00</span></div>
+                                <div>发票费用<span class="data-box-value" id="bill_fee3">300.00</span></div>
+                                <div class="data-total">合计<span class="data-box-value" id="count_sum3">5300.00</span></div>
                             </div>
                         </div>
                         <div class="content-block-inner answer-gai">
@@ -213,80 +1129,86 @@
 
                                 <div class="item-content" id="problem-none">
                                     <div class="item-inner">
-                                        <div class="item-title haolou">同期资料财年</div>
+                                        <div class="item-title haolou">主管税局 <img src="../static/images/img/select-sm.png">&nbsp;
+                                        </div>
                                         <div class="item-input">
-                                            <input   type="text" placeholder="2016-04-13" class="" id="showDataPickers" readonly>
+                                            <input type="text" class="" id="tit_tax3" style="font-size:12px;width:87px;" readonly>
+                                        </div>
+                                        <div class="item-title haolou" style="margin-left:30px;">所在年度 <img src="../static/images/img/select-sm.png">&nbsp;</div>
+                                        <div class="item-input">
+                                            <input type="text" class="" id="data_year3" style="font-size:12px;" readonly>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row no-gutter">
-                                    <div class="col-20">可比公司</div>
-                                    <div class="col-35">
-                                        <input type="text" placeholder="2015-2016" class="" id="years-show" readonly>
+                                <div class="item-content" id="problem-none">
+                                    <div class="item-inner">
+                                        <div class="item-title haolou">支付类型 <img src="../static/images/img/select-sm.png">&nbsp;
+                                        </div>
+                                        <div class="item-input">
+                                            <input type="text" readonly id="pay_type3" style="font-size:12px;">
+                                        </div>
                                     </div>
-                                    <div class="col-45">三年加权数据对比</div>
                                 </div>
 
-                                <div>公司行业及产品</div>
-                                <div class="item-input " id="data-product">
-                                    <textarea placeholder="请尽可能的准确，不要用营业范围代替，否则无法精准的筛选可比企业"></textarea>
-                                </div>
+
                                 <div class="row">
-                                    <div class="col-50">可比数据接收邮箱</div>
+                                    <div class="col-50">鉴定报告接收邮箱</div>
                                     <div class="col-50">
-                                        <div class="item-input search-gai " >
-                                            <input type="email" placeholder="xxxx@xxxx.com" id="data-briebly">
+                                        <div class="item-input search-gai ">
+                                            <input type="email" placeholder="xxxx@xxxx.com" style="background: #f3f3f3;border: 0px;
+        line-height: 20px;
+        padding-left: 10px;
+        height: 30px;" id="tit_email3">
                                         </div>
 
                                     </div>
                                 </div>
-
-                                <p><a>所需数据</a><span>《企业年度关联交易财务状态分析表》</span></p>
-                                <div class="data-prompt">提交后请线下支付，所需数据会发送到你的邮箱</div>
+                                <p>所需资料<a id='require_data3'>《企业年度关联交易财务状态分析表》</a></p>
+                                <div class="data-prompt">提交后请线下支付，所需数据会发送到您的邮箱</div>
                             </div>
                         </div>
-
                         <div class="content-block-inner data-fooer">
                             <h1 class="data-title"><i class="data-box-fooer-lcon"></i>其他要求</h1>
-                            <p>对比指标<span>完全成本加成率</span></p>
-                            <p>对比结果<span>完全成本加成率</span>
-                                <select style="border:0px;">
-                                    <option value ="volvo">中立值</option>
-                                    <option value ="saab">2</option>
-                                    <option value="opel">3</option>
-                                    <option value="audi">4</option>
-                                </select>
-
-
+                            <p>
+                                <span style="padding:0 0 0 0">收汇方所在国家 <img src="../static/images/img/select-sm.png">&nbsp;</span>
+                                <input type="text" class="" id="tit_state3" style="font-size:12px;border:0px;" readonly>
                             </p>
-                            <p>草稿时间<span><a>4</a>个工作日</span><abbr class="data-fooer-prompt">每减少一天加急增加200.00元</abbr></p>
-                            <div class="mask_box"  ></div>
-                            <p class="yes_button"id="mask_box"><label>需要发票</label><input type="button" value="是" name="yes" class="active"><input type="button" value="否" name="no"></p>
+                            <p>报告书时间<span><input style="color:#ecb6b3;width:10px;border:0px;margin-left:-20px;" value="4" id="expect_date3">个工作日</span><abbr class="data-fooer-prompt">每减少一天加急增加200.00元</abbr></p>
+                            <div class="mask_box"></div>
+                            <p class="yes_button" id="mask_box">
+                                <label>需要发票</label>
+                                <input type="button" value="是" name="yes" class="active" style="margin-left:90px;" id="draw_billy3">
+                                <input type="button" value="否" name="no" id="draw_billn3">
+                            </p>
+                            <p class="yes_button" id="mask_box">
+                                <label>需要失联大额支付全流程服务</label>
+                                <input type="button" value="是" name="yes" class="active" style="margin-left:-36px;" id="whole_flow_servicey3">
+                                <input type="button" value="否" name="no" id="whole_flow_servicen3">
+                            </p>
                             <div class="data-fooer-bottom">
-                                <p class="data-supplement">需要完整同期资料报告，请联系</p>
-                                <img src="/static/images/img/data-fooer-lcon.gif" width="38" height="40" >
+                                <p class="data-supplement">需要完整大额关联支付报告，请联系</p>
+                                <img class="QQ" src="../static/images/img/data-fooer-lcon.gif" width="38" height="40">
                                 <b class="button button-big button-fill color-main data-button" id="post_btn_3">提交确认</b>
                             </div>
                         </div>
 
                     </div>
-
                 </div>
-                <!--税收情报交换 4-->
-                <div id="tab4" class="tab">
+-->
+                <!--<div id="tab4" class="tab">
 
                     <div class="content-block tqkb">
                         <div class="row no-gutter">
                             <div class="col-50 box_ bd-r">
-                                <h1 class="data-title"><i class="data-box-left-lcon"></i>案例</h1>
-                                <img id="img-slide" src="/static/images/jpg.jpg" width="110" height="90">
+                                <h1 class="data-title"><i class="data-box-left-lcon"></i>范例</h1>
+                                <img id="img-slide4" src="../static/images/jpg.jpg" width="110" height="90">
                             </div>
                             <div class="col-50 box_ rue-">
-                                <h1  class="data-title"><i class="data-box-right-lcon"></i>报价</h1>
-                                <div>基础价<span class="data-box-value">22212</span></div>
-                                <div>加急价<span class="data-box-value">22212</span></div>
-                                <div>发票费用<span class="data-box-value">22212</span></div>
-                                <div class="data-total">合计<span class="data-box-value">22212</span></div>
+                                <h1 class="data-title"><i class="data-box-right-lcon"></i>报价</h1>
+                                <div>基础价<span class="data-box-value" id="base_price4">5000.00</span></div>
+                                <div>加急价<span class="data-box-value" id="worry_fee4">0.00</span></div>
+                                <div>发票费用<span class="data-box-value" id="bill_fee4">300.00</span></div>
+                                <div class="data-total">合计<span class="data-box-value" id="count_sum4">5300.00</span></div>
                             </div>
                         </div>
                         <div class="content-block-inner answer-gai">
@@ -295,79 +1217,86 @@
 
                                 <div class="item-content" id="problem-none">
                                     <div class="item-inner">
-                                        <div class="item-title haolou">同期资料财年</div>
+                                        <div class="item-title haolou">主管税局 <img src="../static/images/img/select-sm.png">&nbsp;
+                                        </div>
                                         <div class="item-input">
-                                            <input   type="text" placeholder="2016-04-13" class="" id="showDataPickers" readonly>
+                                            <input type="text" class="" id="tit_tax4" style="font-size:12px;width:87px;" readonly>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row no-gutter">
-                                    <div class="col-20">可比公司</div>
-                                    <div class="col-35">
-                                        <input type="text" placeholder="2015-2016" class="" id="years-show" readonly>
+                                <div class="item-content" id="problem-none">
+                                    <div class="item-inner">
+                                        <div class="item-title haolou">涉税主体 <img src="../static/images/img/select-sm.png">&nbsp;
+                                        </div>
+                                        <div class="item-input">
+                                            <input type="text" readonly id="main_tax4" style="font-size:12px;">
+                                        </div>
                                     </div>
-                                    <div class="col-45">三年加权数据对比</div>
                                 </div>
 
-                                <div>公司行业及产品</div>
-                                <div class="item-input " id="data-product">
-                                    <textarea placeholder="请尽可能的准确，不要用营业范围代替，否则无法精准的筛选可比企业"></textarea>
-                                </div>
+
                                 <div class="row">
-                                    <div class="col-50">可比数据接收邮箱</div>
+                                    <div class="col-50">鉴定报告接收邮箱</div>
                                     <div class="col-50">
-                                        <div class="item-input search-gai " >
-                                            <input type="email" placeholder="xxxx@xxxx.com" id="data-briebly">
+                                        <div class="item-input search-gai ">
+                                            <input type="email" placeholder="xxxx@xxxx.com" style="background: #f3f3f3;border: 0px;
+        line-height: 20px;
+        padding-left: 10px;
+        height: 30px;" id="tit_email4">
                                         </div>
 
                                     </div>
                                 </div>
-
-                                <p><a>所需数据</a><span>《企业年度关联交易财务状态分析表》</span></p>
-                                <div class="data-prompt">提交后请线下支付，所需数据会发送到你的邮箱</div>
+                                <p>所需资料<a id='require_data4'>《企业年度关联交易财务状态分析表》</a></p>
+                                <div class="data-prompt">提交后请线下支付，所需数据会发送到您的邮箱</div>
                             </div>
                         </div>
-
                         <div class="content-block-inner data-fooer">
                             <h1 class="data-title"><i class="data-box-fooer-lcon"></i>其他要求</h1>
-                            <p>对比指标<span>完全成本加成率</span></p>
-                            <p>对比结果<span>完全成本加成率</span>
-                                <select style="border:0px;">
-                                    <option value ="volvo">中立值</option>
-                                    <option value ="saab">2</option>
-                                    <option value="opel">3</option>
-                                    <option value="audi">4</option>
-                                </select>
-
-
+                            <p>
+                                <span style="padding:0 0 0 0">海外投资国 <img src="../static/images/img/select-sm.png">&nbsp;</span>
+                                <input type="text" class="" id="tit_state4" style="font-size:12px;border:0px;" readonly>
                             </p>
-                            <p>草稿时间<span><a>4</a>个工作日</span><abbr class="data-fooer-prompt">每减少一天加急增加200.00元</abbr></p>
-                            <div class="mask_box"  ></div>
-                            <p class="yes_button"id="mask_box"><label>需要发票</label><input type="button" value="是" name="yes" class="active"><input type="button" value="否" name="no"></p>
+                            <p>鉴定报告时间<span><input style="color:#ecb6b3;width:20px;border:0px;margin-left:-20px;" value="10" id="expect_date4">个工作日</span><abbr class="data-fooer-prompt">每减少一天加急增加200.00元</abbr></p>
+                            <div class="mask_box"></div>
+                            <p class="yes_button" id="mask_box">
+                                <label>需要发票</label>
+                                <input type="button" value="是" name="yes" class="active" style="margin-left:90px;" id="draw_billy4">
+                                <input type="button" value="否" name="no" id="draw_billn4">
+                            </p>
+                            <p class="yes_button" id="mask_box">
+                                <label>是否被情报调查</label>
+                                <input type="button" value="是" name="yes" class="active" style="margin-left:48px;" id="is_researchy4">
+                                <input type="button" value="否" name="no" id="is_researchn4">
+                            </p>
+                            <p class="yes_button" id="mask_box">
+                                <label>需要情报应对全流程代理服务</label>
+                                <input type="button" value="是" name="yes" class="active" style="margin-left:-36px;" id="whole_flow_servicey4">
+                                <input type="button" value="否" name="no" id="whole_flow_servicen4">
+                            </p>
                             <div class="data-fooer-bottom">
-                                <p class="data-supplement">需要完整同期资料报告，请联系</p>
-                                <img src="/static/images/img/data-fooer-lcon.gif" width="38" height="40" >
+                                <p class="data-supplement">需要完整税收情报交换报告，请联系</p>
+                                <img class="QQ" src="../static/images/img/data-fooer-lcon.gif" width="38" height="40">
                                 <b class="button button-big button-fill color-main data-button" id="post_btn_4">提交确认</b>
                             </div>
                         </div>
 
                     </div>
-
-                </div>
-                <div id="tab5" class="tab">
+                </div>-->
+                <!--<div id="tab5" class="tab">
 
                     <div class="content-block tqkb">
                         <div class="row no-gutter">
                             <div class="col-50 box_ bd-r">
-                                <h1 class="data-title"><i class="data-box-left-lcon"></i>案例</h1>
-                                <img id="img-slide" src="/static/images/jpg.jpg" width="110" height="90">
+                                <h1 class="data-title"><i class="data-box-left-lcon"></i>范例</h1>
+                                <img id="img-slide5" src="../static/images/jpg.jpg" width="110" height="90">
                             </div>
                             <div class="col-50 box_ rue-">
-                                <h1  class="data-title"><i class="data-box-right-lcon"></i>报价</h1>
-                                <div>基础价<span class="data-box-value">22212</span></div>
-                                <div>加急价<span class="data-box-value">22212</span></div>
-                                <div>发票费用<span class="data-box-value">22212</span></div>
-                                <div class="data-total">合计<span class="data-box-value">22212</span></div>
+                                <h1 class="data-title"><i class="data-box-right-lcon"></i>报价</h1>
+                                <div>基础价<span class="data-box-value" id="base_price5">5000.00</span></div>
+                                <div>加急价<span class="data-box-value" id="worry_fee5">0.00</span></div>
+                                <div>发票费用<span class="data-box-value" id="bill_fee5">300.00</span></div>
+                                <div class="data-total">合计<span class="data-box-value" id="count_sum5">5300.00</span></div>
                             </div>
                         </div>
                         <div class="content-block-inner answer-gai">
@@ -376,65 +1305,62 @@
 
                                 <div class="item-content" id="problem-none">
                                     <div class="item-inner">
-                                        <div class="item-title haolou">同期资料财年</div>
+                                        <div class="item-title haolou">主管税局 <img src="../static/images/img/select-sm.png">&nbsp;
+                                        </div>
                                         <div class="item-input">
-                                            <input   type="text" placeholder="2016-04-13" class="" id="showDataPickers" readonly>
+                                            <input type="text" class="" id="tit_tax5" style="font-size:12px;width:87px;" readonly>
+                                        </div>
+                                        <div class="item-title haolou" style="margin-left:30px;">交易年度 <img src="../static/images/img/select-sm.png">&nbsp;</div>
+                                        <div class="item-input">
+                                            <input type="text" class="" id="data_year5" style="font-size:12px;" readonly>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row no-gutter">
-                                    <div class="col-20">可比公司</div>
-                                    <div class="col-35">
-                                        <input type="text" placeholder="2015-2016" class="" id="years-show" readonly>
-                                    </div>
-                                    <div class="col-45">三年加权数据对比</div>
-                                </div>
 
-                                <div>公司行业及产品</div>
-                                <div class="item-input " id="data-product">
-                                    <textarea placeholder="请尽可能的准确，不要用营业范围代替，否则无法精准的筛选可比企业"></textarea>
-                                </div>
+
                                 <div class="row">
-                                    <div class="col-50">可比数据接收邮箱</div>
+                                    <div class="col-50">鉴定报告接收邮箱</div>
                                     <div class="col-50">
-                                        <div class="item-input search-gai " >
-                                            <input type="email" placeholder="xxxx@xxxx.com" id="data-briebly">
+                                        <div class="item-input search-gai ">
+                                            <input type="email" placeholder="xxxx@xxxx.com" style="background: #f3f3f3;border: 0px;
+        line-height: 20px;
+        padding-left: 10px;
+        height: 30px;" id="tit_email5">
                                         </div>
 
                                     </div>
                                 </div>
-
-                                <p><a>所需数据</a><span>《企业年度关联交易财务状态分析表》</span></p>
-                                <div class="data-prompt">提交后请线下支付，所需数据会发送到你的邮箱</div>
+                                <p>所需资料<a id='require_data5'>《企业年度关联交易财务状态分析表》</a></p>
+                                <div class="data-prompt">提交后请线下支付，所需数据会发送到您的邮箱</div>
                             </div>
                         </div>
-
                         <div class="content-block-inner data-fooer">
                             <h1 class="data-title"><i class="data-box-fooer-lcon"></i>其他要求</h1>
-                            <p>对比指标<span>完全成本加成率</span></p>
-                            <p>对比结果<span>完全成本加成率</span>
-                                <select style="border:0px;">
-                                    <option value ="volvo">中立值</option>
-                                    <option value ="saab">2</option>
-                                    <option value="opel">3</option>
-                                    <option value="audi">4</option>
-                                </select>
-
-
+                            <p>
+                                <span style="padding:0 0 0 0">转让方所在国 <img src="../static/images/img/select-sm.png">&nbsp;</span>
+                                <input type="text" class="" id="tit_state5" style="font-size:12px;border:0px;" readonly>
                             </p>
-                            <p>草稿时间<span><a>4</a>个工作日</span><abbr class="data-fooer-prompt">每减少一天加急增加200.00元</abbr></p>
-                            <div class="mask_box"  ></div>
-                            <p class="yes_button"id="mask_box"><label>需要发票</label><input type="button" value="是" name="yes" class="active"><input type="button" value="否" name="no"></p>
+                            <p>鉴定报告时间<span><input style="color:#ecb6b3;width:20px;border:0px;margin-left:-20px;" value="10" id="expect_date5">个工作日</span></p>
+                            <div class="mask_box"></div>
+                            <p class="yes_button" id="mask_box">
+                                <label>需要发票</label>
+                                <input type="button" value="是" name="yes" class="active" style="margin-left:90px;" id="draw_billy5">
+                                <input type="button" value="否" name="no" id="draw_billn5">
+                            </p>
+                            <p class="yes_button" id="mask_box">
+                                <label>是否被税局立案</label>
+                                <input type="button" value="是" name="yes" class="active" style="margin-left:48px;" id="is_researchy5">
+                                <input type="button" value="否" name="no" id="is_researchn5">
+                            </p>
                             <div class="data-fooer-bottom">
-                                <p class="data-supplement">需要完整同期资料报告，请联系</p>
-                                <img src="/static/images/img/data-fooer-lcon.gif" width="38" height="40" >
+                                <p class="data-supplement">需要完整间接财产转让报告，请联系</p>
+                                <img class="QQ" src="../static/images/img/data-fooer-lcon.gif" width="38" height="40">
                                 <b class="button button-big button-fill color-main data-button" id="post_btn_5">提交确认</b>
                             </div>
                         </div>
 
                     </div>
-
-                </div>
+                </div>-->
             </div>
         </div>
     </div>

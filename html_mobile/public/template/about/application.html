@@ -9,86 +9,124 @@
         <div class="center sliding">申请解答者</div>
     </div>
 </div>
+
 <div class="pages">
     <!-- Page, data-page contains page name-->
-    <div data-page="services" class="page">
+    <div data-page="application" class="page">
         <!-- Scrollable page content-->
         <div class="page-content">
             <div class="content-block withdrawals-bj" style="margin: 0px; padding: 0px;">
                 <div class="withdrawals-bj">
-                  <p>真实姓名</p>
-                  <P><i class="data-box-tener-lcon"></i>身份证上传</P>
-                   <P>上传图片</P>
-                    <div class="row person-box">
-                        <div class="col-65">
-                            <b>手机号</b>
-                        </div>
-                        <div class="col-35 ">
-                            <input class="withdrawals-input" type="text" placeholder="选填">
-                        </div>
-                    </div>
-                    <div class="row person-box">
-                        <div class="col-65">
-                            <b>工作地点</b>
-                        </div>
-                        <div class="col-35 ">
-                            <input class="withdrawals-input" type="text" placeholder="精确到县">
-                        </div>
-                    </div>
-                    <div class="row person-box">
-                        <div class="col-65">
-                            <b>专业资格</b>
-                        </div>
-                        <div class="col-35 ">
-                            <input class="withdrawals-input" type="text" placeholder="下拉框">
-                        </div>
-                        <P>上传图片</P>
-                        <div class="row person-box">
-                            <div class="col-65">
-                                <b>工作单位</b>
-                            </div>
-                            <div class="col-35 ">
-                                <input class="withdrawals-input" type="text" placeholder="选填">
-                            </div>
-                        </div>
-                        <div class="row person-box">
-                            <div class="col-65">
-                                <b>专业资格</b>
-                            </div>
-                            <div class="col-35 ">
-                                <input class="withdrawals-input" type="text" placeholder="下拉框">
-                            </div>
-                            <label class="label-checkbox item-content" style="margin-top: 20px;">
-                                <!-- Checked by default -->
-                                <input type="checkbox" name="my-checkbox" value="Books" checked="checked">
-                                <div class="item-media">
+                    <div id="application_list"></div>
+                    <div class="list-block" id="apply">
+                        <ul>
+                            <!-- Text inputs -->
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-title label"><b>真实姓名</b></div>
+                                    <div class="item-input">
+                                        <input id="real_name" type="text" placeholder="">
+                                    </div>
+                                </div>
+                            </li>
 
-                                    <div class="row answer-gai "style="padding-right: 20px;">
-                                        <div class="col-10 withdrawals-lcon">
-                                            <i class="icon icon-form-checkbox icon-checked"></i>
-                                        </div>
-                                        <div class="col-50">
-                                            <div class="item-title-row">
-                                                <b>我也阅读并同意</b>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-title label">
+                                        <div class="item-media">
+                                            <i class="card-Inco" style="width: 30px; height: 25px;padding-left: 0px;"></i><b>身份证上传</b></div>
+                                    </div>
+                                    <div class="item-input">
+                                        <input id="card_id" type="text" placeholder="">
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="item-content">
+                                    <div class="image-item">
+                                        <div class="about-img1"></div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-title label"><b>手机号</b></div>
+                                    <div class="item-input">
+                                        <input id="phone_number" type="text" placeholder="选填" style="text-align: right">
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-title label"><b>工作地点</b></div>
+                                    <div class="item-input">
+                                        <input id="region_code" type="text" placeholder="精确到区县" required="required" style="text-align: right">
+                                    </div>
+                                </div>
+                            </li>
+
+                            <!-- Select -->
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-title label"><b>专业资格</b></div>
+                                    <div class="item-input">
+                                        <input id="major" type="text" placeholder="" required="required" style="text-align: right" >
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="item-content">
+                                    <div class="image-item">
+                                        <div class="about-img1"></div>
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-title label"><b>工作单位及职称</b></div>
+                                    <div class="item-input">
+                                        <input id="company_post" type="text" placeholder="选填" style="text-align: right">
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-title label"><b>擅长的税务领域</b></div>
+                                    <div class="item-input">
+                                        <input type="text" placeholder="可多选" class="expert-input" id="taxproperty_code" readonly style="text-align: right">
+                                    </div>
+                                </div>
+                            </li>
+
+                            <li>
+                                <label class="label-checkbox item-content" style="margin-top: 20px;">
+                                    <input id="first" type="checkbox" name="my-checkbox" value="Books">
+                                    <div class="item-media">
+                                        <div class="row answer-gai "style="padding-right: 20px;">
+                                            <div class="col-10 withdrawals-lcon">
+                                                <i  class="icon icon-form-checkbox icon-checked"></i>
                                             </div>
-                                        </div>
-                                        <div class="col-35">
-                                            <div class="item-title-row">
-
+                                            <div class="col-88">
+                                                <div class="item-title-row">
+                                                    <b style="font-size:14px">我阅读并同意《税务在线服务协议》</b>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </label>
+                                <b class="button button-big button-fill color-main" id="submit" >提交确认</b>
+                            </li>
 
-                            </label>
-
-
+                        </ul>
                     </div>
-
                 </div>
-                    <b class="button  button-fill color-main ">提交确认</b>
             </div>
         </div>
     </div>
 </div>
-    </div>

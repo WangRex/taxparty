@@ -7,16 +7,16 @@
                 <i class="m-icon m-icon-back"></i>
             </a>
         </div>
-        <div class="center sliding">登陆</div>
+        <div class="center sliding">登录</div>
     </div>
 </div>
 <div class="pages">
     <!-- Page, data-page contains page name-->
-    <div data-page="login" class="page">
+    <div data-page="login" class="page no-tabbar">
         <!-- Scrollable page content-->
         <div class="page-content main_panl_all">
             <div class="logo">
-                <img src="/static/images/logo.jpg" alt="">
+                <img src="../static/images/logo.jpg" alt="">
             </div>
             <div class="list-block inset signin">
                 <ul class="input_row">
@@ -45,7 +45,7 @@
                         </div>
                     </li>
                 </ul>
-                <b class="button button-big button-fill color-main" id="dologin">登陆</b>
+                <b class="button button-big button-fill color-main" id="dologin">登录</b>
                 <div class="row button_link">
                     <div class="col-50">
                         <a href="signin/findpswd.html" class="list-button left">忘记密码</a>
@@ -54,6 +54,29 @@
                         <a href="signin/register.html" class="list-button right">注册</a>
                     </div>
                 </div>
+                <div class="copy">
+                    <img src="../static/images/img/logo_bottom.png">
+                    <div>
+                        <span>森泽瑞诺</span>
+                        <span  class="r">®</span>
+                        <span>版权所有</span>
+                    </div>
+                </div>
+                <style>
+                    .main_panl_all .copy{
+                        text-align: center;
+                    }
+                    .main_panl_all .copy img{
+                        height: 18px;margin-top: 50px;
+                    }
+                    .main_panl_all .copy div{
+                        font-size: 15px;
+                        color:gray;
+                    }
+                    .main_panl_all .copy .r{
+                        margin-top:-10px;vertical-align:5px;
+                    }
+                </style>
             </div>
         </div>
     </div>

@@ -1,6 +1,6 @@
 <!-- We don't need full layout here, because this page will be parsed with Ajax-->
 <!-- Top Navbar-->
-<div class="navbar">
+<div class="navbar" id="set">
     <div class="navbar-inner">
         <div class="left">
             <a href="#" class="back link"> <i class="m-icon m-icon-back"></i>
@@ -11,7 +11,7 @@
 </div>
 <div class="pages">
     <!-- Page, data-page contains page name-->
-    <div data-page="services" class="page">
+    <div data-page="set" class="page">
         <!-- Scrollable page content-->
         <div class="page-content">
             <div class="list-block list-set">
@@ -22,8 +22,8 @@
                                 <div class="item-title label item-set">新消息通知</div>
                                 <div class="item-input">
                                     <label class="label-switch">
-                                        <input type="checkbox">
-                                        <div class="checkbox"></div>
+                                        <input type="checkbox"  id="prompt">
+                                        <div class="checkbox" ></div>
                                     </label>
                                 </div>
                             </div>
@@ -34,9 +34,9 @@
                             <div class="item-inner">
                                 <div class="item-title label item-set">通知声音提示</div>
                                 <div class="item-input">
-                                    <label class="label-switch">
-                                        <input type="checkbox" checked>
-                                        <div class="checkbox"></div>
+                                    <label class="label-switch" >
+                                        <input type="checkbox" checked  id="notice">
+                                        <div class="checkbox" ></div>
                                     </label>
                                 </div>
                             </div>
@@ -45,21 +45,30 @@
                     <li>
                         <a href="about/set-money.html">
                         <div class="item-content item-padding">
-                            <div class="item-inner">
+                            <div class="item-inner" id="search">
                                 <div class="item-title label item-set">设置个人最低价</div>
                             </div>
                         </div>
                         </a>
                     </li>
                     <li>
-                        <a href="about/set-password.html">
+                        <a href="about/set-password.html" id="judge">
                             <div class="item-content item-padding">
-                                <div class="item-inner">
-                                    <div class="item-title label item-set">设置支付密码</div>
+                                <div class="item-inner" id="low">
+                                    <div class="item-title label item-set" >设置提现密码</div>
                                 </div>
                             </div>
                         </a>
                     </li>
+                    <!--<li>-->
+                        <!--<a href="about/reset-money.html">-->
+                            <!--<div class="item-content item-padding">-->
+                                <!--<div class="item-inner">-->
+                                    <!--<div class="item-title label item-set">重置提现密码</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</a>-->
+                    <!--</li>-->
                     <li>
                         <a href="about/reset-pas.html">
                             <div class="item-content item-padding">
@@ -70,7 +79,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="about/information.html">
                             <div class="item-content item-padding">
                                 <div class="item-inner">
                                     <div class="item-title label item-set">关于</div>
@@ -78,9 +87,11 @@
                             </div>
                         </a>
                     </li>
-                    <br>
-                    <li><a href="#" class="item-link list-button sign-out">退出</a></li>
                 </ul>
+                <br>
+                <div style="padding:0 15px">
+                    <b id="dologout" class="button button-big button-fill color-main">退出</b>
+                </div>
             </div>
         </div>
     </div>

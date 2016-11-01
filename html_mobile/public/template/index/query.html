@@ -6,7 +6,7 @@
             <a href="#" class="back link"> <i class="m-icon m-icon-back"></i>
             </a>
         </div>
-        <div class="center sliding">法规查询</div>
+        <div class="center sliding">法规</div>
     </div>
 </div>
 <div class="pages">
@@ -15,36 +15,96 @@
         <!-- Scrollable page content-->
         <div class="page-content">
             <div class="content-block searchbar_box">
-                <div class="list-block search">
-                    <ul class="">
-                        <li>
-                            <div class="item-content">
-                                <div class="item-inner">
-                                    <div class="item-title label">文件字号</div>
-                                    <div class="item-input">
-                                        <input id="fileid" type="text" placeholder="">
+                <div class="list-block list-block-zero search row no-gutter ">
+                    <div class="col-80">
+                        <ul class="">
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-title label" style="width:30%;color: #8e8e93;font-size: 15px">法规文号:</div>
+
+
+
+                                        <div class="item-input" >
+                                            <div class="row">
+                                                <div class="col-100" id="law_att" >
+                                                    <select>
+                                                        <option></option>
+                                                        <option>财关税</option>
+                                                        <option>税总发</option>
+                                                        <option>税总函</option>
+                                                        <option>国家税务总局令</option>
+                                                        <option>国家税务总局公告</option>
+                                                        <option>国家税务总局通告</option>
+                                                        <option>财税</option>
+                                                        <option>国发明电</option>
+                                                        <option>其他</option>
+
+                                                    </select>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="item-content">
-                                <div class="item-inner">
-                                    <div class="item-title label">文件名</div>
-                                    <div class="item-input">
-                                        <input id="filename" type="text" placeholder="">
+                            </li>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-title label" style="width:30%;color: #8e8e93;font-size: 15px">发布日期:</div>
+
+
+
+                                        <div class="item-input" >
+                                            <input type="text" id="release_date">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </li>
-                    </ul>
-                    <div class="list-block inset">
-                       <a id="queryfile" class="button button-big button-fill color-main">查询</a>
-                   </div>
+                            </li>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-title label" style="width:30%;color: #8e8e93;font-size: 15px">法规号:</div>
+
+
+
+                                        <div class="item-input" >
+                                            <div class="row">
+                                                <div class="col-90 input_search_under" >
+                                                    <input  id="law_number" type="text" placeholder="001"  >
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-10 item-title label" style="width:8%;color: #8e8e93;font-size: 15px">号</div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-title label" style="color: #8e8e93;font-size: 15px">法规名:</div>
+                                        <div class="item-input input_search_under">
+                                            <input id="law_name" type="text" placeholder="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div class="col-20" style="height:175px;background: #fff;">
+                        <div class="item-content" style="padding-top: 26px">
+
+                            <a id="queryfile">
+                                <img src="../static/images/img/search_big.png" width="100%" style="padding-top:95%;">
+                            </a>
+                        </div>
+                    </div>
                 </div>
                 <div class="list-block media-list">
                     <ul id="searchbar_list">
-                       
+
                     </ul>
                 </div>
             </div>

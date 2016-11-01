@@ -4,27 +4,29 @@ app.login = (function() {
 
         var param = {
             "username": user,
-            "user_password": pass,
-            "verify_code": ""
+            "user_password": pass
         }
 
         var succCallBack = function(data, status, response) {
             var data = JSON.parse(data);
-            console.log(data)
+            console.log(data.errCode)
+
             if (data.errCode == '0') {
+
+                console.log(data.data)
 
                 var obj = {
                     token: data.token,
                     username: user
                 }
 
-                app.storage.set('userArr', data);
+                app.toast("登录成功！")
 
-                app.toast('登陆成功!')
+                app.storage.set('userArr', data);
 
                 setTimeout(function() {
                     view.main.router.loadPage('index.html');
-                }, 2000)
+                }, 1)
 
             } else if (data.errorCode == '101') {
                 app.toast(data.errorMessage)
@@ -53,7 +55,7 @@ app.register = (function() {
             console.log(data);
 
             if (data.errorCode == '0') {
-                view.main.router.loadPage('index.html');
+                view.main.router.loadPage('signin/login.html');
             }
         }
 
@@ -113,7 +115,7 @@ app.isLR = (function() {
             app.toast('密码输入不一致');
             return false
         } else if (!codes) {
-            app.toast('请输入验证码');
+            app.toast('验证码不能为空');
             return false
         } else {
             app.register(icode, users, pswd2, codes)
@@ -137,27 +139,74 @@ app.verifyCode = (function() {
 
         var succCallBack = function(data, status, response) {
             var data = JSON.parse(data);
-
+            var index = $$("#verifyCode");
+            var num = 59;
+            var txt = "获取验证码";
             console.log(data)
+
+            function time() {
+                if (num == 0) {
+                    index.removeClass("disabled");
+                    index.html(txt);
+                    num = 59;
+                } else {
+                    index.addClass("disabled");
+                    index.html(num + 'S');
+                    num--;
+                    setTimeout(function() {
+                        time(index)
+                    }, 1000)
+                }
+            }
+            if (data.errorCode == 0) {
+                time();
+
+            } else if (data.errorCode == 1102) {
+                app.toast(data.errorMessage);
+            }
         }
-        var getUserPhoneVerifyCode = root.interFace.getUserPhoneVerifyCode;
-        return app.doAjax(getUserPhoneVerifyCode, 'post', param, succCallBack)
+        var findVerifyCode = root.interFace.findVerifyCode;
+        return app.doAjax(findVerifyCode, 'post', param, succCallBack)
     }
 })()
 
 
 //获取手机邮箱验证码
 app.verifyTelCode = (function() {
-    return function(tel) {
+    return function(flag, tel) {
 
         var param = {
-            tel_num: tel,
+            flag: flag,
+            userAcc: tel,
         }
 
         var succCallBack = function(data, status, response) {
             var data = JSON.parse(data);
-
+            var index = $$("#getTelNum");
+            var num = 59;
+            var txt = "获取验证码";
             console.log(data)
+
+            function time() {
+                if (num == 0) {
+                    index.removeClass("disabled");
+                    index.html(txt);
+                    num = 59;
+                } else {
+                    index.addClass("disabled");
+                    index.html(num + 'S');
+                    num--;
+                    setTimeout(function() {
+                        time(index)
+                    }, 1000)
+                }
+            }
+
+            if (data.errorCode == 0) {
+                time();
+            } else if (data.errorCode == 1103) {
+                app.toast(data.errorMessage)
+            }
         }
 
         var getUserPhoneVerifyCode = root.interFace.getUserPhoneVerifyCode;
@@ -190,6 +239,15 @@ app.upUserImg = (function() {
 app.newsList = (function() {
     return function() {
 
+
+        var userArr = app.storage.get("userArr");
+
+        if (userArr == null) {
+            app.toast("您还没有登录");
+            return false
+        }
+
+
         var param = {
             "token": app.storage.get("userArr").token,
         }
@@ -197,7 +255,7 @@ app.newsList = (function() {
         var succCallBack = function(data, status, response) {
             var data = JSON.parse(data);
             console.log(data)
-            if (data.data != null) {
+            if (data != null && data.data != null) {
                 var nodes = data.data;
 
                 $$.each(nodes, function(index, value) {
@@ -205,14 +263,14 @@ app.newsList = (function() {
                     value["time_m"] = value.new_subtime.substr(5, 2);
                     value["time_d"] = value.new_subtime.substr(8, 3);
                     value["time_mi"] = value.new_subtime.substr(11, 5)
-                })
+                });
 
-                console.log(nodes)
+                console.log(nodes);
                 var news_list_tpl = $$('script#news_list_tpl').html();
                 var tpl = Template7.compile(news_list_tpl);
-                $$("#news_list").html(tpl(nodes))
+                $$("#news_list").html(tpl(nodes));
             } else {
-                app.toast('未查询到数据!')
+                app.toast('未查询到数据!');
             }
 
         }
@@ -222,7 +280,7 @@ app.newsList = (function() {
         return app.doAjax(getAllInform, 'post', param, succCallBack)
 
     }
-})()
+})();
 
 // 资讯详情
 app.newsDetails = (function() {
@@ -234,49 +292,91 @@ app.newsDetails = (function() {
 
         var succCallBack = function(data, status, response) {
             var data = JSON.parse(data);
-            var nodes = data.data;
-            nodes["time_y"] = nodes.date.substr(0, 4);
-            nodes["time_m"] = nodes.date.substr(5, 2);
-            nodes["time_d"] = nodes.date.substr(8, 3);
-            nodes["time_mi"] = nodes.date.substr(11, 5);
-            console.log(nodes);
+            if (data.errorCode != "0") {
+                app.toast(data.errorMessage);
+            } else {
+                if (data.data) {
+                    var nodes = data.data;
+                    if (nodes.date) {
+                        nodes["time_y"] = nodes.date.substr(0, 4);
+                        nodes["time_m"] = nodes.date.substr(5, 2);
+                        nodes["time_d"] = nodes.date.substr(8, 3);
+                        nodes["time_mi"] = nodes.date.substr(11, 5);
+                    } else {
+                        nodes["time_y"] = "";
+                        nodes["time_m"] = "";
+                        nodes["time_d"] = "";
+                        nodes["time_mi"] = "";
+                    }
+                    console.log(nodes);
 
-            var news_data_tpl = $$('script#news_data_tpl').html();
-            var tpl = Template7.compile(news_data_tpl);
-            $$("#news_data").html(tpl(nodes));
+                    var news_data_tpl = $$('script#news_data_tpl').html();
+                    var tpl = Template7.compile(news_data_tpl);
+                    $$("#news_data").html(tpl(nodes));
 
-            var comment_list_tpl = $$('script#comment_list_tpl').html();
-            var tpl = Template7.compile(comment_list_tpl);
-            $$("#comment_list").html(tpl(data.data.comment));
+                    if (nodes.comments > 0) {
+                        var comment_list_tpl = $$('script#comment_list_tpl').html();
+                        var tpl = Template7.compile(comment_list_tpl);
+                        $$("#comment_list").html(tpl(nodes.comment));
+                    }
+                }
 
-            var common_tpl = $$('script#common_tpl').html();
-            var tpl = Template7.compile(common_tpl);
-            $$("#common_c").html(tpl(nodes));
+                var common_tpl = $$('script#common_tpl').html();
+                var tpl = Template7.compile(common_tpl);
+                $$("#common_c").html(tpl(nodes));
+            }
+        };
 
+        var getInform = root.interFace.getInform;
 
+        return app.doAjax(getInform, 'post', param, succCallBack);
 
+    }
+})();
+
+// 资讯详情
+app.newsDetailsCustom = (function() {
+    return function(listId, succCallBack) {
+        var param = {
+            "token": app.storage.get("userArr").token,
+            "inform_id": listId
         }
 
-        var getInform = root.interFace.getInform
+        var getInform = root.interFace.getInform;
 
-        return app.doAjax(getInform, 'post', param, succCallBack)
+        return app.doAjax(getInform, 'post', param, succCallBack);
 
     }
 })();
 
 // 资讯详情点赞
 app.newslikeInform = (function() {
-    return function(listId) {
+    return function(listId, likeFlag) {
 
         var param = {
             "token": app.storage.get("userArr").token,
-            "flag": "1",
+            "like_flag": likeFlag,
             "inform_id": listId
         };
 
         var succCallBack = function(data, status, response) {
             var data = JSON.parse(data);
-
+            if (data.errorCode == 0) {
+                var succCallBackUpdateLike = function(data, status, response) {
+                    var data = JSON.parse(data);
+                    var nodes = data.data;
+                    if (likeFlag == 0) {
+                        var html = '<img src="../static/images/img/shou_03.png" width="13px;" alt="点赞">';
+                    } else {
+                        var html = '<img src="../static/images/img/thumb52.png" width="13px;" alt="点赞">';
+                    }
+                    $$("#likeBtn").attr("data-like-flag", nodes.like_flag);
+                    $$("#likeBtn").html(html);
+                };
+                app.newsDetailsCustom(listId.trim(), succCallBackUpdateLike);
+            } else {
+                app.toast(data.errorMessage);
+            }
             console.log(data);
 
         };
@@ -298,7 +398,7 @@ app.newsCollectInform = (function() {
 
         var succCallBack = function(data, status, response) {
             var data = JSON.parse(data);
-
+            app.toast(data.errorMessage);
             console.log(data);
 
         };
@@ -310,12 +410,29 @@ app.newsCollectInform = (function() {
 })();
 
 
+// 资讯评论reload
+app.commentInformReload = (function() {
+
+    return function(token, listId, succCallBack) {
+        var param = {
+            "token": token,
+            "inform_id": listId,
+        };
+
+        var getInform = root.interFace.getInform;
+
+        return app.doAjax(getInform, 'post', param, succCallBack);
+    }
+})();
+
+
 // 资讯评论
 app.commentInform = (function() {
 
     return function(listId, val, time) {
+        var token = app.storage.get("userArr").token;
         var param = {
-            "token": app.storage.get("userArr").token,
+            "token": token,
             "inform_id": listId,
             "comment": val,
             "time": time + '',
@@ -324,8 +441,24 @@ app.commentInform = (function() {
 
         var succCallBack = function(data, status, response) {
             var data = JSON.parse(data);
-
             console.log(data);
+            if (data.errorCode == 0) {
+                app.toast(data.errorMessage || "评论成功！");
+                var succCallBackReloadComments = function(data) {
+                    var data = JSON.parse(data);
+                    var nodes = data.data;
+                    if (nodes.comments > 0) {
+                        var comment_list_tpl = $$('script#comment_list_tpl').html();
+                        var tpl = Template7.compile(comment_list_tpl);
+                        $$("#comment_list").html(tpl(nodes.comment));
+                    }
+                    $$("#commentsCount").html(nodes.comments);
+                    $$("#textarea_val").val("");
+                }
+                app.commentInformReload(token, listId, succCallBackReloadComments);
+            } else {
+                app.toast(data.errorMessage || "评论失败！");
+            }
 
         };
 
@@ -350,12 +483,38 @@ app.collectList = (function() {
             var tpl = Template7.compile(collect_news_list_tpl);
             $$("#collect_list").html(tpl(nodes));
 
-            console.log(data)
+            console.log(data);
 
         }
 
-        var queryCollectionListByUID = root.interFace.queryCollectionListByUID
+        var queryCollectionListByUID = root.interFace.queryCollectionListByUID;
 
-        return app.doAjax(queryCollectionListByUID, 'post', param, succCallBack)
+        return app.doAjax(queryCollectionListByUID, 'post', param, succCallBack);
     }
-})()
+})();
+
+//取消收藏
+app.disCollectNews = (function() {
+    return function(tuc_id) {
+
+        var param = {
+            "token": app.storage.get("userArr").token,
+            "tuc_id":tuc_id
+        }
+
+        var succCallBack = function(data, status, response) {
+            var data = JSON.parse(data);
+            console.log(data);
+            if (data.errCode == 0) {
+                app.toast(data.errorMessage || "取消收藏成功！");
+            } else {
+                app.toast(data.errorMessage || "取消收藏失败！");
+            }
+
+        }
+
+        var updateCollectionByCID = root.interFace.updateCollectionByCID;
+
+        return app.doAjax(updateCollectionByCID, 'post', param, succCallBack);
+    }
+})();

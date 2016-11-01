@@ -11,73 +11,46 @@
     <!-- Page, data-page contains page name-->
     <div data-page="uestionsaddto" class="page">
         <!-- Scrollable page content-->
-        <div class="page-content page-gai">
-            <div  class="content-block person">
-                <div class="row person-box">
-                    <div class="col-15">
-                        <select class="uestions-select">
-                            <option>来源</option>
-                            <option>所属地区</option>
-                            <option>所属地区</option>
-                        </select>
-                    </div>
-                    <div class="col-17">
-                        <select class="uestions-select">
-                            <option>来源</option>
-                            <option>所属地区</option>
-                            <option>所属地区</option>
-                        </select>
-                    </div>
-                    <div class="col-17">
-                        <select class="uestions-select">
-                            <option>问题属性</option>
-                            <option>税务认定</option>
-                            <option>发票办理</option>
-                            <option>申报纳税</option>
-                        </select>
-                    </div>
-                    <div class="col-17">
-                        <select class="uestions-select">
-                            <option>税种类型</option>
-                            <option>税务认定</option>
-                            <option>发票办理</option>
-                            <option>申报纳税</option>
-                        </select>
-                    </div>
-                    <div class="col-17">
-                        <select class="uestions-select">
-                            <option>征管程序</option>
-                            <option>税务认定</option>
-                            <option>发票办理</option>
-                            <option>申报纳税</option>
-                        </select>
-                    </div>
-                    <div class="col-17">
-                        <select class="uestions-select">
-                            <option>业务类型</option>
-                            <option>税务认定</option>
-                            <option>发票办理</option>
-                            <option>申报纳税</option>
-                        </select>
-                    </div>
-
-                    <div class="col-100">
-                        <div class="item-input ">
-                            <textarea class="uestions-input" placeholder="请输入你的问题"></textarea>
+        <div class="page-content uestions">
+            <div class="person-box">
+                <div class="content-block select_div" style="padding:20px 15px;margin:0">
+                    <div class="row">
+                        <div class="col-50">
+                            <input type="text" placeholder="来源" class="expert-input" id="source" readonly>
+                        </div>
+                        <div class="col-50">
+                            <input type="text" placeholder="适用地区" class="expert-input" id="area" readonly style="width: 150px;">
                         </div>
                     </div>
-                    <div class="col-100">
-                        <div class="item-input ">
-                            <textarea class="uestions-input" placeholder="请输入你的问题"></textarea>
+                    <div class="row">
+                        <div class="col-50">
+                            <input type="text" placeholder="问题属性" class="expert-input" id="ask_attribute" readonly>
+                        </div>
+                        <div class="col-50">
+                            <input type="text" placeholder="税种类型" class="expert-input" id="tax_type" readonly>
                         </div>
                     </div>
-                    <b class="button  button-fill color-main uestions-button">添加</b>
-
-            </div>
-
-
+                    <div class="row">
+                        <div class="col-50">
+                            <input type="text" placeholder="征管程序" class="expert-input" id="collection_procedure" readonly>
+                        </div>
+                        <div class="col-50">
+                            <input type="text" placeholder="业务类型" class="expert-input" id="business_type" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-block textarea_item">
+                    <div class="list-block">
+                        <textarea placeholder="请输入你的问题" id="ask_title"></textarea>
+                    </div>
+                    <div class="list-block">
+                        <textarea placeholder="请输入你的问题" id="answer"></textarea>
+                    </div>
+                </div>
+                <div class="content-block">
+                    <b id="dologout" class="button button-big button-fill color-main" id="addQuestionBtn">添加</b>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
