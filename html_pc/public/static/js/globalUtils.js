@@ -7,8 +7,12 @@ var globalModule = (function(gm) {
         console.log('接口:' + url);
         console.log('类型:' + type);
         console.log('输入:' + JSON.stringify(data));
-        // var token = { token: app.store.get('user').token };
-        var token = "111";
+
+        var user = app.store.get('user');
+        var token = "";
+        if (user) {
+            token = user.token;
+        }
         if (data) {
             $.extend(data, token);
         }
