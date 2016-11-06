@@ -13,6 +13,10 @@ var globalModule = (function(gm) {
         if (user) {
             token = user.token;
         }
+        //如果token为空，则跳转到登录页面。
+        if (token) {
+            window.location.replace("login.html");
+        }
         if (data) {
             $.extend(data, token);
         }

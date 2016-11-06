@@ -111,7 +111,7 @@ var root = {
 window.app = {};
 
 
-app.init = (function () {
+app.init = (function() {
 
     return '';
 })();
@@ -121,21 +121,14 @@ app.init = (function () {
 app.store = $.AMUI.store;
 
 if (!app.store.enabled) {
-  alert('Local storage is not supported by your browser. Please disable "Private Mode", or upgrade to a modern browser.');
-  // return false;
+    alert('Local storage is not supported by your browser. Please disable "Private Mode", or upgrade to a modern browser.');
 }
-
-var user = app.store.get('user');
-
-app.store.set('domain', document.domain);
-app.store.set('host', window.location.host);
-
 
 /*
  *  邮箱&手机号
  */
 
-app.empty = (function () {
+app.empty = (function() {
     return {
         tel: /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/,
         emi: /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/
@@ -146,7 +139,7 @@ app.empty = (function () {
 /*
  *   获取当前时间
  */
-var D = (function () {
+var D = (function() {
 
     var oDate = new Date(); //实例一个时间对象；
     var oYear = oDate.getFullYear(); //获取系统的年；
