@@ -1,4 +1,4 @@
-var INTERFACE_URL = "http://192.168.1.126:8080/tz-core";
+var INTERFACE_URL = "http://shsj.clpsgroup.com.cn/tz-core";
 
 var root = {
     interFace: {
@@ -115,64 +115,20 @@ app.init = (function () {
 
     return '';
 })();
-
-/*
- *   loader
- */
-
-app.loader = (function () {
-    function show() {
-        f7app.showIndicator()
-    }
-
-    function hide() {
-        f7app.hideIndicator();
-    }
-
-    return {
-        show: show,
-        hide: hide
-    }
-})()
-/*
- *    弹出提示框组件
- */
-app.toast = (function () {
-    return function (tit, txt) {
-        var params = {};
-
-        if (arguments.length === 1) {
-            params.text = tit
-        } else if (arguments.length === 2) {
-            params.title = tit;
-            params.text = txt
-        }
-
-        f7app.modal(params);
-
-        setTimeout(function () {
-            f7app.closeModal('.modal.modal-in');
-        }, 2000)
-    }
-})();
 /*
  *    本地存储
  */
-app.storage = (function () {
-    function setParams(key, jsonObj) {
-        localStorage.setItem(key, JSON.stringify(jsonObj));
-    }
+app.store = $.AMUI.store;
 
-    function getParams(key) {
-        var strObj = localStorage.getItem(key);
-        return JSON.parse(strObj);
-    }
+if (!app.store.enabled) {
+  alert('Local storage is not supported by your browser. Please disable "Private Mode", or upgrade to a modern browser.');
+  // return false;
+}
 
-    return {
-        set: setParams,
-        get: getParams
-    }
-})()
+var user = app.store.get('user');
+
+app.store.set('domain', document.domain);
+app.store.set('host', window.location.host);
 
 
 /*
@@ -184,40 +140,7 @@ app.empty = (function () {
         tel: /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/,
         emi: /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/
     }
-})()
-/*
- *   ajax
- */
-
-app.doAjax = (function () {
-    return function (interFace, type, param, succCallBack) {
-        console.log('接口:' + interFace);
-        console.log('类型:' + type);
-        console.log('输入:' + JSON.stringify(param));
-        //console.log('函数:' + succCallBack);
-
-        Dom7.ajax({
-            url: interFace,
-            type: type,
-            data: JSON.stringify(param),
-            contentType: "application/json;charset=UTF-8",
-            timeout: root.timeout,
-            beforeSend: function (request) {
-                app.loader.show();
-            },
-            success: function (data, status, response) {
-                succCallBack(data, status, response)
-            },
-            complete: function () {
-                app.loader.hide();
-            },
-            error: function (xhr, type, errorThrown) {
-                console.log(xhr);
-                app.toast('通讯错误，请重试。');
-            }
-        });
-    }
-})()
+})();
 
 
 /*

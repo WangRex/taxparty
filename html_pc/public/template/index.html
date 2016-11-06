@@ -1,153 +1,158 @@
 <!DOCTYPE html>
 <html>
-	<head lang="en">
-		<meta charset="UTF-8">
-		<title>税聚</title>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="format-detection" content="telephone=no">
-		<meta name="renderer" content="webkit">
-		<meta http-equiv="Cache-Control" content="no-siteapp" />
-		<link rel="alternate icon" type="image/png" href="assets/i/favicon.png">
-		<!-- 框架css -->
-		<link rel="stylesheet" href="../static/lib/amazeui/css/amazeui.min.css">
-		<!-- 自定义css -->
-		<link rel="stylesheet" href="/static/css/style.css">
-	</head>
-	<body>
-		<!--遮罩层-->
-		<div id="cover" style="width:100%;height:100%;background:#000;opacity: .6;position: absolute;left:0;top:0;z-index: 99;pointer-events: none;display: none;"></div>
-		<!--Header-->
-		<header id="amz-header">
-  			<div class="am-container">
-  				<h2>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>税聚</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="alternate icon" type="image/png" href="assets/i/favicon.png">
+    <!-- 框架css -->
+    <link rel="stylesheet" href="../static/lib/amazeui/css/amazeui.min.css">
+    <!-- 自定义css -->
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+
+<body>
+    <!--遮罩层-->
+    <div id="cover" style="width:100%;height:100%;background:#000;opacity: .6;position: absolute;left:0;top:0;z-index: 99;pointer-events: none;display: none;"></div>
+    <!--Header-->
+    <header id="amz-header">
+        <div class="am-container">
+            <h2>
   					<a href="index.html">
   						<img src="../static/images/logo.jpg"/>
   						<small>税聚</small>
   					</a>
   				</h2>
-  				<nav>
-  					<ul class="amz-header-nav am-collapse">
-	                    <li class="am-active"><a href="">首页</a></li>
-	                    <li><a href="">寻他</a></li>
-	                    <li><a href="">资讯</a></li>
-	                    <li><a href="">我的</a></li>
-	                    <li><a href="login.html"><img src="../static/images/img/head.png"/ style="height:26px;"></a></li>
-	                    <li><a href="message.html">消息</a></li>
-	                    <li><a href="">中文|English</a></li>
-	                </ul>
-  				</nav>
-  			</div>
-		</header>
-		<!--banner-->
-		<div class="banner">
-		  <div class="am-container am-container-height">
-		  	<div class="center-list">
-		  		<div class="amenu">
-		  			<a href="" class="am-fl">直问答咖</a>
-		  			<a href="" class="am-fr">高级咨询</a>
-		  		</div>
-		  		<form action="" method="post" class="forms">
-		  			<a href="" class="am-fl">
-		  				<input type="text" placeholder="请在这里概述您的问题" class="am-text-top text"/>
-		  			</a>
-		  			<a href="" class="am-fr">
-		  				<input type="submit" value="ASK" class="am-btn btn">
-		  			</a>
-		  		</form>
-		  		<div class="upload">
-		  			<a href="" class="am-fl">
-		  				<img src="../static/images/img/picture.png"/>
-		  				<span>图片</span>
-		  			</a>
-		  			<a href="" class="am-fl" style="margin-left:20px;">
-		  				<img src="../static/images/img/file.png"/>
-		  				<span>文件</span>
-		  			</a>
-		  		</div>
-		  	</div>
-			<div class="number">
-				题库量 82，583 专家数 2,683
-			</div>		  
-		  </div>
-		</div>
-		<!--content-->
-		<div class="content">
-		  <div class="am-g am-container">
-		    <div class="am-u-lg-22">
-		      <div class="am-g">
-		        <div class="am-u-lg-2 am-u-md-6 am-u-sm-12 content-list">
-		        	<a href="services.html" class="am-text-center am-block">
-			          	<img class="am-block" src="../static/images/img/current.png"/>
-			          	<span>同期资料</span>
-			          	<span>可比数据</span>
-		          	</a>
-		        </div>
-		        <div class="am-u-lg-2 am-u-md-6 am-u-sm-12 content-list">  	
-		           	<a href="tax.html" class="am-text-center">
-			          	<img src="../static/images/img/identify.png"/>
-			          	<span>国际税收</span>
-			          	<span>鉴定</span>
-		          	</a>
-		        </div>
-		        <div class="am-u-lg-2 am-u-md-6 am-u-sm-12 content-list">  	
-		            <a href="query.html" class="am-text-center">
-			          	<img src="../static/images/img/inquire.png"/>
-			          	<span>法规查询</span>
-		          	</a>
-		        </div>
-		        <div class="am-u-lg-2 am-u-md-6 am-u-sm-12 content-list">  	
-		            <a href="advise.html" class="am-text-center">
-			          	<img src="../static/images/img/advise.png"/>
-			          	<span>法规建议</span>
-		          	</a>
-		        </div>
-		        <div class="am-u-lg-2 am-u-md-6 am-u-sm-12 content-list">  	
-		            <a href="info.html" class="am-text-center">
-			          	<img src="../static/images/img/info.png"/>
-			          	<span>培训信息</span>
-		          	</a>
-		        </div>
-		        <div class="am-u-lg-2 am-u-md-6 am-u-sm-12 content-list">  	
-		            <a href="calculator.html" class="am-text-center">
-			          	<img src="../static/images/img/calculator.png"/>
-			          	<span>个税</span>
-			          	<span>计算器</span>
-		          	</a>
-		        </div>
-		        <div class="am-u-lg-2 am-u-md-6 am-u-sm-12 content-list">  	
-		            <a href="public.html" class="am-text-center">
-			          	<img src="../static/images/img/public.png"/>
-			          	<span>税聚</span>
-			          	<span>公众号</span>
-		          	</a>
-		        </div>
-		        <div class="am-u-lg-2 am-u-md-6 am-u-sm-12 content-list">  	
-		            <a href="app.html" class="am-text-center">
-			          	<img src="../static/images/img/app.png"/>
-			          	<span>税聚</span>
-			          	<span>APP</span>
-		          	</a>
-		        </div>
-		      </div>
-		    </div>
-		  </div>
-		</div>
-		<a class="am-a-maodian"></a>
-		<!--Footer-->
-		<footer class="am-footer footer links">
-		  <div class="am-footer-switch am-footer-alink"> 
-		  	<a data-rel="desktop" class="am-footer-desktop" href="javascript:">我们</a>
-		  	<span class="am-footer-divider">|</span> 
-		  	<a data-rel="desktop" class="am-footer-desktop" href="javascript:">合作</a>
-		  	<span class="am-footer-divider">|</span>
-		  	<a data-rel="desktop" class="am-footer-desktop" href="javascript:">联系</a>
-		  	<span class="am-footer-divider">|</span>
-		  	<a data-rel="desktop" class="am-footer-desktop" href="javascript:">隐私</a> 
-		  </div>
-		</footer>
-		<!--客服-->
-		<!--<div class="windows" id="right">
+            <nav>
+                <ul class="amz-header-nav am-collapse" id="amz-header-nav">
+                    <li class="am-active"><a href="">首页</a></li>
+                    <li><a href="">寻他</a></li>
+                    <li><a href="">资讯</a></li>
+                    <li><a href="">我的</a></li>
+                    <li>
+                        <a href="login.html" id="loginBtn"><img src="../static/images/img/head.png" / style="height:26px;"></a>
+                    </li>
+                    <li><a href="javascript:void(0);" id="messageBtn">消息</a></li>
+                    <!-- <li><a href="message.bak.html" id="messageBtn">消息</a></li> -->
+                    <li><a href="">中文|English</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <!--banner-->
+    <div class="banner" id="banner-div">
+        <div class="am-container am-container-height" id="banner-content">
+            <div class="center-list">
+                <div class="amenu">
+                    <a href="" class="am-fl">直问答咖</a>
+                    <a href="" class="am-fr">高级咨询</a>
+                </div>
+                <form action="" method="post" class="forms">
+                    <a href="" class="am-fl">
+                        <input type="text" placeholder="请在这里概述您的问题" class="am-text-top text" />
+                    </a>
+                    <a href="" class="am-fr">
+                        <input type="submit" value="ASK" class="am-btn btn">
+                    </a>
+                </form>
+                <div class="upload">
+                    <a href="" class="am-fl">
+                        <img src="../static/images/img/picture.png" />
+                        <span>图片</span>
+                    </a>
+                    <a href="" class="am-fl" style="margin-left:20px;">
+                        <img src="../static/images/img/file.png" />
+                        <span>文件</span>
+                    </a>
+                </div>
+            </div>
+            <div class="number">
+                题库量 82，583 专家数 2,683
+            </div>
+        </div>
+    </div>
+    <!--content-->
+    <div class="content">
+        <div class="am-g am-container">
+            <div class="am-u-lg-22">
+                <div class="am-g">
+                    <div class="am-u-lg-2 am-u-md-6 am-u-sm-12 content-list">
+                        <a href="services.html" class="am-text-center am-block">
+                            <img class="am-block" src="../static/images/img/current.png" />
+                            <span>同期资料</span>
+                            <span>可比数据</span>
+                        </a>
+                    </div>
+                    <div class="am-u-lg-2 am-u-md-6 am-u-sm-12 content-list">
+                        <a href="tax.html" class="am-text-center">
+                            <img src="../static/images/img/identify.png" />
+                            <span>国际税收</span>
+                            <span>鉴定</span>
+                        </a>
+                    </div>
+                    <div class="am-u-lg-2 am-u-md-6 am-u-sm-12 content-list">
+                        <a href="query.html" class="am-text-center">
+                            <img src="../static/images/img/inquire.png" />
+                            <span>法规查询</span>
+                        </a>
+                    </div>
+                    <div class="am-u-lg-2 am-u-md-6 am-u-sm-12 content-list">
+                        <a href="advise.html" class="am-text-center">
+                            <img src="../static/images/img/advise.png" />
+                            <span>法规建议</span>
+                        </a>
+                    </div>
+                    <div class="am-u-lg-2 am-u-md-6 am-u-sm-12 content-list">
+                        <a href="info.html" class="am-text-center">
+                            <img src="../static/images/img/info.png" />
+                            <span>培训信息</span>
+                        </a>
+                    </div>
+                    <div class="am-u-lg-2 am-u-md-6 am-u-sm-12 content-list">
+                        <a href="calculator.html" class="am-text-center">
+                            <img src="../static/images/img/calculator.png" />
+                            <span>个税</span>
+                            <span>计算器</span>
+                        </a>
+                    </div>
+                    <div class="am-u-lg-2 am-u-md-6 am-u-sm-12 content-list">
+                        <a href="public.html" class="am-text-center">
+                            <img src="../static/images/img/public.png" />
+                            <span>税聚</span>
+                            <span>公众号</span>
+                        </a>
+                    </div>
+                    <div class="am-u-lg-2 am-u-md-6 am-u-sm-12 content-list">
+                        <a href="app.html" class="am-text-center">
+                            <img src="../static/images/img/app.png" />
+                            <span>税聚</span>
+                            <span>APP</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a class="am-a-maodian"></a>
+    <!--Footer-->
+    <footer class="am-footer footer links">
+        <div class="am-footer-switch am-footer-alink">
+            <a data-rel="desktop" class="am-footer-desktop" href="javascript:void(0);void(0);">我们</a>
+            <span class="am-footer-divider">|</span>
+            <a data-rel="desktop" class="am-footer-desktop" href="javascript:void(0);void(0);">合作</a>
+            <span class="am-footer-divider">|</span>
+            <a data-rel="desktop" class="am-footer-desktop" href="javascript:void(0);void(0);">联系</a>
+            <span class="am-footer-divider">|</span>
+            <a data-rel="desktop" class="am-footer-desktop" href="javascript:void(0);void(0);">隐私</a>
+        </div>
+    </footer>
+    <!--客服-->
+    <!--<div class="windows" id="right">
 			<div class="title">
 				<img alt="" src=""/>		
 			</div>
@@ -155,10 +160,36 @@
 				<img src="../static/images/img/code.png"/>	
 			</div>
 		</div>-->
-		<script src="../static/lib/jquery/jquery.min.js"></script>
-		<script src="../static/lib/amazeui/js/amazeui.min.js"></script>
-		<script src="../static/js/app.js"></script>
-		<script src="../static/js/business.js"></script>
-	</body>
+    <div class="am-modal am-modal-no-btn" tabindex="-1" id="my-alert">
+    </div>
+    <!-- alert模板 -->
+    <script id="alert-tpl" type="text/x-handlebars-template">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">{{title}}
+                <a href="javascript:void(0);void(0); void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+            </div>
+            <div class="am-modal-bd">
+                {{content}}
+            </div>
+        </div>
+    </script>
+    <div class="am-modal am-modal-loading am-modal-no-btn" tabindex="-1" id="my-modal-loading">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">正在载入...</div>
+            <div class="am-modal-bd">
+                <span class="am-icon-spinner am-icon-spin"></span>
+            </div>
+        </div>
+    </div>
+    <script src="../static/lib/jquery/jquery.min.js"></script>
+    <!-- <script src="../static/lib/jquery/jquery.widgets.serializeJson.js"></script> -->
+    <script src="../static/lib/amazeui/js/amazeui.min.js"></script>
+    <script src="../static/lib/amazeui/js/amazeui.widgets.helper.min.js"></script>
+    <script src="../static/lib/amazeui/js/handlebars.min.js"></script>
+    <script src="../static/js/app.js"></script>
+    <script src="../static/js/business.js"></script>
+    <script src="../static/js/globalUtils.js"></script>
+    <script src="../static/js/index.js"></script>
+</body>
 
 </html>

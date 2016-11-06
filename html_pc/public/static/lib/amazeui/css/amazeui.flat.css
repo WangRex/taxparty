@@ -11143,9 +11143,9 @@ tbody.am-collapse.am-in {
   }
   /**
    * Don't show links that are fragment identifiers,
-   * or use the `javascript:` pseudo protocol
+   * or use the `javascript:void(0);` pseudo protocol
    */
-  a[href^="javascript:"]:after,
+  a[href^="javascript:void(0);"]:after,
   a[href^="#"]:after {
     content: "";
   }

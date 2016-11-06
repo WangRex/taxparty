@@ -2293,7 +2293,7 @@ if (!Object.create) {
         iframe.style.display = 'none';
         parent.appendChild(iframe);
         /* eslint-disable no-script-url */
-        iframe.src = 'javascript:';
+        iframe.src = 'javascript:void(0);';
         /* eslint-enable no-script-url */
 
         empty = iframe.contentWindow.Object.prototype;

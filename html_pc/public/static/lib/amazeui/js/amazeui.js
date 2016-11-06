@@ -10009,7 +10009,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  '<div class="am-pureview-counter"><span class="am-pureview-current"></span> / ' +
 	  '<span class="am-pureview-total"></span></div></div>' +
 	  '<div class="am-pureview-actions am-active">' +
-	  '<a href="javascript: void(0)" class="am-icon-chevron-left" ' +
+	  '<a href="javascript:void(0); void(0)" class="am-icon-chevron-left" ' +
 	  'data-am-close="pureview"></a></div>' +
 	  '</div>',
 
@@ -10063,7 +10063,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  this.$actions = $pureview.find(options.selector.actions);
 
 	  if (options.shareBtn) {
-	    this.$actions.append('<a href="javascript: void(0)" ' +
+	    this.$actions.append('<a href="javascript:void(0); void(0)" ' +
 	    'class="am-icon-share-square-o" data-am-toggle="share"></a>');
 	  }
 
@@ -16357,7 +16357,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    id: UI.utils.generateGUID('am-navbar-actions')
 	  });
 	  var $moreLink = $('<li class="am-navbar-labels am-navbar-more">' +
-	  '<a href="javascript: void(0);">' +
+	  '<a href="javascript:void(0); void(0);">' +
 	  '<span class="am-icon-angle-up"></span>' +
 	  '<span class="am-navbar-label">更多</span></a></li>');
 

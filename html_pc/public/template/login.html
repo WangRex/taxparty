@@ -1,80 +1,91 @@
 <!DOCTYPE html>
 <html>
-	<head lang="en">
-		<meta charset="UTF-8">
-		<title>税聚</title>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="format-detection" content="telephone=no">
-		<meta name="renderer" content="webkit">
-		<meta http-equiv="Cache-Control" content="no-siteapp" />
-		<link rel="alternate icon" type="image/png" href="assets/i/favicon.png">
-		<!-- 框架css -->
-		<link rel="stylesheet" href="../static/lib/amazeui/css/amazeui.min.css">
-		<link rel="stylesheet" href="../static/lib/amazeui/css/admin.css">
-		<!-- 自定义css -->
-		<link rel="stylesheet" href="/static/css/login.css">
-		<!--<link rel="stylesheet" href="/widget/login/xxx.css">-->
-	</head>
-	<body>
-		<!--Header-->
-		<header id="amz-header">
-  			<div class="am-container">
-  				<h2>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>税聚</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="alternate icon" type="image/png" href="assets/i/favicon.png">
+    <!-- 框架css -->
+    <link rel="stylesheet" href="../static/lib/amazeui/css/amazeui.min.css">
+    <link rel="stylesheet" href="../static/lib/amazeui/css/admin.css">
+    <!-- 自定义css -->
+    <link rel="stylesheet" href="/static/css/login.css">
+    <!--<link rel="stylesheet" href="/widget/login/xxx.css">-->
+</head>
+
+<body>
+    <!--Header-->
+    <header id="amz-header">
+        <div class="am-container">
+            <h2>
   					<a href="index.html">
   						<img src="../static/images/logo.jpg"/>
   						<small>税聚</small>
   					</a>
   				</h2>
-  			</div>
-		</header>
-		<!--banner-->
-		<div class="page">
-			<div class="am-container page-content">
-				<div class="loginbox">
-					<div class="logo">
-	            		<h1><a href="">税聚</a></h1>
-					</div>
-					<div class="logos">
-	            		<a href="">账号登录</a>
-					</div>
-					<form action="index.html" method="">				
-						<div class="am-input-group">
-		                   <input type="text" name="username" id="username" placeholder="账号">
-		                </div>
-		                <div class="am-input-group">
-		                   <input type="password" name="password" id="password" placeholder="密码">
-		                </div>
-		                <div class="am-input-group">
-		                	<a href="forgetpassword.html" class="am-fl">忘记密码</a>
-		  					<a href="register.html" class="am-fr">免费注册</a>
-		                </div>
-		                <div class="am-input-group">
-		                	<button>登&nbsp;&nbsp;录</button> 
-		                </div>
-		                   			
-					</form>
-				</div>
-			</div>
-		</div>
-		<a class="am-a-maodian"></a>
-		<!--Footer-->
-		<footer class="am-footer footer links">
-		  <div class="am-footer-switch am-footer-alink"> 
-		  	<a data-rel="desktop" class="am-footer-desktop" href="javascript:">我们</a>
-		  	<span class="am-footer-divider">|</span> 
-		  	<a data-rel="desktop" class="am-footer-desktop" href="javascript:">合作</a>
-		  	<span class="am-footer-divider">|</span>
-		  	<a data-rel="desktop" class="am-footer-desktop" href="javascript:">联系</a>
-		  	<span class="am-footer-divider">|</span>
-		  	<a data-rel="desktop" class="am-footer-desktop" href="javascript:">隐私</a> 
-		  </div>
-		</footer>
-		
-		<script src="../static/lib/jquery/jquery.min.js"></script>
-		<script src="../static/lib/amazeui/js/amazeui.min.js"></script>
-		<script src="../static/js/app.js"></script>
-		<script src="../static/js/business.js"></script>
-	</body>
+        </div>
+    </header>
+    <!--banner-->
+    <div class="page">
+        <div class="am-container page-content">
+            <div class="loginbox">
+                <div class="logo">
+                    <h1><a href="">税聚</a></h1>
+                </div>
+                <div class="logos">
+                    <a href="">账号登录</a>
+                </div>
+                <div class="am-input-group">
+                    <input type="text" name="username" id="username" placeholder="账号" value="15210044288">
+                </div>
+                <div class="am-input-group">
+                    <input type="password" name="password" id="password" placeholder="密码" value="123456">
+                </div>
+                <div class="am-input-group">
+                    <a href="forgetpassword.html" class="am-fl">忘记密码</a>
+                    <a href="register.html" class="am-fr">免费注册</a>
+                </div>
+                <div class="am-input-group" id="dologin">
+                    <button>登&nbsp;&nbsp;录</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a class="am-a-maodian"></a>
+    <!--Footer-->
+    <footer class="am-footer footer links">
+        <div class="am-footer-switch am-footer-alink">
+            <a data-rel="desktop" class="am-footer-desktop" href="javascript:void(0);">我们</a>
+            <span class="am-footer-divider">|</span>
+            <a data-rel="desktop" class="am-footer-desktop" href="javascript:void(0);">合作</a>
+            <span class="am-footer-divider">|</span>
+            <a data-rel="desktop" class="am-footer-desktop" href="javascript:void(0);">联系</a>
+            <span class="am-footer-divider">|</span>
+            <a data-rel="desktop" class="am-footer-desktop" href="javascript:void(0);">隐私</a>
+        </div>
+    </footer>
+    <div class="am-modal am-modal-loading am-modal-no-btn" tabindex="-1" id="my-modal-loading">
+        <div class="am-modal-dialog">
+            <div class="am-modal-hd">正在载入...</div>
+            <div class="am-modal-bd">
+                <span class="am-icon-spinner am-icon-spin"></span>
+            </div>
+        </div>
+    </div>
+    <script src="../static/lib/jquery/jquery.min.js"></script>
+    <!-- <script src="../static/lib/jquery/jquery.widgets.serializeJson.js"></script> -->
+    <script src="../static/lib/amazeui/js/amazeui.min.js"></script>
+    <script src="../static/lib/amazeui/js/amazeui.widgets.helper.min.js"></script>
+    <script src="../static/lib/amazeui/js/handlebars.min.js"></script>
+    <script src="../static/js/app.js"></script>
+    <script src="../static/js/business.js"></script>
+    <script src="../static/js/globalUtils.js"></script>
+    <script src="../static/js/login.js"></script>
+</body>
 
 </html>
