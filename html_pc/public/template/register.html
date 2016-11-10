@@ -1,83 +1,88 @@
 <!DOCTYPE html>
 <html>
-	<head lang="en">
-		<meta charset="UTF-8">
-		<title>税聚</title>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta name="format-detection" content="telephone=no">
-		<meta name="renderer" content="webkit">
-		<meta http-equiv="Cache-Control" content="no-siteapp" />
-		<link rel="alternate icon" type="image/png" href="assets/i/favicon.png">
-		<!-- 框架css -->
-		<link rel="stylesheet" href="../static/lib/amazeui/css/amazeui.min.css">
-		<!-- 自定义css -->
-		<link rel="stylesheet" href="/static/css/login.css">
-	</head>
-	<body>
-		<!--Header-->
-		<header id="amz-header">
-  			<div class="am-container">
-  				<h2>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>税聚</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="alternate icon" type="image/png" href="assets/i/favicon.png">
+    <!-- 框架css -->
+    <link rel="stylesheet" href="../static/lib/amazeui/css/amazeui.min.css">
+    <!-- 自定义css -->
+    <link rel="stylesheet" href="/static/css/login.css">
+</head>
+
+<body>
+    <!--Header-->
+    <header id="amz-header">
+        <div class="am-container">
+            <h2>
   					<a href="index.html">
   						<img src="../static/images/logo.jpg"/>
   						<small>税聚</small>
   					</a>
   				</h2>
-  			</div>
-		</header>
-		<!--banner-->
-		<div class="pages">
-			<div class="am-container pages-content">
-				<div class="loginboxs">
-					<div class="title">
-	            		<a href="">登录</a>
-					</div>
-					<form action="email.html" method="">
-						<div class="am-input-group">
-		                   <input type="text" name="username" id="username" placeholder="手机号/邮箱">
-		                </div>
-						<div class="am-input-group">
-		                   <input type="password" name="password" id="password" placeholder="请输入6位密码">
-		                </div>
-		                <div class="am-input-group">
-		                   <input type="password" name="password" id="password" placeholder="确认密码">
-		                </div>
-		                <div class="am-input-group">
-		                   <input type="text" name="" id="" placeholder="请输入6位邀请码"> <span>选填</span>
-		                </div>
-		                <div class="am-input-group proving">
-		                   <input type="text" name="code" id="code" placeholder="请输入验证码">
-		                   <span>4354</span>
-		                </div>
-		              	<div class="am-input-group">
-		                	<span class="checker">我已阅读并同意《税聚在线服务协议》</span>
-		                </div>
-		                <div class="am-input-group">
-		                	<button>注册</button>
-		                </div>
-					</form>
-				</div>
-			</div>
-		</div>
-		<a class="am-a-maodian"></a>
-		<!--Footer-->
-		<footer class="am-footer footer links">
-		  <div class="am-footer-switch am-footer-alink"> 
-		  	<a data-rel="desktop" class="am-footer-desktop" href="javascript:void(0);">我们</a>
-		  	<span class="am-footer-divider">|</span> 
-		  	<a data-rel="desktop" class="am-footer-desktop" href="javascript:void(0);">合作</a>
-		  	<span class="am-footer-divider">|</span>
-		  	<a data-rel="desktop" class="am-footer-desktop" href="javascript:void(0);">联系</a>
-		  	<span class="am-footer-divider">|</span>
-		  	<a data-rel="desktop" class="am-footer-desktop" href="javascript:void(0);">隐私</a> 
-		  </div>
-		</footer>
-		
-		<script src="../static/lib/jquery/jquery.min.js"></script>
-		<script src="../static/lib/amazeui/js/amazeui.min.js"></script>
-		<script src="../static/js/app.js"></script>
-		<script src="../static/js/business.js"></script>
-	</body>
+        </div>
+    </header>
+    <!--banner-->
+    <div class="pages">
+        <div class="am-container pages-content">
+            <div class="loginboxs">
+                <div class="title">
+                    <a href="">登录</a>
+                </div>
+                <form action="email.html" method="">
+                    <div class="am-input-group">
+                        <input type="text" name="username" id="username" placeholder="手机号/邮箱">
+                    </div>
+                    <div class="am-input-group">
+                        <input type="password" name="password" id="password" placeholder="请输入6位密码">
+                    </div>
+                    <div class="am-input-group">
+                        <input type="password" name="password" id="password" placeholder="确认密码">
+                    </div>
+                    <div class="am-input-group">
+                        <input type="text" name="" id="" placeholder="请输入6位邀请码"> <span>选填</span>
+                    </div>
+                    <div class="am-input-group proving">
+                        <input type="text" name="code" id="code" placeholder="请输入验证码">
+                        <span>4354</span>
+                    </div>
+                    <div class="am-input-group">
+                        <span class="checker">我已阅读并同意《税聚在线服务协议》</span>
+                    </div>
+                    <div class="am-input-group">
+                        <button id="doregister">注册</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <a class="am-a-maodian"></a>
+    <!--Footer-->
+    <footer class="am-footer footer links">
+        <div class="am-footer-switch am-footer-alink">
+            <a data-rel="desktop" class="am-footer-desktop" href="javascript:void(0);">我们</a>
+            <span class="am-footer-divider">|</span>
+            <a data-rel="desktop" class="am-footer-desktop" href="javascript:void(0);">合作</a>
+            <span class="am-footer-divider">|</span>
+            <a data-rel="desktop" class="am-footer-desktop" href="javascript:void(0);">联系</a>
+            <span class="am-footer-divider">|</span>
+            <a data-rel="desktop" class="am-footer-desktop" href="javascript:void(0);">隐私</a>
+        </div>
+    </footer>
+    <script src="../static/lib/jquery/jquery.min.js"></script>
+    <script src="../static/lib/amazeui/js/amazeui.min.js"></script>
+    <script src="../static/lib/amazeui/js/amazeui.widgets.helper.min.js"></script>
+    <script src="../static/lib/amazeui/js/handlebars.min.js"></script>
+    <script src="../static/js/app.js"></script>
+    <script src="../static/js/business.js"></script>
+    <script src="../static/js/globalUtils.js"></script>
+    <script src="../static/js/login.js"></script>
+</body>
 
 </html>

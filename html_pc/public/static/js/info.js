@@ -1,6 +1,6 @@
-var loginModule = (function(lm) {
+var infoModule = (function(info) {
 
-    lm.init = function() {
+    info.init = function() {
         $(document).on("click", "#dologin", function() {
             lm.login();
         });
@@ -9,7 +9,7 @@ var loginModule = (function(lm) {
         });
     }
 
-    lm.login = function() {
+    info.login = function() {
         var data = {
             "username": $("#username").val(),
             "user_password": $("#password").val()
@@ -32,9 +32,9 @@ var loginModule = (function(lm) {
             window.location.replace("index.html");
         }, 'post');
     }
-    return lm;
-}(loginModule || {}));
+    return info;
+}(infoModule || {}));
 
 $(function() {
-    loginModule.init();
+    infoModule.init();
 });
