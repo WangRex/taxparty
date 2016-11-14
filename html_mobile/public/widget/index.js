@@ -44,6 +44,20 @@ $$(document).on("click", "div.home_main_mod a.btn",function (event) {
     event.stopPropagation();
 })
 
+$$(document).on("click", "#msg-btn",function (event) {
+
+    var userArr = app.storage.get("userArr");
+    if (userArr == null) {
+        app.toast("您还没有登录!");
+
+        return false
+    }
+    view.main.router.loadPage('index/msg.html');
+    return false;
+    event.preventDefault();
+    event.stopPropagation();
+})
+
 /* ===== 注册 ===== */
 f7app.onPageAfterAnimation('register', function (page) {
 

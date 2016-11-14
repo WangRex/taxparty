@@ -1,13 +1,13 @@
 //登陆
-app.login = (function() {
-    return function(user, pass) {
+app.login = (function () {
+    return function (user, pass) {
 
         var param = {
             "username": user,
             "user_password": pass
         }
 
-        var succCallBack = function(data, status, response) {
+        var succCallBack = function (data, status, response) {
             var data = JSON.parse(data);
             console.log(data.errCode)
 
@@ -19,12 +19,20 @@ app.login = (function() {
                     token: data.token,
                     username: user
                 }
-
+                
+                var json = {
+                    "key": "username",
+                    "val": user
+                };
+                //Chrome调试可以注释掉这两行代码，但是请勿提交到SVN
+                /*InvokeApp.setItem(function(){},function(){},json);//调用原生插件缓存用户名
+                InvokeApp.BindAccount(function(){},function(){},{});//调用原生插件绑定阿里百川推送账号
+               */
                 app.toast("登录成功！")
 
                 app.storage.set('userArr', data);
 
-                setTimeout(function() {
+                setTimeout(function () {
                     view.main.router.loadPage('index.html');
                 }, 1)
 
@@ -38,9 +46,9 @@ app.login = (function() {
 })();
 
 //注册
-app.register = (function() {
+app.register = (function () {
 
-    return function(i_code, user, pass, v_code) {
+    return function (i_code, user, pass, v_code) {
 
         var param = {
             invite_code: i_code,
@@ -49,13 +57,16 @@ app.register = (function() {
             check_errorCode: v_code,
         }
 
-        var succCallBack = function(data, status, response) {
+        var succCallBack = function (data, status, response) {
             var data = JSON.parse(data);
 
             console.log(data);
 
             if (data.errorCode == '0') {
+                app.toast("注册成功！");
                 view.main.router.loadPage('signin/login.html');
+            } else {
+                app.toast("验证码过期或者不正确！");
             }
         }
 
@@ -66,8 +77,8 @@ app.register = (function() {
 
 
 //校验
-app.isLR = (function() {
-
+app.isLR = (function () {
+    var re = /^[0-9a-zA-Z]+$/;
     //登陆校验
     function islogin() {
         var user = $$("#user").val();
@@ -82,6 +93,9 @@ app.isLR = (function() {
         } else if (pswd.length < 6) {
             app.toast('密码不能小于6位');
             return false
+        } else if (!re.test(pswd)) {
+            app.toast("密码只能是数字、大小写字母！");
+            return false
         } else {
             app.login(user, pswd)
         }
@@ -90,6 +104,8 @@ app.isLR = (function() {
 
     //注册校验
     function isregister() {
+        var re = /^[0-9a-zA-Z]+$/;
+
         var icode = $$("#icode").val();
         var users = $$("#users").val();
         var pswd1 = $$("#pswd1").val();
@@ -97,25 +113,34 @@ app.isLR = (function() {
         var codes = $$("#codes").val();
 
         if (!users) {
-            app.toast('请输入邮箱或手机号码');
+            app.toast('请输入邮箱或手机号码！');
             return false
         } else if (!app.empty.tel.test(users) && !app.empty.emi.test(users)) {
-            app.toast('请输入正确的手机号码或邮箱');
+            app.toast('请输入正确的手机号码或邮箱!');
             return false
         } else if (!pswd1) {
-            app.toast('请输入密码');
+            app.toast('请输入密码!');
             return false
         } else if (pswd1.length < 6) {
-            app.toast('密码不能小于6位');
+            app.toast('密码不能小于6位!');
+            return false
+        } else if (!re.test(pswd1)) {
+            app.toast("密码只能是数字、大小写字母！");
             return false
         } else if (!pswd2) {
-            app.toast('请输入确认密码');
+            app.toast('请输入确认密码!');
+            return false
+        } else if (pswd2.length < 6) {
+            app.toast('密码不能小于6位!');
+            return false
+        } else if (!re.test(pswd2)) {
+            app.toast("密码只能是数字、大小写字母！");
             return false
         } else if (pswd2 !== pswd1) {
-            app.toast('密码输入不一致');
+            app.toast('两次密码输入不一致!');
             return false
         } else if (!codes) {
-            app.toast('验证码不能为空');
+            app.toast('验证码不能为空!');
             return false
         } else {
             app.register(icode, users, pswd2, codes)
@@ -129,15 +154,15 @@ app.isLR = (function() {
 })()
 
 //获取验证码
-app.verifyCode = (function() {
-    return function(type, user) {
+app.verifyCode = (function () {
+    return function (type, user) {
 
         var param = {
             flag: type,
             userAcc: user
         }
 
-        var succCallBack = function(data, status, response) {
+        var succCallBack = function (data, status, response) {
             var data = JSON.parse(data);
             var index = $$("#verifyCode");
             var num = 59;
@@ -153,7 +178,7 @@ app.verifyCode = (function() {
                     index.addClass("disabled");
                     index.html(num + 'S');
                     num--;
-                    setTimeout(function() {
+                    setTimeout(function () {
                         time(index)
                     }, 1000)
                 }
@@ -172,15 +197,15 @@ app.verifyCode = (function() {
 
 
 //获取手机邮箱验证码
-app.verifyTelCode = (function() {
-    return function(flag, tel) {
+app.verifyTelCode = (function () {
+    return function (flag, tel) {
 
         var param = {
             flag: flag,
             userAcc: tel,
         }
 
-        var succCallBack = function(data, status, response) {
+        var succCallBack = function (data, status, response) {
             var data = JSON.parse(data);
             var index = $$("#getTelNum");
             var num = 59;
@@ -196,7 +221,7 @@ app.verifyTelCode = (function() {
                     index.addClass("disabled");
                     index.html(num + 'S');
                     num--;
-                    setTimeout(function() {
+                    setTimeout(function () {
                         time(index)
                     }, 1000)
                 }
@@ -217,15 +242,15 @@ app.verifyTelCode = (function() {
 
 
 //上传头像
-app.upUserImg = (function() {
+app.upUserImg = (function () {
 
-    return function(userImg) {
+    return function (userImg) {
         var param = {
             "username": app.storage.get("userArr").username,
             "img": userImg
         }
 
-        var succCallBack = function(data, status, response) {
+        var succCallBack = function (data, status, response) {
             var data = JSON.parse(data);
 
             console.log(data)
@@ -236,8 +261,8 @@ app.upUserImg = (function() {
 })()
 
 // 资讯一览
-app.newsList = (function() {
-    return function() {
+app.newsList = (function () {
+    return function () {
 
 
         var userArr = app.storage.get("userArr");
@@ -252,13 +277,13 @@ app.newsList = (function() {
             "token": app.storage.get("userArr").token,
         }
 
-        var succCallBack = function(data, status, response) {
+        var succCallBack = function (data, status, response) {
             var data = JSON.parse(data);
             console.log(data)
             if (data != null && data.data != null) {
                 var nodes = data.data;
 
-                $$.each(nodes, function(index, value) {
+                $$.each(nodes, function (index, value) {
                     value["time_y"] = value.new_subtime.substr(0, 4);
                     value["time_m"] = value.new_subtime.substr(5, 2);
                     value["time_d"] = value.new_subtime.substr(8, 3);
@@ -283,14 +308,14 @@ app.newsList = (function() {
 })();
 
 // 资讯详情
-app.newsDetails = (function() {
-    return function(listId) {
+app.newsDetails = (function () {
+    return function (listId) {
         var param = {
             "token": app.storage.get("userArr").token,
             "inform_id": listId
         }
 
-        var succCallBack = function(data, status, response) {
+        var succCallBack = function (data, status, response) {
             var data = JSON.parse(data);
             if (data.errorCode != "0") {
                 app.toast(data.errorMessage);
@@ -335,8 +360,8 @@ app.newsDetails = (function() {
 })();
 
 // 资讯详情
-app.newsDetailsCustom = (function() {
-    return function(listId, succCallBack) {
+app.newsDetailsCustom = (function () {
+    return function (listId, succCallBack) {
         var param = {
             "token": app.storage.get("userArr").token,
             "inform_id": listId
@@ -350,8 +375,8 @@ app.newsDetailsCustom = (function() {
 })();
 
 // 资讯详情点赞
-app.newslikeInform = (function() {
-    return function(listId, likeFlag) {
+app.newslikeInform = (function () {
+    return function (listId, likeFlag) {
 
         var param = {
             "token": app.storage.get("userArr").token,
@@ -359,10 +384,10 @@ app.newslikeInform = (function() {
             "inform_id": listId
         };
 
-        var succCallBack = function(data, status, response) {
+        var succCallBack = function (data, status, response) {
             var data = JSON.parse(data);
             if (data.errorCode == 0) {
-                var succCallBackUpdateLike = function(data, status, response) {
+                var succCallBackUpdateLike = function (data, status, response) {
                     var data = JSON.parse(data);
                     var nodes = data.data;
                     if (likeFlag == 0) {
@@ -388,15 +413,15 @@ app.newslikeInform = (function() {
 })();
 
 // 资讯详情收藏
-app.newsCollectInform = (function() {
-    return function(inform_id) {
+app.newsCollectInform = (function () {
+    return function (inform_id) {
 
         var param = {
             "token": app.storage.get("userArr").token,
             "inform_id": inform_id
         };
 
-        var succCallBack = function(data, status, response) {
+        var succCallBack = function (data, status, response) {
             var data = JSON.parse(data);
             app.toast(data.errorMessage);
             console.log(data);
@@ -411,9 +436,9 @@ app.newsCollectInform = (function() {
 
 
 // 资讯评论reload
-app.commentInformReload = (function() {
+app.commentInformReload = (function () {
 
-    return function(token, listId, succCallBack) {
+    return function (token, listId, succCallBack) {
         var param = {
             "token": token,
             "inform_id": listId,
@@ -427,9 +452,9 @@ app.commentInformReload = (function() {
 
 
 // 资讯评论
-app.commentInform = (function() {
+app.commentInform = (function () {
 
-    return function(listId, val, time) {
+    return function (listId, val, time) {
         var token = app.storage.get("userArr").token;
         var param = {
             "token": token,
@@ -439,12 +464,12 @@ app.commentInform = (function() {
             "username": '15210044288'
         };
 
-        var succCallBack = function(data, status, response) {
+        var succCallBack = function (data, status, response) {
             var data = JSON.parse(data);
             console.log(data);
             if (data.errorCode == 0) {
                 app.toast(data.errorMessage || "评论成功！");
-                var succCallBackReloadComments = function(data) {
+                var succCallBackReloadComments = function (data) {
                     var data = JSON.parse(data);
                     var nodes = data.data;
                     if (nodes.comments > 0) {
@@ -468,14 +493,14 @@ app.commentInform = (function() {
     }
 })();
 
-app.collectList = (function() {
-    return function() {
+app.collectList = (function () {
+    return function () {
 
         var param = {
             "token": app.storage.get("userArr").token
         }
 
-        var succCallBack = function(data, status, response) {
+        var succCallBack = function (data, status, response) {
             var data = JSON.parse(data);
             var nodes = data.data;
 
@@ -494,15 +519,15 @@ app.collectList = (function() {
 })();
 
 //取消收藏
-app.disCollectNews = (function() {
-    return function(tuc_id) {
+app.disCollectNews = (function () {
+    return function (tuc_id) {
 
         var param = {
             "token": app.storage.get("userArr").token,
-            "tuc_id":tuc_id
+            "tuc_id": tuc_id
         }
 
-        var succCallBack = function(data, status, response) {
+        var succCallBack = function (data, status, response) {
             var data = JSON.parse(data);
             console.log(data);
             if (data.errCode == 0) {

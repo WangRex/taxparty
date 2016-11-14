@@ -90,7 +90,7 @@ app.queryList = (function () {
         var param = {
             "token": app.storage.get("userArr").token,
             "law_name": law_name,
-            "law_number": law_number,
+            "law_num": law_number,
             "release_date":release_date,
             "law_att":law_att
 
@@ -167,15 +167,15 @@ f7app.onPageBeforeAnimation('queryList', function (page) {
     console.log(page.query);
     $$("#queryfile").on("click", function () {
 
-        var law_name = $$("#law_name").val(); //文件字号
-        var law_number = $$("#law_number").val(); //文件名
-        var release_date = $$("#release_date").val(); //文件名
-        var law_att = $$("#law_att").val(); //文件名
+        var law_name = $$("#law_name").val(); //文件名
+        var law_num = $$("#law_num").val(); //法规号
+        var release_date = $$("#release_date").val(); //发布日期
+        var law_att = $$("#law_att").val(); //法规文号
 
         if (!law_name && !law_number&&!release_date&&!law_att) {
             // app.toast("请输入文件字号或者文件名");
         }
-        app.queryList(law_name,law_number,release_date,law_att);
+        app.queryList(law_name,law_num,release_date,law_att);
 
 
     })
@@ -235,7 +235,7 @@ app.discollect=(function () {
         var param = {
             "token": app.storage.get("userArr").token,
             "flag":"0",
-            "tuc_id":law_id
+            "info_id":law_id
         };
         var succCallBack = function (data, status, response) {
             var data = JSON.parse(data);

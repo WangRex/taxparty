@@ -52,8 +52,43 @@ app.services = (function () {
     }
 })()
 
-//同期可比数据
-f7app.onPageInit('services', function (page) {
+app.findUserEmail = (function () {
+        return function (token) {
+
+            var param = {
+                "token": token
+            }
+
+
+            var succCallBack = function (data, status, response, address) {
+                var data = JSON.parse(data);
+                console.log(data);
+                if (data.errorCode == '0') {
+                    if (!data.email) {
+                        console.warn("数据异常！");
+                    } else {
+                        $$('#data-briebly').val(data.email);
+                        $$('#tit_email1').val(data.email);
+                        $$('#tit_email2').val(data.email);
+                        $$('#tit_email3').val(data.email);
+                        $$('#tit_email4').val(data.email);
+                        $$('#tit_email5').val(data.email);
+                    }
+                } else if (data.errorCode == '2001') {
+                    //无操作
+                    console.info("非邮箱用户，故无返回数据。");
+                } else {
+                    app.toast("系统异常！");
+                }
+
+            }
+
+
+            return app.doAjax(root.interFace.findUserEmail, 'post', param, succCallBack)
+        }
+    })()
+    //同期可比数据
+f7app.onPageInit('tongqikebi', function (page) {
 
     //绑定返回键
     window.localStorage["page"] = 'main';
@@ -71,7 +106,8 @@ f7app.onPageInit('services', function (page) {
         return true;
 
     }
-
+    var token = app.storage.get("userArr").token
+    app.findUserEmail(token);
     //初始化范例图片
     var myPhotoBrowserStandalone = f7app.photoBrowser({
         photos: [
@@ -83,7 +119,11 @@ f7app.onPageInit('services', function (page) {
             '../static/images/data/tqzl/tqzl6.png',
             '../static/images/data/tqzl/tqzl7.png',
             '../static/images/data/tqzl/tqzl8.png',
-        ]
+        ],
+        type:'page',
+        view:view.main,
+        backLinkText:'关闭',
+        exposition:false
     });
     //Open photo browser on click
     $$('#img-slide').on('click', function () {
@@ -274,15 +314,33 @@ f7app.onPageInit('services', function (page) {
     var worry_fee = Number(200 * (4 - Number($$('#expect_date').val()))).toFixed(2);
     $$('#worry_fee').text(worry_fee);
 
+    var bill_fee;
+    var count_sum;
+    if (draw_bill == '0') {
+        bill_fee = ((Number($$('#base_price').text()) + 200 * (4 - Number($$('#expect_date').val()))) * 0.06).toFixed(2);
+        $$('#bill_fee').text(bill_fee);
+    } else {
+        bill_fee = 0;
+        $$('#bill_fee').text(bill_fee.toFixed(2));
+    }
+
+    count_sum = ((Number($$('#base_price').text()) + 200 * (4 - Number($$('#expect_date').val())) - (-Number(bill_fee))) * 1.00).toFixed(2);
+    $$('#count_sum').text(count_sum);
+
     //报告书时间改变，报价随之变动
     $$('#expect_date').change(function () {
         worry_fee = Number(200 * (4 - Number($$('#expect_date').val()))).toFixed(2);
         $$('#worry_fee').text(worry_fee);
 
-        bill_fee = ((Number($$('#base_price').text()) + 200 * (4 - Number($$('#expect_date').val()))) * 0.06).toFixed(2);
-        $$('#bill_fee').text(bill_fee);
+        if (draw_bill == '0') {
+            bill_fee = ((Number($$('#base_price').text()) + 200 * (4 - Number($$('#expect_date').val()))) * 0.06).toFixed(2);
+            $$('#bill_fee').text(bill_fee);
+        } else {
+            bill_fee = 0;
+            $$('#bill_fee').text(bill_fee.toFixed(2));
+        }
 
-        count_sum = ((Number($$('#base_price').text()) + 200 * (4 - Number($$('#expect_date').val()))) * 1.06).toFixed(2);
+        count_sum = ((Number($$('#base_price').text()) + 200 * (4 - Number($$('#expect_date').val())) - (-Number(bill_fee))) * 1.00).toFixed(2);
         $$('#count_sum').text(count_sum);
 
     })
@@ -303,17 +361,29 @@ f7app.onPageInit('services', function (page) {
     });
 
     //初始化发票选择
-    var draw_bill = '0';
+    var draw_bill = '1';
     $$('#draw_billy').click(function () {
         $$('#draw_billy').addClass('active');
         $$('#draw_billn').removeClass('active');
         draw_bill = '0';
+
+        bill_fee = ((Number($$('#base_price').text()) + 200 * (4 - Number($$('#expect_date').val()))) * 0.06).toFixed(2);
+        $$('#bill_fee').text(bill_fee);
+
+        count_sum = ((Number($$('#base_price').text()) + 200 * (4 - Number($$('#expect_date').val())) - (-Number(bill_fee))) * 1.00).toFixed(2);
+        $$('#count_sum').text(count_sum);
     });
     $$('#draw_billn').click(function () {
         console.log('sds');
         $$('#draw_billn').addClass('active');
         $$('#draw_billy').removeClass('active');
         draw_bill = '1';
+
+        bill_fee = 0;
+        $$('#bill_fee').text(bill_fee.toFixed(2));
+
+        count_sum = ((Number($$('#base_price').text()) + 200 * (4 - Number($$('#expect_date').val())) - (-Number(bill_fee))) * 1.00).toFixed(2);
+        $$('#count_sum').text(count_sum);
     });
 
     //提交数据
@@ -557,9 +627,13 @@ app.propertyzhuan = (function () {
 //国际税收
 f7app.onPageInit('tax_sui', function (page) {
 
-    //绑定返回键
+    console.log(page.url)
+        //绑定返回键
     window.localStorage["page"] = 'main';
-    
+
+    var token = app.storage.get("userArr").token
+    app.findUserEmail(token);
+
     var swiper = new Swiper('.swiper-container', {
         scrollbarHide: true,
         slidesPerView: 'auto'
@@ -1057,23 +1131,42 @@ f7app.onPageInit('tax_sui', function (page) {
 
     //初始化报价数据
     Number($$('#base_price1').text('5000.00'));
+
     var worry_fee1 = Number(200 * (4 - Number($$('#expect_date1').val()))).toFixed(2);
     $$('#worry_fee1').text(worry_fee1);
 
-    var bill_fee1 = ((Number($$('#base_price1').text()) + 200 * (4 - Number($$('#expect_date1').val()))) * 0.06).toFixed(2);
-    $$('#bill_fee1').text(bill_fee1);
+    var bill_fee1;
+    var count_sum1;
+    if (draw_bill1 == '0') {
+        bill_fee1 = ((Number($$('#base_price1').text()) + 200 * (4 - Number($$('#expect_date1').val()))) * 0.06).toFixed(2);
+        $$('#bill_fee1').text(bill_fee1);
+    } else {
+        bill_fee1 = 0;
+        $$('#bill_fee1').text(bill_fee1.toFixed(2));
+    }
 
-    var count_sum1 = ((Number($$('#base_price1').text()) + 200 * (4 - Number($$('#expect_date1').val()))) * 1.06).toFixed(2);
+    count_sum1 = ((Number($$('#base_price1').text()) + 200 * (4 - Number($$('#expect_date1').val())) - (-Number(bill_fee1))) * 1.00).toFixed(2)
     $$('#count_sum1').text(count_sum1);
+
+
+
+
     //tab2
     Number($$('#base_price2').text('5000.00'));
     var worry_fee2 = Number(200 * (4 - Number($$('#expect_date2').val()))).toFixed(2);
     $$('#worry_fee2').text(worry_fee2);
 
-    var bill_fee2 = ((Number($$('#base_price2').text()) + 200 * (4 - Number($$('#expect_date2').val()))) * 0.06).toFixed(2);
-    $$('#bill_fee2').text(bill_fee2);
+    var bill_fee2;
+    var count_sum2;
+    if (draw_bill2 == '0') {
+        bill_fee2 = ((Number($$('#base_price2').text()) + 200 * (4 - Number($$('#expect_date2').val()))) * 0.06).toFixed(2);
+        $$('#bill_fee2').text(bill_fee2);
+    } else {
+        bill_fee2 = 0;
+        $$('#bill_fee2').text(bill_fee2.toFixed(2));
+    }
 
-    var count_sum2 = ((Number($$('#base_price2').text()) + 200 * (4 - Number($$('#expect_date2').val()))) * 1.06).toFixed(2);
+    count_sum2 = ((Number($$('#base_price2').text()) + 200 * (4 - Number($$('#expect_date2').val())) - (-Number(bill_fee2))) * 1.00).toFixed(2)
     $$('#count_sum2').text(count_sum2);
 
     //tab3
@@ -1081,10 +1174,17 @@ f7app.onPageInit('tax_sui', function (page) {
     var worry_fee3 = Number(200 * (4 - Number($$('#expect_date3').val()))).toFixed(2);
     $$('#worry_fee3').text(worry_fee3);
 
-    var bill_fee3 = ((Number($$('#base_price3').text()) + 200 * (4 - Number($$('#expect_date3').val()))) * 0.06).toFixed(2);
-    $$('#bill_fee3').text(bill_fee3);
+    var bill_fee3;
+    var count_sum3;
+    if (draw_bill3 == '0') {
+        bill_fee3 = ((Number($$('#base_price3').text()) + 200 * (4 - Number($$('#expect_date3').val()))) * 0.06).toFixed(2);
+        $$('#bill_fee3').text(bill_fee3);
+    } else {
+        bill_fee3 = 0;
+        $$('#bill_fee3').text(bill_fee3.toFixed(2));
+    }
 
-    var count_sum3 = ((Number($$('#base_price3').text()) + 200 * (4 - Number($$('#expect_date3').val()))) * 1.06).toFixed(2);
+    count_sum3 = ((Number($$('#base_price3').text()) + 200 * (4 - Number($$('#expect_date3').val())) - (-Number(bill_fee3))) * 1.00).toFixed(2)
     $$('#count_sum3').text(count_sum3);
 
     //tab4
@@ -1092,10 +1192,17 @@ f7app.onPageInit('tax_sui', function (page) {
     var worry_fee4 = Number(200 * (10 - Number($$('#expect_date4').val()))).toFixed(2);
     $$('#worry_fee4').text(worry_fee4);
 
-    var bill_fee4 = ((Number($$('#base_price4').text()) + 200 * (10 - Number($$('#expect_date4').val()))) * 0.06).toFixed(2);
-    $$('#bill_fee4').text(bill_fee4);
+    var bill_fee4;
+    var count_sum4;
+    if (draw_bill4 == '0') {
+        bill_fee4 = ((Number($$('#base_price4').text()) + 200 * (4 - Number($$('#expect_date4').val()))) * 0.06).toFixed(2);
+        $$('#bill_fee4').text(bill_fee4);
+    } else {
+        bill_fee4 = 0;
+        $$('#bill_fee4').text(bill_fee4.toFixed(2));
+    }
 
-    var count_sum4 = ((Number($$('#base_price4').text()) + 200 * (10 - Number($$('#expect_date4').val()))) * 1.06).toFixed(2);
+    count_sum4 = ((Number($$('#base_price4').text()) + 200 * (10 - Number($$('#expect_date4').val())) - (-Number(bill_fee4))) * 1.00).toFixed(2)
     $$('#count_sum4').text(count_sum4);
 
     //tab5
@@ -1103,10 +1210,17 @@ f7app.onPageInit('tax_sui', function (page) {
     var worry_fee5 = Number(200 * (10 - Number($$('#expect_date5').val()))).toFixed(2);
     $$('#worry_fee5').text(worry_fee5);
 
-    var bill_fee5 = ((Number($$('#base_price5').text()) + 200 * (10 - Number($$('#expect_date5').val()))) * 0.06).toFixed(2);
-    $$('#bill_fee5').text(bill_fee5);
+    var bill_fee5;
+    var count_sum5;
+    if (draw_bill5 == '0') {
+        bill_fee5 = ((Number($$('#base_price5').text()) + 200 * (10 - Number($$('#expect_date5').val()))) * 0.06).toFixed(2);
+        $$('#bill_fee5').text(bill_fee5);
+    } else {
+        bill_fee5 = 0;
+        $$('#bill_fee5').text(bill_fee5.toFixed(2));
+    }
 
-    var count_sum5 = ((Number($$('#base_price5').text()) + 200 * (10 - Number($$('#expect_date5').val()))) * 1.06).toFixed(2);
+    count_sum5 = ((Number($$('#base_price5').text()) + 200 * (10 - Number($$('#expect_date5').val())) - (-Number(bill_fee5))) * 1.00).toFixed(2)
     $$('#count_sum5').text(count_sum5);
 
     //报告书时间改变，报价随之变动
@@ -1114,10 +1228,15 @@ f7app.onPageInit('tax_sui', function (page) {
         worry_fee1 = Number(200 * (4 - Number($$('#expect_date1').val()))).toFixed(2);
         $$('#worry_fee1').text(worry_fee1);
 
-        bill_fee1 = ((Number($$('#base_price1').text()) + 200 * (4 - Number($$('#expect_date1').val()))) * 0.06).toFixed(2);
-        $$('#bill_fee1').text(bill_fee1);
+        if (draw_bill1 == '0') {
+            bill_fee1 = ((Number($$('#base_price1').text()) + 200 * (4 - Number($$('#expect_date1').val()))) * 0.06).toFixed(2);
+            $$('#bill_fee1').text(bill_fee1);
+        } else {
+            bill_fee1 = 0;
+            $$('#bill_fee1').text(bill_fee1.toFixed(2));
+        }
 
-        count_sum1 = ((Number($$('#base_price1').text()) + 200 * (4 - Number($$('#expect_date1').val()))) * 1.06).toFixed(2);
+        count_sum1 = ((Number($$('#base_price1').text()) + 200 * (4 - Number($$('#expect_date1').val())) - (-Number(bill_fee1))) * 1.00).toFixed(2)
         $$('#count_sum1').text(count_sum1);
 
     })
@@ -1125,10 +1244,15 @@ f7app.onPageInit('tax_sui', function (page) {
         worry_fee2 = Number(200 * (4 - Number($$('#expect_date2').val()))).toFixed(2);
         $$('#worry_fee2').text(worry_fee2);
 
-        bill_fee2 = ((Number($$('#base_price2').text()) + 200 * (4 - Number($$('#expect_date2').val()))) * 0.06).toFixed(2);
-        $$('#bill_fee2').text(bill_fee2);
+        if (draw_bill2 == '0') {
+            bill_fee2 = ((Number($$('#base_price2').text()) + 200 * (4 - Number($$('#expect_date2').val()))) * 0.06).toFixed(2);
+            $$('#bill_fee2').text(bill_fee2);
+        } else {
+            bill_fee2 = 0;
+            $$('#bill_fee2').text(bill_fee2.toFixed(2));
+        }
 
-        count_sum2 = ((Number($$('#base_price2').text()) + 200 * (4 - Number($$('#expect_date2').val()))) * 1.06).toFixed(2);
+        count_sum2 = ((Number($$('#base_price2').text()) + 200 * (4 - Number($$('#expect_date2').val())) - (-Number(bill_fee2))) * 1.00).toFixed(2)
         $$('#count_sum2').text(count_sum2);
 
     })
@@ -1136,10 +1260,15 @@ f7app.onPageInit('tax_sui', function (page) {
         worry_fee3 = Number(200 * (4 - Number($$('#expect_date3').val()))).toFixed(2);
         $$('#worry_fee3').text(worry_fee3);
 
-        bill_fee3 = ((Number($$('#base_price3').text()) + 200 * (4 - Number($$('#expect_date3').val()))) * 0.06).toFixed(2);
-        $$('#bill_fee3').text(bill_fee3);
+        if (draw_bill3 == '0') {
+            bill_fee3 = ((Number($$('#base_price3').text()) + 200 * (4 - Number($$('#expect_date3').val()))) * 0.06).toFixed(2);
+            $$('#bill_fee3').text(bill_fee3);
+        } else {
+            bill_fee3 = 0;
+            $$('#bill_fee3').text(bill_fee3.toFixed(2));
+        }
 
-        count_sum3 = ((Number($$('#base_price3').text()) + 200 * (4 - Number($$('#expect_date3').val()))) * 1.06).toFixed(2);
+        count_sum3 = ((Number($$('#base_price3').text()) + 200 * (4 - Number($$('#expect_date3').val())) - (-Number(bill_fee3))) * 1.00).toFixed(2)
         $$('#count_sum3').text(count_sum3);
 
     })
@@ -1147,10 +1276,15 @@ f7app.onPageInit('tax_sui', function (page) {
         worry_fee4 = Number(200 * (10 - Number($$('#expect_date4').val()))).toFixed(2);
         $$('#worry_fee4').text(worry_fee4);
 
-        bill_fee4 = ((Number($$('#base_price4').text()) + 200 * (10 - Number($$('#expect_date4').val()))) * 0.06).toFixed(2);
-        $$('#bill_fee4').text(bill_fee4);
+        if (draw_bill4 == '0') {
+            bill_fee4 = ((Number($$('#base_price4').text()) + 200 * (10 - Number($$('#expect_date4').val()))) * 0.06).toFixed(2);
+            $$('#bill_fee4').text(bill_fee4);
+        } else {
+            bill_fee4 = 0;
+            $$('#bill_fee4').text(bill_fee4.toFixed(2));
+        }
 
-        count_sum4 = ((Number($$('#base_price4').text()) + 200 * (10 - Number($$('#expect_date4').val()))) * 1.06).toFixed(2);
+        count_sum4 = ((Number($$('#base_price4').text()) + 200 * (10 - Number($$('#expect_date4').val())) - (-Number(bill_fee4))) * 1.00).toFixed(2)
         $$('#count_sum4').text(count_sum4);
 
     })
@@ -1158,78 +1292,149 @@ f7app.onPageInit('tax_sui', function (page) {
         worry_fee5 = Number(200 * (10 - Number($$('#expect_date5').val()))).toFixed(2);
         $$('#worry_fee5').text(worry_fee5);
 
-        bill_fee5 = ((Number($$('#base_price5').text()) + 200 * (10 - Number($$('#expect_date5').val()))) * 0.06).toFixed(2);
-        $$('#bill_fee5').text(bill_fee5);
+        if (draw_bill5 == '0') {
+            bill_fee5 = ((Number($$('#base_price5').text()) + 200 * (10 - Number($$('#expect_date5').val()))) * 0.06).toFixed(2);
+            $$('#bill_fee5').text(bill_fee5);
+        } else {
+            bill_fee5 = 0;
+            $$('#bill_fee5').text(bill_fee5.toFixed(2));
+        }
 
-        count_sum5 = ((Number($$('#base_price5').text()) + 200 * (10 - Number($$('#expect_date5').val()))) * 1.06).toFixed(2);
+        count_sum5 = ((Number($$('#base_price5').text()) + 200 * (10 - Number($$('#expect_date5').val())) - (-Number(bill_fee5))) * 1.00).toFixed(2)
         $$('#count_sum5').text(count_sum5);
 
     })
 
     //初始化发票选择
-    var draw_bill1 = '0';
+    var draw_bill1 = '1';
     $$('#draw_billy1').click(function () {
         $$('#draw_billy1').addClass('active');
         $$('#draw_billn1').removeClass('active');
         draw_bill1 = '0';
+
+        bill_fee1 = ((Number($$('#base_price1').text()) + 200 * (4 - Number($$('#expect_date1').val()))) * 0.06).toFixed(2);
+        $$('#bill_fee1').text(bill_fee1);
+
+        count_sum1 = ((Number($$('#base_price1').text()) + 200 * (4 - Number($$('#expect_date1').val())) - (-Number(bill_fee1))) * 1.00).toFixed(2)
+        $$('#count_sum1').text(count_sum1);
+
     });
     $$('#draw_billn1').click(function () {
         console.log('sds');
         $$('#draw_billn1').addClass('active');
         $$('#draw_billy1').removeClass('active');
         draw_bill1 = '1';
+
+        bill_fee1 = 0;
+        $$('#bill_fee1').text(bill_fee1.toFixed(2));
+
+        count_sum1 = ((Number($$('#base_price1').text()) + 200 * (4 - Number($$('#expect_date1').val())) - (-Number(bill_fee1))) * 1.00).toFixed(2)
+        $$('#count_sum1').text(count_sum1);
+
     });
 
-    var draw_bill2 = '0';
+    var draw_bill2 = '1';
     $$('#draw_billy2').click(function () {
         $$('#draw_billy2').addClass('active');
         $$('#draw_billn2').removeClass('active');
         draw_bill2 = '0';
+
+        bill_fee2 = ((Number($$('#base_price2').text()) + 200 * (4 - Number($$('#expect_date2').val()))) * 0.06).toFixed(2);
+        $$('#bill_fee2').text(bill_fee2);
+
+        count_sum2 = ((Number($$('#base_price2').text()) + 200 * (4 - Number($$('#expect_date2').val())) - (-Number(bill_fee2))) * 1.00).toFixed(2)
+        $$('#count_sum2').text(count_sum2);
+
     });
     $$('#draw_billn2').click(function () {
         console.log('sds');
         $$('#draw_billn2').addClass('active');
         $$('#draw_billy2').removeClass('active');
         draw_bill2 = '1';
+
+        bill_fee2 = 0;
+        $$('#bill_fee2').text(bill_fee2.toFixed(2));
+
+        count_sum2 = ((Number($$('#base_price2').text()) + 200 * (4 - Number($$('#expect_date2').val())) - (-Number(bill_fee2))) * 1.00).toFixed(2)
+        $$('#count_sum2').text(count_sum2);
     });
 
-    var draw_bill3 = '0';
+    var draw_bill3 = '1';
     $$('#draw_billy3').click(function () {
         $$('#draw_billy3').addClass('active');
         $$('#draw_billn3').removeClass('active');
         draw_bill3 = '0';
+
+        bill_fee3 = ((Number($$('#base_price3').text()) + 200 * (4 - Number($$('#expect_date3').val()))) * 0.06).toFixed(2);
+        $$('#bill_fee3').text(bill_fee3);
+
+        count_sum3 = ((Number($$('#base_price3').text()) + 200 * (4 - Number($$('#expect_date3').val())) - (-Number(bill_fee3))) * 1.00).toFixed(2)
+        $$('#count_sum3').text(count_sum3);
+
     });
     $$('#draw_billn3').click(function () {
         console.log('sds');
         $$('#draw_billn3').addClass('active');
         $$('#draw_billy3').removeClass('active');
         draw_bill3 = '1';
+
+        bill_fee3 = 0;
+        $$('#bill_fee3').text(bill_fee3.toFixed(2));
+
+        count_sum3 = ((Number($$('#base_price3').text()) + 200 * (4 - Number($$('#expect_date3').val())) - (-Number(bill_fee3))) * 1.00).toFixed(2)
+        $$('#count_sum3').text(count_sum3);
     });
 
-    var draw_bill4 = '0';
+    var draw_bill4 = '1';
     $$('#draw_billy4').click(function () {
         $$('#draw_billy4').addClass('active');
         $$('#draw_billn4').removeClass('active');
         draw_bill4 = '0';
+
+        bill_fee4 = ((Number($$('#base_price4').text()) + 200 * (10 - Number($$('#expect_date4').val()))) * 0.06).toFixed(2);
+        $$('#bill_fee4').text(bill_fee4);
+
+        count_sum4 = ((Number($$('#base_price4').text()) + 200 * (10 - Number($$('#expect_date4').val())) - (-Number(bill_fee4))) * 1.00).toFixed(2)
+        $$('#count_sum4').text(count_sum4);
+
     });
     $$('#draw_billn4').click(function () {
         console.log('sds');
         $$('#draw_billn4').addClass('active');
         $$('#draw_billy4').removeClass('active');
         draw_bill4 = '1';
+
+        bill_fee4 = 0;
+        $$('#bill_fee4').text(bill_fee4.toFixed(2));
+
+        count_sum4 = ((Number($$('#base_price4').text()) + 200 * (10 - Number($$('#expect_date4').val())) - (-Number(bill_fee4))) * 1.00).toFixed(2)
+        $$('#count_sum4').text(count_sum4);
     });
 
-    var draw_bill5 = '0';
+    var draw_bill5 = '1';
     $$('#draw_billy5').click(function () {
         $$('#draw_billy5').addClass('active');
         $$('#draw_billn5').removeClass('active');
         draw_bill5 = '0';
+
+        bill_fee5 = ((Number($$('#base_price5').text()) + 200 * (10 - Number($$('#expect_date5').val()))) * 0.06).toFixed(2);
+        $$('#bill_fee5').text(bill_fee5);
+
+        count_sum5 = ((Number($$('#base_price5').text()) + 200 * (10 - Number($$('#expect_date5').val())) - (-Number(bill_fee5))) * 1.00).toFixed(2)
+        $$('#count_sum5').text(count_sum5);
+
     });
     $$('#draw_billn5').click(function () {
         console.log('sds');
         $$('#draw_billn5').addClass('active');
         $$('#draw_billy5').removeClass('active');
         draw_bill5 = '1';
+
+        bill_fee5 = 0;
+        $$('#bill_fee5').text(bill_fee5.toFixed(2));
+
+        count_sum5 = ((Number($$('#base_price5').text()) + 200 * (10 - Number($$('#expect_date5').val())) - (-Number(bill_fee5))) * 1.00).toFixed(2);
+        $$('#count_sum5').text(count_sum5);
     });
 
     //协定待遇

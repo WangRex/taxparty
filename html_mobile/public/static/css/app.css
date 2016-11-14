@@ -1,3 +1,7 @@
+body{
+    font-family: -apple-system, SF UI Text, Helvetica Neue, Helvetica, Arial, '微软雅黑',sans-serif;    
+
+}
 .index-message-tip-icon {
     width: 5px;
     height: 5px;
@@ -6,6 +10,38 @@
     position: relative;
     top: -8px;
     left: -7px;
+    display: none;
+}
+#application_list .list-block .item-inner:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: auto;
+    top: auto;
+    height: 0px;
+    width: 100%;
+    background-color: #c8c7cc;
+    display: block;
+    z-index: 15;
+    -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+}
+
+#service_list .list-block .item-inner:after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: auto;
+    top: auto;
+    height: 0px;
+    width: 100%;
+    background-color: #c8c7cc;
+    display: block;
+    z-index: 15;
+    -webkit-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
 }
 
 .page {
@@ -544,7 +580,7 @@ b.button {
     padding: 15px 0;
     color: #007aff;
     display: block;
-    line-height: 43px;
+/*    line-height: 43px;*/
     font-size: 14px;
     color: #999
 }
@@ -1442,16 +1478,8 @@ b.button {
     position: relative;
 }
 
-.about-img2 {
-    width: 100px;
-    height: 100px;
-    background-image: url(../images/img/img2.png);
-    background-size: 100% 100%;
-    display: inline-block;
-    position: relative;
-}
 
-.about-img1 {
+.about-img {
     width: 100px;
     height: 100px;
     background-image: url(../images/img/img1.png);
@@ -1459,7 +1487,13 @@ b.button {
     display: inline-block;
     position: relative;
 }
+.about-img1 {
+    background-image: url(../images/img/img1.png);
+}
 
+.about-img2 {
+    background-image: url(../images/img/img2.png);
+}
 .card-Inco {
     background: url("../images/img/card.png") left center no-repeat;
     background-size: 30px 25px;
@@ -1467,8 +1501,8 @@ b.button {
 }
 
 .star {
-    width: 26px;
-    height: 26px;
+    width: 20px;
+    height: 20px;
     background-image: url(../images/icon/index/918414576415375791.png);
     background-size: 100% 100%;
     display: inline-block;
@@ -1476,8 +1510,8 @@ b.button {
 }
 
 .star-filled {
-    width: 26px;
-    height: 26px;
+    width: 20px;
+    height: 20px;
     background-image: url(../images/icon/index/250460207530181560.png);
     background-size: 100% 100%;
     display: inline-block;
@@ -1485,8 +1519,8 @@ b.button {
 }
 
 .filled {
-    width: 26px;
-    height: 26px;
+    width: 20px;
+    height: 20px;
     background-image: url(../images/icon/index/873586400822538572.jpg);
     background-size: 100% 100%;
     display: inline-block;
@@ -1551,7 +1585,7 @@ label.label-radio i.icon-form-radio {
     height: 20px;
     position: relative;
     border-radius: 20px;
-    border: 2px solid #6d6d6d;
+    border: 1px solid #9D9DA1;
     box-sizing: border-box;
     -webkit-transition-duration: 300ms;
     transition-duration: 300ms;

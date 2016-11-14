@@ -43,26 +43,34 @@ $$(document).on('click', "#getTelNum", function () {
 $$(document).on('click', "#telcomplete", function () {
     var pass = $$("#sixnum").val();
     var repeat = $$("#sixnum2").val();
-    var re = /^[0-9]{6}$/;
+    var re = /^[0-9a-zA-Z]+$/;
     console.log(pass, repeat);
     if (pass == null || pass == '') {
-        app.toast("不能输入空");
+        app.toast("请输入密码!");
+
+        return false;
+    }else if (pass.length<6) {
+        app.toast("请输入至少6位密码!");
 
         return false;
     }else if (!re.test(pass)) {
-        app.toast("请输入6位数字1");
+        app.toast("密码只能是数字、大小写字母！");
 
         return false;
     } else if (repeat == null || repeat == '') {
-        app.toast("不能输入空");
+        app.toast("请再次输入密码!");
 
         return false;
-    } else if (!re.test(repeat)) {
-        app.toast("请输入6数字2");
+    }else if (repeat.length<6) {
+        app.toast("请输入至少6位密码!");
+
+        return false;
+    }else if (!re.test(repeat)) {
+        app.toast("密码只能是数字、大小写字母！");
 
         return false;
     } else if (pass != repeat) {
-        app.toast("密码输入不同");
+        app.toast("两次输入密码不一致，请重新输入！");
 
         return false;
     } else {
@@ -113,7 +121,7 @@ $$(document).on('click', "#complete", function () {
 
 
     if (!getmail) {
-        app.toast('邮箱号不能为空!');
+        app.toast('邮箱不能为空!');
         return false
     } else if (app.empty.emi.test(getmail)) {
         app.findpswd_input(getmail)
@@ -158,6 +166,7 @@ app.findpswd_shou = (function () {
         var succCallBack = function (data, status, response) {
             var data = JSON.parse(data);
             if (data.errorCode == '0'){
+                app.toast("密码重置成功！");
                 view.main.router.loadPage('signin/login.html');
             }
             console.log(data)
@@ -177,6 +186,7 @@ app.findpswd_input = (function () {
         var succCallBack = function (data, status, response) {
             var data = JSON.parse(data);
             if (data.errorCode == '0'){
+                app.toast("密码重置成功！");
                 view.main.router.loadPage('signin/login.html');
             }else if(data.errorCode == '1202'){
                 app.toast("您还未注册用户");

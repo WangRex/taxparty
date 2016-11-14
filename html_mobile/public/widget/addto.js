@@ -1,20 +1,21 @@
 //投诉方法
-app.checkboxes = (function() {
-    return function(token, id, comp) {
+app.checkboxes = (function () {
+    return function (token, id, comp) {
         var param = {
             token: token,
             "need_id": id,
             "complaint": comp,
         }
 
-        var succCallBack = function(data, status, response) {
+        var succCallBack = function (data, status, response) {
             var data = JSON.parse(data);
             console.log(data);
             if (data.errorCode == 0) {
                 app.toast("投诉成功！");
-                $$("#checkboxesBackClickBtn").click();
+                view.seek.router.back();
             } else {
                 app.toast("投诉失败！");
+                view.seek.router.back();
             }
         }
 
@@ -23,7 +24,7 @@ app.checkboxes = (function() {
 })();
 
 //投诉
-f7app.onPageInit('checkboxes', function(page) {
+f7app.onPageInit('checkboxes', function (page) {
 
     console.log(page.url);
     //绑定返回键
@@ -31,18 +32,18 @@ f7app.onPageInit('checkboxes', function(page) {
 
 
     var token = app.storage.get("userArr").token;
-    console.log(page.url);
+    console.log(page);
     console.log(page.query.need_id);
     var need_id = page.query.need_id;
     var services_id = page.query.services_id;
     var id, txt;
-    $$('#label_radio').on("click", "input", function() {
+    $$('#label_radio').on("click", "input", function () {
         console.log(this);
         id = this.getAttribute('data-value');
         txt = this.value;
     });
 
-    $$("#sub_post").on("click", function() {
+    $$("#sub_post").on("click", function () {
         console.log("id：" + typeof id);
         console.log("txt：" + typeof txt)
         if (typeof id === 'undefined') {
@@ -56,13 +57,13 @@ f7app.onPageInit('checkboxes', function(page) {
 });
 
 //资金方法
-app.capital2 = (function() {
-    return function(token) {
+app.capital2 = (function () {
+    return function (token) {
         var param = {
             "token": token
         }
 
-        var succCallBack = function(data, status, response) {
+        var succCallBack = function (data, status, response) {
             var data = JSON.parse(data);
 
             console.log(data)
@@ -78,7 +79,7 @@ app.capital2 = (function() {
 })();
 
 /*资金*/
-f7app.onPageInit('capital', function(page) {
+f7app.onPageInit('capital', function (page) {
 
 
     console.log(page.url);
@@ -92,40 +93,56 @@ f7app.onPageInit('capital', function(page) {
 });
 
 /* nasyer所有待回答的问题方法*/
-app.answerplus = (function() {
-    return function(token) {
+app.answerplus = (function () {
+    return function (token) {
         var param = {
             "token": token
         }
 
-        var succCallBack = function(data, status, response) {
+        var succCallBack = function (data, status, response) {
             var data = JSON.parse(data);
             console.log(data);
-            if (data.errorCode == 0) {
-                var ansquelisttpl = $$("script#answer_questions_list_tpl").html();
-                var lesul = Template7.compile(ansquelisttpl);
-                $$("#answer_questions_list").html(lesul(data.data));
-                $$(".answerQuestionBtn").on("click", function() {
-                    var askId = $$(this).attr("data-askid");
-                    view.main.router.loadPage('index/answer.html?askId=' + askId + '');
-                });
-                $$('.ac_2').on('click', function() {
-                    var ask = $$(this).attr("data-ask");
+            if (data.errorCode == '0') {
+                if (!data.data || !data.data[0]) {
+                    app.toast('暂无数据！');
+                } else {
 
-                    var buttons = [{
-                        text: '<a onclick="app.weixin2()"><img src="../static/images/img/weixin.png" alt="微信" height="60"></a>' +
-                            '<a onclick="app.Circlefriends2()"><img src="../static/images/img/pengyou.png" alt="朋友圈" height="60"></a> ' +
-                            '<a><img src="../static/images/img/weibo.png" alt="微博" height="60"></a>',
-                        bold: true
+                    //头像异常处理
+                    $$.each(data.data, function (i, e) {
+                        if (!e.avatar) {
+                            //没有头像，启用默认头像
+                            e.avatar = '../static/images/logo.jpg';
+                        }
+                    });
 
-                    }, {
-                        text: '取消',
-                        color: 'red'
-                    }, ];
+                    var ansquelisttpl = $$("script#answer_questions_list_tpl").html();
+                    var lesul = Template7.compile(ansquelisttpl);
+                    $$("#answer_questions_list").html(lesul(data.data));
 
-                    f7app.actions(buttons);
-                });
+                    $$(".answerQuestionBtn").on("click", function () {
+                        var askId = $$(this).attr("data-askid");
+                        view.main.router.loadPage('index/answer.html?askId=' + askId + '');
+                    });
+                    $$('.ac_2').on('click', function () {
+                        var ask = $$(this).attr("data-ask");
 
+                        var buttons = [{
+                            text: '<a onclick="app.weixin2()"><img src="../static/images/img/weixin.png" alt="微信" height="60"></a>' +
+                                '<a onclick="app.Circlefriends2()"><img src="../static/images/img/pengyou.png" alt="朋友圈" height="60"></a> ' +
+                                '<a><img src="../static/images/img/weibo.png" alt="微博" height="60"></a>',
+                            bold: true
+
+                        }, {
+                            text: '取消',
+                            color: 'gray'
+                        }, ];
+
+                        f7app.actions(buttons);
+                    });
+                }
+
+            } else if (!data.errorMessage) {
+                app.toast('系统异常！');
             } else {
                 app.toast(data.errorMessage);
             }
@@ -136,7 +153,7 @@ app.answerplus = (function() {
 })();
 
 /* nasyer所有待回答的问题*/
-f7app.onPageInit('answerplus', function(page) {
+f7app.onPageInit('answerplus', function (page) {
 
     console.log(page.url);
     //绑定返回键
@@ -144,14 +161,15 @@ f7app.onPageInit('answerplus', function(page) {
 
     var token = app.storage.get("userArr").token;
     console.log(token);
-    app.checkIdentityAnswer(token);
+    // app.checkIdentityAnswer(token);
+    app.answerplus(token);
 });
 
 
 //调用微信接口
-app.weixin2 = (function() {
-    return function() {
-        if (typeof(Wechat) !== 'undefined') {
+app.weixin2 = (function () {
+    return function () {
+        if (typeof (Wechat) !== 'undefined') {
             Wechat.share({
                 message: {
                     title: "税聚解答",
@@ -166,9 +184,9 @@ app.weixin2 = (function() {
                     }
                 },
                 scene: Wechat.Scene.SESSION // share to SESSION
-            }, function() {
+            }, function () {
                 app.toast("分享成功");
-            }, function(reason) {
+            }, function (reason) {
                 app.toast("分享失败");
             });
         }
@@ -177,9 +195,9 @@ app.weixin2 = (function() {
 
 
 //调用分享朋友圈接口
-app.Circlefriends2 = (function() {
-    return function() {
-        if (typeof(Wechat) !== 'undefined') {
+app.Circlefriends2 = (function () {
+    return function () {
+        if (typeof (Wechat) !== 'undefined') {
             Wechat.share({
                 message: {
                     title: "税聚解答",
@@ -194,9 +212,9 @@ app.Circlefriends2 = (function() {
                     }
                 },
                 scene: Wechat.Scene.Timeline // share to Timeline
-            }, function() {
+            }, function () {
                 app.toast("分享成功");
-            }, function(reason) {
+            }, function (reason) {
                 app.toast("分享失败");
             });
         }
@@ -204,19 +222,56 @@ app.Circlefriends2 = (function() {
 })()
 
 //回答身份验证ajax请求
-app.checkIdentityAnswer = (function() {
+app.checkIdentityAnswer = (function () {
 
-    return function(token) {
+    return function () {
 
+        //解答者level=1
         var param = {
-            "token": token
+            "token": app.storage.get("userArr").token,
+            "level": "1"
         };
 
-        var succCallBack = function(data, status, response) {
+        var succCallBack = function (data, status, response) {
             var data = JSON.parse(data);
             console.log(data);
-            if (data.data[0] === 0 || data.data[0] === 1) {
-                app.answerplus(token);
+            if (data.errorCode == 0) {
+                //0是普通用户 1是解答者 2是线下服务者 只有是解答者才能回答
+                // 返回的是键值对 marker代表权限 count代表人数
+                // 0 表示没有申请过 出现申请的提示
+                // 1 表示审核中，出现申请等待页面，显示多少人排队
+                // 2 表示审核通过，可以跳转页面
+                // 3 表示审核不通过，出现审核不通过的提示页面
+                if (data.data[0].marker == 0) {
+                    f7app.modal({
+                        text: '<img src="../static/images/img/del.png" style="position:absolute;right:-20px;top:-20px;"><p>抱歉，您尚未申请成为解答者，我们无法向您推送问题。</p><br/><center><button class="button button-big button-fill color-main" onclick="app.applyApplication();">马上申请</button></center>',
+                        verticalButtons: true,
+                        buttons: [{
+                            text: '关闭',
+                            close: true
+                        }, ]
+                    });
+                } else if (data.data[0].marker == 1) {
+                    f7app.modal({
+                        text: '<img src="../static/images/img/del.png" style="position:absolute;right:-20px;top:-20px;"><p>"您的申请还在排队审核中，前面还有' + data.data[0].count + '位用户。请耐心等待。"</p>',
+                        verticalButtons: true,
+                        buttons: [{
+                            text: '关闭',
+                            close: true
+                        }, ]
+                    });
+                } else if (data.data[0].marker == 2) {
+                    view.main.router.loadPage('index/answer-plus.html');
+                } else if (data.data[0].marker == 3) {
+                    f7app.modal({
+                        text: '<img src="../static/images/img/del.png" style="position:absolute;right:-20px;top:-20px;"><p>抱歉，您申请成为解答者未通过，我们无法向您推送问题。</p><br/><center><button class="button button-big button-fill color-main" onclick="app.applyApplication();">重新申请</button></center>',
+                        verticalButtons: true,
+                        buttons: [{
+                            text: '关闭',
+                            close: true
+                        }, ]
+                    });
+                }
             }
         };
 
@@ -227,14 +282,25 @@ app.checkIdentityAnswer = (function() {
 
 })();
 
+
+
+//申请成为解答者
+app.applyApplication = (function () {
+    return function () {
+        f7app.closeModal();
+        view.main.router.loadPage('about/application.html');
+    }
+
+})();
+
 /* 题库一览方法*/
-app.personaluestions = (function() {
-    return function(token) {
+app.personaluestions = (function () {
+    return function (token) {
         var param = {
             "token": token
         }
 
-        var succCallBack = function(data, status, response) {
+        var succCallBack = function (data, status, response) {
             var data = JSON.parse(data);
             console.log(data)
 
@@ -256,7 +322,7 @@ app.personaluestions = (function() {
 })();
 
 /* 题库一览*/
-f7app.onPageInit('personaluestions', function(page) {
+f7app.onPageInit('personaluestions', function (page) {
 
     console.log(page.url);
     //绑定返回键
@@ -265,11 +331,111 @@ f7app.onPageInit('personaluestions', function(page) {
     var token = app.storage.get("userArr").token;
     console.log(token);
     app.personaluestions(token);
+    app.goBackAbout = function () {
+        //我的页面个人信息ajax请求
+        app.getUserInfo = (function () {
+
+            return function () {
+                var token = app.storage.get("userArr").token;
+                var param = {
+                    "token": token
+                };
+
+                var succCallBack = function (data, status, response) {
+                    var data = JSON.parse(data);
+                    console.log(data);
+
+                    if (data.data == null) {
+                        app.toast("请登录")
+                        return false
+                    }
+
+                    var detailsr_tpl = $$('script#user_tpl').html();
+                    var tpl = Template7.compile(detailsr_tpl);
+                    var myData = data.data[0];
+                    if (myData.post_type == "2") {
+                        myData.post_type = "充值卡";
+                    } else if (myData.post_type == "1") {
+                        myData.post_type = "VIP";
+                    } else if (myData.post_type == "0") {
+                        myData.post_type = "SVIP";
+                    }
+
+                    $$("#user_list").html(tpl(myData));
+
+                    $$("#avatar").css("backgroundImage", 'url(' + myData.avatar + ')')
+
+                    if (myData.marker == "1") {
+                        $$("#marker1").attr("class", "about-marker-11");
+                    } else if (myData.marker == "2") {
+                        $$("#marker2").attr("class", "about-marker-12");
+                    }
+
+                    if (myData.major == "无") {
+                        $$("#major123").hide();
+                    }
+
+                    app.vipTypeInit(token); //vip选择初始化
+
+                    $$('#Eject').on('click', function () {
+                        var token = app.storage.get("userArr").token;
+
+                        var succCallBack = function (data, status, response, address) {
+                            var data = JSON.parse(data);
+
+                        }
+                        app.Eject(token);
+
+                    });
+
+                    /* ===== 我的头像上传 ===== */
+                    $$("#fileup").on("change", "input", function () {
+                        var slef = this;
+                        var file = slef.files[0];
+                        console.log(file)
+                        app.fileupImg.getOrientation(file, function (direction) {
+                            var direction = direction;
+                            var reader = new FileReader();
+                            reader.onload = function () {
+                                var result = reader.result;
+                                // 安卓4.1兼容问题
+                                var base64 = reader.result.split(',')[1];
+                                var dataUrl = 'data:image/png;base64,' + base64;
+                                var img = new Image();
+                                img.src = result;
+                                img.onload = function () {
+                                    var dataUrl = app.fileupImg.compressImage(img, direction);
+                                    slef.parentNode.style.backgroundImage = 'url(' + dataUrl + ')';
+                                    slef.parentNode.setAttribute('data-img', dataUrl)
+
+                                    var token = app.storage.get("userArr").token;
+                                    app.saveAvatar(token, dataUrl);
+
+                                    app.loader.show()
+                                }
+                            }
+                            reader.readAsDataURL(file);
+                        })
+
+                    })
+
+                };
+
+                var getUserInfo = root.interFace.getUserInfo;
+                return app.doAjax(getUserInfo, 'post', param, succCallBack)
+
+            }
+
+        })()
+        app.getUserInfo();
+    }
 });
 
+
+
 //获取来源列表
-app.queryNatTexOffice = (function() {
-    return function(token, succCallBack) {
+app.queryNatTexOffice = (function () {
+    return function (token, succCallBack) {
         var param = {
             "token": token
         };
@@ -279,8 +445,8 @@ app.queryNatTexOffice = (function() {
 })();
 
 //获取来源列表
-app.queryLocTexOffice = (function() {
-    return function(token, father_code, succCallBack) {
+app.queryLocTexOffice = (function () {
+    return function (token, father_code, succCallBack) {
         var param = {
             "token": token,
             "father_code": father_code
@@ -291,8 +457,8 @@ app.queryLocTexOffice = (function() {
 })();
 
 //题库添加方法
-app.uestionsaddto = (function() {
-    return function(token, source, area, ask_attribute, tax_type, collection_procedure, business_type, ask_title, answer) {
+app.uestionsaddto = (function () {
+    return function (token, source, area, ask_attribute, tax_type, collection_procedure, business_type, ask_title, answer) {
         var param = {
             "token": token,
             "source": source,
@@ -305,7 +471,7 @@ app.uestionsaddto = (function() {
             "answer": answer
         }
 
-        var succCallBack = function(data, status, response) {
+        var succCallBack = function (data, status, response) {
             var data = JSON.parse(data);
             app.toast(data.errorMessage);
             if (data.errorCode == 0) {
@@ -325,6 +491,7 @@ app.uestionsaddto = (function() {
                 $$("#answer").val("");
             }
             console.log(data);
+            view.about.router.refreshPreviousPage()
         }
 
         return app.doAjax(root.interFace.insertBank, 'post', param, succCallBack);
@@ -332,8 +499,8 @@ app.uestionsaddto = (function() {
 })();
 
 //题库添加数据初始化
-app.uestionsaddtoInit = (function() {
-    return function(token) {
+app.uestionsaddtoInit = (function () {
+    return function (token) {
         // app.queryNatTexOffice(token);
         // app.queryLocTexOffice(token, 'D110000');
 
@@ -342,13 +509,13 @@ app.uestionsaddtoInit = (function() {
             layer: 2
         });
 
-        $$("#source").on('click', function(event) {
+        $$("#source").on('click', function (event) {
             var self = this;
-            app.queryNatTexOffice(token, function(data) {
+            app.queryNatTexOffice(token, function (data) {
                 var array = [];
                 var data = JSON.parse(data);
                 if (data) {
-                    $$.each(data.data, function(i, e) {
+                    $$.each(data.data, function (i, e) {
                         var obj = {};
                         obj.value = e.tax_code;
                         obj.text = e.tax_name;
@@ -356,7 +523,7 @@ app.uestionsaddtoInit = (function() {
                     });
                 }
                 sourcePicker.setData(array);
-                sourcePicker.show(function(items) {
+                sourcePicker.show(function (items) {
                     var t = (items[0] || {}).text + " " + (items[1] || {}).text;
                     self.value = t;
                     self.setAttribute("data-id", items[1].value);
@@ -364,18 +531,18 @@ app.uestionsaddtoInit = (function() {
             });
         }, false);
 
-        sourcePicker.pickerElement[0].addEventListener('change', function(event) {
+        sourcePicker.pickerElement[0].addEventListener('change', function (event) {
             var nextPickerElement = this.nextSibling;
             if (nextPickerElement && nextPickerElement.picker) {
                 var eventData = event.detail || {};
                 var preItem = eventData.item || {};
                 console.log(eventData.item.value);
                 var token = app.storage.get("userArr").token;
-                app.queryLocTexOffice(token, eventData.item.value, function(data) {
+                app.queryLocTexOffice(token, eventData.item.value, function (data) {
                     var array = [];
                     var data = JSON.parse(data);
                     if (data) {
-                        $$.each(data.data, function(i, e) {
+                        $$.each(data.data, function (i, e) {
                             var obj = {};
                             obj.value = e.tax_code;
                             obj.text = e.tax_name;
@@ -393,76 +560,27 @@ app.uestionsaddtoInit = (function() {
         });
 
         areaPicker3.setData(cityData3);
-        $$("#area").on('click', function(event) {
+        $$("#area").on('click', function (event) {
             var self = this;
-            areaPicker3.show(function(items) {
+            areaPicker3.show(function (items) {
                 var t = (items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
                 self.value = t;
                 self.setAttribute("data-id", items[2].value);
             });
         }, false);
-        /*
-                areaPicker3.pickerElement[0].addEventListener('change', function(event) {
-                    var nextPickerElement = this.nextSibling;
-                    if (nextPickerElement && nextPickerElement.picker) {
-                        var eventData = event.detail || {};
-                        var preItem = eventData.item || {};
-                        console.log(eventData.item.value);
-                        if (app.queryCity) {
-                            var token = app.storage.get("userArr").token;
-                            app.queryCity(token, eventData.item.value, function(data) {
-                                var array = [];
-                                var data = JSON.parse(data);
-                                if (data) {
-                                    $$.each(data.data, function(i, e) {
-                                        var obj = {};
-                                        obj.value = e.region_code;
-                                        obj.text = e.region_name;
-                                        array.push(obj);
-                                    });
-                                }
-                                nextPickerElement.picker.setItems(array);
-                            });
-                        }
-                    }
-                }, false);
-
-                areaPicker3.pickerElement[1].addEventListener('change', function(event) {
-                    var nextPickerElement = this.nextSibling;
-                    if (nextPickerElement && nextPickerElement.picker) {
-                        var eventData = event.detail || {};
-                        var preItem = eventData.item || {};
-                        if (app.queryCity) {
-                            var token = app.storage.get("userArr").token;
-                            app.queryCounty(token, eventData.item.value, function(data) {
-                                var array = [];
-                                var data = JSON.parse(data);
-                                if (data) {
-                                    $$.each(data.data, function(i, e) {
-                                        var obj = {};
-                                        obj.value = e.region_code;
-                                        obj.text = e.region_name;
-                                        array.push(obj);
-                                    });
-                                }
-                                nextPickerElement.picker.setItems(array);
-                            });
-                        }
-                    }
-                }, false);*/
 
         //初始化问题属性
         var taxPicker01 = new mui.PopPicker({
             layer: 1
         });
 
-        $$("#ask_attribute").on('click', function(event) {
+        $$("#ask_attribute").on('click', function (event) {
             var self = this;
-            app.queryTaxProperty(token, "01", function(data) {
+            app.queryTaxProperty(token, "01", function (data) {
                 var array = [];
                 var data = JSON.parse(data);
                 if (data) {
-                    $$.each(data.data, function(i, e) {
+                    $$.each(data.data, function (i, e) {
                         var obj = {};
                         obj.value = e.tax_code;
                         obj.text = e.tax_name;
@@ -470,7 +588,7 @@ app.uestionsaddtoInit = (function() {
                     });
                 }
                 taxPicker01.setData(array);
-                taxPicker01.show(function(items) {
+                taxPicker01.show(function (items) {
                     var t = (items[0] || {}).text;
                     self.value = t;
                     self.setAttribute("data-id", items[0].value);
@@ -483,13 +601,13 @@ app.uestionsaddtoInit = (function() {
             layer: 1
         });
 
-        $$("#tax_type").on('click', function(event) {
+        $$("#tax_type").on('click', function (event) {
             var self = this;
-            app.queryTaxProperty(token, "02", function(data) {
+            app.queryTaxProperty(token, "02", function (data) {
                 var array = [];
                 var data = JSON.parse(data);
                 if (data) {
-                    $$.each(data.data, function(i, e) {
+                    $$.each(data.data, function (i, e) {
                         var obj = {};
                         obj.value = e.tax_code;
                         obj.text = e.tax_name;
@@ -497,7 +615,7 @@ app.uestionsaddtoInit = (function() {
                     });
                 }
                 taxPicker02.setData(array);
-                taxPicker02.show(function(items) {
+                taxPicker02.show(function (items) {
                     var t = (items[0] || {}).text;
                     self.value = t;
                     self.setAttribute("data-id", items[0].value);
@@ -510,13 +628,13 @@ app.uestionsaddtoInit = (function() {
             layer: 1
         });
 
-        $$("#collection_procedure").on('click', function(event) {
+        $$("#collection_procedure").on('click', function (event) {
             var self = this;
-            app.queryTaxProperty(token, "03", function(data) {
+            app.queryTaxProperty(token, "03", function (data) {
                 var array = [];
                 var data = JSON.parse(data);
                 if (data) {
-                    $$.each(data.data, function(i, e) {
+                    $$.each(data.data, function (i, e) {
                         var obj = {};
                         obj.value = e.tax_code;
                         obj.text = e.tax_name;
@@ -524,7 +642,7 @@ app.uestionsaddtoInit = (function() {
                     });
                 }
                 taxPicker03.setData(array);
-                taxPicker03.show(function(items) {
+                taxPicker03.show(function (items) {
                     var t = (items[0] || {}).text;
                     self.value = t;
                     self.setAttribute("data-id", items[0].value);
@@ -537,13 +655,13 @@ app.uestionsaddtoInit = (function() {
             layer: 1
         });
 
-        $$("#business_type").on('click', function(event) {
+        $$("#business_type").on('click', function (event) {
             var self = this;
-            app.queryTaxProperty(token, "04", function(data) {
+            app.queryTaxProperty(token, "04", function (data) {
                 var array = [];
                 var data = JSON.parse(data);
                 if (data) {
-                    $$.each(data.data, function(i, e) {
+                    $$.each(data.data, function (i, e) {
                         var obj = {};
                         obj.value = e.tax_code;
                         obj.text = e.tax_name;
@@ -551,14 +669,14 @@ app.uestionsaddtoInit = (function() {
                     });
                 }
                 taxPicker04.setData(array);
-                taxPicker04.show(function(items) {
+                taxPicker04.show(function (items) {
                     var t = (items[0] || {}).text;
                     self.value = t;
                     self.setAttribute("data-id", items[0].value);
                 });
             });
         }, false);
-        $$("#addQuestionBtn").on("click", function() {
+        $$("#addQuestionBtn").on("click", function () {
             var source = $$("#source").attr("data-id");
             var area = $$("#area").attr("data-id");
             var ask_attribute = $$("#ask_attribute").val();
@@ -567,15 +685,34 @@ app.uestionsaddtoInit = (function() {
             var business_type = $$("#business_type").attr("data-id");
             var ask_title = $$("#ask_title").val();
             var answer = $$("#answer").val();
-            app.uestionsaddto(token, source, area, ask_attribute, tax_type, collection_procedure, business_type, ask_title, answer);
+
+            if (!source) {
+                app.toast('来源不可以为空！')
+            } else if (!area) {
+                app.toast('适用地区不可以为空！')
+            } else if (!ask_attribute) {
+                app.toast('问题属性不可以为空！')
+            } else if (!tax_type) {
+                app.toast('税种类型不可以为空！')
+            } else if (!collection_procedure) {
+                app.toast('征管类型不可以为空！')
+            } else if (!business_type) {
+                app.toast('业务类型不以为空！')
+            } else if (!ask_title) {
+                app.toast('问题不可以为空！')
+            } else if (!answer) {
+                app.toast('答案不可以为空！')
+            } else {
+                app.uestionsaddto(token, source, area, ask_attribute, tax_type, collection_procedure, business_type, ask_title, answer);
+            }
         });
         return "success";
     }
 })();
 
 //获取来源列表
-app.queryTaxProperty = (function() {
-    return function(token, father_id, succCallBack) {
+app.queryTaxProperty = (function () {
+    return function (token, father_id, succCallBack) {
         var param = {
             "token": token,
             "father_id": father_id
@@ -587,7 +724,7 @@ app.queryTaxProperty = (function() {
 
 
 //题库添加
-f7app.onPageInit('uestionsaddto', function(page) {
+f7app.onPageInit('uestionsaddto', function (page) {
 
     console.log(page.url);
     //绑定返回键
@@ -599,13 +736,13 @@ f7app.onPageInit('uestionsaddto', function(page) {
 });
 
 //个人发票列表方法
-app.ticketlist = (function() {
-    return function(token) {
+app.ticketlist = (function () {
+    return function (token) {
         var param = {
             "token": token
         };
 
-        var succCallBack = function(data, status, response, address) {
+        var succCallBack = function (data, status, response, address) {
             var data = JSON.parse(data);
             if (data.errorCode == '0') {
                 if (!data) {
@@ -613,8 +750,8 @@ app.ticketlist = (function() {
                 } else if (!data.invoice || !data.invoice[0]) {
                     app.toast('暂无数据！');
                 } else {
-                    $$.each(data.invoice, function(i, e) {
-                        e.express_name = e.express_name + ':';
+                    $$.each(data.invoice, function (i, e) {
+                        e.express_name = e.express_name + ' : ';
                     })
                     var post_total = $$("script#post_total_tpl").html();
                     var lesul = Template7.compile(post_total);
@@ -624,7 +761,7 @@ app.ticketlist = (function() {
                     var lesul = Template7.compile(post_list);
                     $$("#post_list").html(lesul(data.invoice));
 
-                    $$("#post_list").find("span.sure").on("click", function() {
+                    $$("#post_list").find("span.sure").on("click", function () {
                         var invoiceid = $$(this).attr("data-invoiceid");
                         console.log(invoiceid);
                         var token = app.storage.get("userArr").token;
@@ -645,14 +782,14 @@ app.ticketlist = (function() {
 })();
 
 //确认发票接受方法
-app.list_fang = (function() {
-    return function(token, uisi) {
+app.list_fang = (function () {
+    return function (token, uisi) {
         var param = {
             "token": token,
             "invoice_id": uisi
         };
 
-        var succCallBack = function(data, status, response, address) {
+        var succCallBack = function (data, status, response, address) {
             var data = JSON.parse(data);
             if (data.errorCode) {
                 $$("#status" + uisi).attr("class", "yellow").html("达");
@@ -666,7 +803,7 @@ app.list_fang = (function() {
 })();
 
 //个人发票列表
-f7app.onPageInit('ticketlist', function(page) {
+f7app.onPageInit('ticketlist', function (page) {
 
     console.log(page.url);
     //绑定返回键
@@ -675,7 +812,7 @@ f7app.onPageInit('ticketlist', function(page) {
     var token = app.storage.get("userArr").token;
     console.log(token);
     app.ticketlist(token);
-    $$("#list_sd").on("click", function() {
+    $$("#list_sd").on("click", function () {
         var uisi = 1;
         var token = app.storage.get("userArr").token;
         console.log(token);
@@ -684,7 +821,7 @@ f7app.onPageInit('ticketlist', function(page) {
 
 });
 //可开发票金额
-f7app.onPageInit('ticket', function(page) {
+f7app.onPageInit('ticket', function (page) {
 
     console.log(page.url);
     //绑定返回键
@@ -695,18 +832,18 @@ f7app.onPageInit('ticket', function(page) {
     app.queryUserInvoiceCount(token);
 });
 
-app.queryUserInvoiceCount = (function() {
-    return function(token) {
+app.queryUserInvoiceCount = (function () {
+    return function (token) {
         var param = {
             "token": token
         }
 
-        var succCallBack = function(data, status, response) {
+        var succCallBack = function (data, status, response) {
             var data = JSON.parse(data);
             var cash = data.data[0].cash;
             cash = cash.toFixed(2);
             $$("#userInvoiceCount").html(cash);
-            $$("#money").on("change", function() {
+            $$("#money").on("change", function () {
                 var token = app.storage.get("userArr").token;
                 console.log(token);
                 var money = $$(this).val();
@@ -723,8 +860,8 @@ app.queryUserInvoiceCount = (function() {
 })();
 
 //申请发票方法
-app.ticket = (function() {
-    return function(token, money, rise, Distinguish, content, address, Addressee, Telephone, kuai) {
+app.ticket = (function () {
+    return function (token, money, rise, Distinguish, content, address, Addressee, Telephone, kuai) {
         var param = {
             "token": token,
             "invoice_amount": money,
@@ -737,7 +874,7 @@ app.ticket = (function() {
             "express_fee": kuai
         }
 
-        var succCallBack = function(data, status, response) {
+        var succCallBack = function (data, status, response) {
             var data = JSON.parse(data);
             app.toast(data.errorMessage);
             console.log(data);
@@ -757,7 +894,7 @@ app.ticket = (function() {
     }
 })();
 //申请发票
-f7app.onPageInit('ticket', function(page) {
+f7app.onPageInit('ticket', function (page) {
 
     console.log(page.url);
     //绑定返回键
@@ -766,7 +903,7 @@ f7app.onPageInit('ticket', function(page) {
 
     var token = app.storage.get("userArr").token;
     console.log(token);
-    $$("#tick").on("click", function() {
+    $$("#tick").on("click", function () {
         var flag = true;
         var money = $$("#money").val();
         if (!money) {
@@ -825,8 +962,8 @@ f7app.onPageInit('ticket', function(page) {
 });
 
 //专家一览方法
-app.expert = (function() {
-    return function(token, region, name, Expertise) {
+app.expert = (function () {
+    return function (token, region, name, Expertise) {
         var param = {
             "token": token,
             "region_code": region,
@@ -834,7 +971,7 @@ app.expert = (function() {
             "taxproperty_code": Expertise
         }
 
-        var succCallBack = function(data, status, response, address) {
+        var succCallBack = function (data, status, response, address) {
             var data = JSON.parse(data);
 
             var expertList = $$("script#expert_list_tpl").html();
@@ -888,130 +1025,53 @@ app.expert = (function() {
 
             /* ===== Mui PopPicker ===== */
             mui.init();
-            //选择服务地点
-            var expertCityPicker3 = new mui.PopPicker({
+
+
+            //初始化工作地点
+            var region_code_picker = new mui.PopPicker({
                 layer: 3
             });
-            var skills2 = new mui.PopPicker({
+
+            region_code_picker.setData(cityData3);
+            $$("#region").on('click', function (event) {
+                console.log(this);
+                var self = this;
+                region_code_picker.show(function (items) {
+                    var t = (items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
+                    self.value = t;
+                    if (items[2].value) {
+                        self.setAttribute("data_id", items[2].value);
+                    } else if (items[1].value) {
+                        self.setAttribute("data_id", items[1].value);
+                    }
+                    console.log(items[0].value + '---' + items[1].value + '----' + items[2].value)
+                });
+            }, false);
+
+            //选择业务专长
+            var tax = new mui.PopPicker({
                 layer: 2
             });
-
-            $$("#region").on('click', function(event) {
+            tax.setData(taxPropertyJson);
+            $$("#Expertise").on('click', function (event) {
+                console.log(this);
                 var self = this;
-                app.queryProvince(token, function(data) {
-                    var array = [];
-                    var data = JSON.parse(data);
-                    if (data) {
-                        $$.each(data.data, function(i, e) {
-                            var obj = {};
-                            obj.value = e.region_code;
-                            obj.text = e.region_name;
-                            array.push(obj);
-                        });
-                    }
-                    expertCityPicker3.setData(array);
-                    expertCityPicker3.show(function(items) {
-                        var t = (items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
+                tax.show(function (items) {
+                   if (!items[1].value) {
+                        var t = (items[0] || {}).text;
                         self.value = t;
-                        self.setAttribute("data-id", items[2].value);
-                    });
-                });
-            }, false);
-
-            expertCityPicker3.pickerElement[0].addEventListener('change', function(event) {
-                var nextPickerElement = this.nextSibling;
-                if (nextPickerElement && nextPickerElement.picker) {
-                    var eventData = event.detail || {};
-                    var preItem = eventData.item || {};
-                    console.log(eventData.item.value);
-                    var token = app.storage.get("userArr").token;
-                    app.queryCity(token, eventData.item.value, function(data) {
-                        var array = [];
-                        var data = JSON.parse(data);
-                        if (data) {
-                            $$.each(data.data, function(i, e) {
-                                var obj = {};
-                                obj.value = e.region_code;
-                                obj.text = e.region_name;
-                                array.push(obj);
-                            });
-                        }
-                        nextPickerElement.picker.setItems(array);
-                    });
-                }
-
-                expertCityPicker3.pickerElement[1].addEventListener('change', function(event) {
-                    var nextPickerElement = this.nextSibling;
-                    if (nextPickerElement && nextPickerElement.picker) {
-                        var eventData = event.detail || {};
-                        var preItem = eventData.item || {};
-                        if (eventData.item) {
-                            console.log(eventData.item.value);
-                            var token = app.storage.get("userArr").token;
-                            app.queryCounty(token, eventData.item.value, function(data) {
-                                var array = [];
-                                var data = JSON.parse(data);
-                                if (data) {
-                                    $$.each(data.data, function(i, e) {
-                                        var obj = {};
-                                        obj.value = e.region_code;
-                                        obj.text = e.region_name;
-                                        array.push(obj);
-                                    });
-                                }
-                                nextPickerElement.picker.setItems(array);
-                            });
-                        }
-                    }
-                }, false);
-            }, false);
-
-            $$("#Expertise").on('click', function(event) {
-                var self = this;
-                app.queryPersonSkills(token, function(data) {
-                    var array = [];
-                    var data = JSON.parse(data);
-                    if (data) {
-                        $$.each(data.data, function(i, e) {
-                            var obj = {};
-                            obj.value = e.tax_code;
-                            obj.text = e.tax_name;
-                            array.push(obj);
-                        });
-                    }
-                    skills2.setData(array);
-                    skills2.show(function(items) {
+                        self.setAttribute("data_id", items[0].value);
+                    } else {
                         var t = (items[0] || {}).text + " " + (items[1] || {}).text;
                         self.value = t;
-                        self.setAttribute("data-id", items[1].value);
-                    });
+                        self.setAttribute("data_id", items[1].value);
+                    }
+                    console.log(items[0].value + '---' + items[1].value)
                 });
             }, false);
 
-            skills2.pickerElement[0].addEventListener('change', function(event) {
-                var nextPickerElement = this.nextSibling;
-                if (nextPickerElement && nextPickerElement.picker) {
-                    var eventData = event.detail || {};
-                    var preItem = eventData.item || {};
-                    console.log(eventData.item.value);
-                    var token = app.storage.get("userArr").token;
-                    app.queryDetailSkills(token, eventData.item.value, function(data) {
-                        var array = [];
-                        var data = JSON.parse(data);
-                        if (data) {
-                            $$.each(data.data, function(i, e) {
-                                var obj = {};
-                                obj.value = e.tax_code;
-                                obj.text = e.tax_name;
-                                array.push(obj);
-                            });
-                        }
-                        nextPickerElement.picker.setItems(array);
-                    });
-                }
-            }, false);
 
-            $$("#expertList").find("li").on("click", function() {
+            $$("#expertList").find("li").on("click", function () {
                 var serviceId = $$(this).attr("data-serviceid");
                 console.log(serviceId);
                 var token = app.storage.get("userArr").token;
@@ -1026,8 +1086,8 @@ app.expert = (function() {
 })();
 
 //获取省份列表
-app.queryProvince = (function() {
-    return function(token, succCallBack) {
+app.queryProvince = (function () {
+    return function (token, succCallBack) {
         var param = {
             "token": token
         };
@@ -1037,8 +1097,8 @@ app.queryProvince = (function() {
 })();
 
 //获取市列表
-app.queryCity = (function() {
-    return function(token, region_code, succCallBack) {
+app.queryCity = (function () {
+    return function (token, region_code, succCallBack) {
         var param = {
             "token": token,
             "region_code": region_code
@@ -1049,8 +1109,8 @@ app.queryCity = (function() {
 })();
 
 //获取区列表
-app.queryCounty = (function() {
-    return function(token, region_code, succCallBack) {
+app.queryCounty = (function () {
+    return function (token, region_code, succCallBack) {
         var param = {
             "token": token,
             "region_code": region_code
@@ -1061,8 +1121,8 @@ app.queryCounty = (function() {
 })();
 
 //获取业务专长一级列表
-app.queryPersonSkills = (function() {
-    return function(token, succCallBack) {
+app.queryPersonSkills = (function () {
+    return function (token, succCallBack) {
         var param = {
             "token": token
         };
@@ -1072,8 +1132,8 @@ app.queryPersonSkills = (function() {
 })();
 
 //获取业务专长二级列表
-app.queryDetailSkills = (function() {
-    return function(token, tax_code, succCallBack) {
+app.queryDetailSkills = (function () {
+    return function (token, tax_code, succCallBack) {
         var param = {
             "token": token,
             "tax_code": tax_code
@@ -1084,7 +1144,7 @@ app.queryDetailSkills = (function() {
 })();
 
 //专家一览
-f7app.onPageInit('expert', function(page) {
+f7app.onPageInit('expert', function (page) {
 
 
     console.log(page.url);
@@ -1097,23 +1157,23 @@ f7app.onPageInit('expert', function(page) {
     var token = app.storage.get("userArr").token;
     app.expert(token, region, name, Expertise);
 
-    $$("#expertcike").on("click", function() {
-        var region = $$("#region").attr("data-id") || "";
+    $$("#expertcike").on("click", function () {
+        var region = $$("#region").attr("data_id") || "";
         var name = $$("#name").val();
-        var Expertise = $$("#Expertise").attr("data-id") || "";
+        var Expertise = $$("#Expertise").attr("data_id") || "";
         var token = app.storage.get("userArr").token;
         app.expert(token, region, name, Expertise);
     });
 });
 
 //问答-咨询方法
-app.Consultation = (function() {
-    return function(token) {
+app.Consultation = (function () {
+    return function (token) {
         var param = {
             "token": token
 
         }
-        var succCallBack = function(data, status, response, address) {
+        var succCallBack = function (data, status, response, address) {
             var data = JSON.parse(data);
 
             console.log(data);
@@ -1132,14 +1192,14 @@ app.Consultation = (function() {
 })();
 
 //问答-解答方法
-app.Answer = (function() {
-    return function(token) {
+app.Answer = (function () {
+    return function (token) {
         var param = {
             "token": token
 
         }
 
-        var succCallBack = function(data, status, response, address) {
+        var succCallBack = function (data, status, response, address) {
             var data = JSON.parse(data);
             console.log(data);
             var perstik = $$("script#tationzans_2").html();
@@ -1157,21 +1217,21 @@ app.Answer = (function() {
 })();
 
 //问答-求助方法
-app.Seekhelp = (function() {
+app.Seekhelp = (function () {
 
-    return function(token) {
+    return function (token) {
 
         var param = {
             "token": token
         };
 
-        var succCallBack = function(data, status, response) {
+        var succCallBack = function (data, status, response) {
             var data = JSON.parse(data);
 
             var unselectedOrder = [];
             var selectedOrder = [];
 
-            $$.each(data.data, function(i, e) {
+            $$.each(data.data, function (i, e) {
 
                 e["service_date"] = e.helpInfo.service_date;
                 e["region_name"] = e.helpInfo.region_name;
@@ -1229,7 +1289,7 @@ app.Seekhelp = (function() {
                     e["problem_des"] = e.helpInfo.problem_des;
                     e["service_user_id"] = e.helpInfo.service_user_id;
                     e["tof_stt"] = e.helpInfo.tof_stt;
-                    $$.each(e.service, function(idx, ele) {
+                    $$.each(e.service, function (idx, ele) {
                         ele.help_id = e.help_id;
                     });
                     var seek_img_list = $$('script#seek_img_list_tpl').html();
@@ -1275,14 +1335,14 @@ app.Seekhelp = (function() {
 
 
 //援助列表ajax请求
-app.help = (function() {
+app.help = (function () {
 
-    return function(token) {
+    return function (token) {
         var param = {
             "token": token
         }
 
-        var succCallBack = function(data, status, response) {
+        var succCallBack = function (data, status, response) {
             var data = JSON.parse(data);
             if (data.errorCode == 0) {
                 var seek_help_title = $$('script#help_title_tpl').html();
@@ -1293,7 +1353,7 @@ app.help = (function() {
                 obj.completeTotal = data.completeTotal;
                 $$(".help_problem-bj").html(tpl(obj));
 
-                $$.each(data.data, function(i, e) {
+                $$.each(data.data, function (i, e) {
                     e.cpa = false;
                     e.a_cpa = false;
                     e.cpv = false;
@@ -1357,14 +1417,14 @@ app.help = (function() {
 })();
 
 //求助标题
-app.queryHelpListInfo = (function() {
+app.queryHelpListInfo = (function () {
 
-    return function(token) {
+    return function (token) {
         var param = {
             "token": token
         }
 
-        var succCallBack = function(data, status, response) {
+        var succCallBack = function (data, status, response) {
             var data = JSON.parse(data);
 
 
@@ -1375,9 +1435,9 @@ app.queryHelpListInfo = (function() {
             var unselectedOrder = [];
             var selectedOrder = [];
 
-            $$.each(data.data, function(i, e) {
+            $$.each(data.data, function (i, e) {
 
-                e["service_date"] = e.helpInfo.service_date;
+                e["submit_time"] = e.helpInfo.submit_time;
                 e["region_name"] = e.helpInfo.region_name;
                 e["offer"] = e.helpInfo.offer;
                 e["tof_stt"] = e.helpInfo.tof_stt;
@@ -1397,7 +1457,7 @@ app.queryHelpListInfo = (function() {
                     e.other = false;
                     var major = e.major;
                     if (major) {
-                        var majorArray = major.split(',');
+                        var majorArray = major; //.split(',');
                         for (var j = 0; j < majorArray.length; j++) {
                             if (majorArray[j] == '注册会计师') {
                                 e.cpa = true;
@@ -1433,7 +1493,7 @@ app.queryHelpListInfo = (function() {
                     e["problem_des"] = e.helpInfo.problem_des;
                     e["service_user_id"] = e.helpInfo.service_user_id;
                     e["tof_stt"] = e.helpInfo.tof_stt;
-                    $$.each(e.service, function(idx, ele) {
+                    $$.each(e.service, function (idx, ele) {
                         ele.help_id = e.help_id;
                     });
                     var seek_img_list = $$('script#seek_img_list_tpl').html();
@@ -1480,7 +1540,7 @@ app.queryHelpListInfo = (function() {
 })();
 
 //问答
-f7app.onPageInit('problem', function(page) {
+f7app.onPageInit('problem', function (page) {
 
     console.log(page.url);
     //绑定返回键
@@ -1490,20 +1550,20 @@ f7app.onPageInit('problem', function(page) {
     var token = app.storage.get("userArr").token;
     app.Consultation(token);
 
-    $$("#tab1").on("show", function() {
+    $$("#tab1").on("show", function () {
         console.log("咨询");
         var token = app.storage.get("userArr").token;
         app.Consultation(token);
     });
 
-    $$("#tab2").on("show", function() {
+    $$("#tab2").on("show", function () {
 
         console.log("解答");
         var token = app.storage.get("userArr").token;
         app.Answer(token);
     })
 
-    $$("#tab3").on("show", function() {
+    $$("#tab3").on("show", function () {
 
         var swiper = new Swiper('.swiper-container', {
             scrollbar: '.swiper-scrollbar',
@@ -1519,7 +1579,7 @@ f7app.onPageInit('problem', function(page) {
     })
 
 
-    $$("#tab4").on("show", function() {
+    $$("#tab4").on("show", function () {
 
         console.log("求援");
         var token = app.storage.get("userArr").token;
@@ -1529,14 +1589,14 @@ f7app.onPageInit('problem', function(page) {
 });
 
 //重新提交邀请码方法
-app.againSubmit = (function() {
-        return function(token, value) {
+app.againSubmit = (function () {
+        return function (token, value) {
             var param = {
                 "token": token,
                 "invite_errorCode": value
             }
 
-            var succCallBack = function(data, status, response, address) {
+            var succCallBack = function (data, status, response, address) {
                 var data = JSON.parse(data);
 
                 console.log(data)
@@ -1546,19 +1606,19 @@ app.againSubmit = (function() {
         }
     })()
     //邀请方法
-app.Eject = (function(title, w, h) {
-    return function(token) {
+app.Eject = (function (title, w, h) {
+    return function (token) {
         var param = {
             "token": token
 
         }
-        var succCallBack = function(data, status, response, address) {
+        var succCallBack = function (data, status, response, address) {
             var data = JSON.parse(data);
             console.log(data)
             if (!data.errorCode == '0') {
                 console.log("到了")
 
-                f7app.prompt('您的邀请码', function(value) {
+                f7app.prompt('您的邀请码', function (value) {
                     f7app.alert('您输入的是"' + value + "请确认");
                     var token = app.storage.get("userArr").token;
                     app.againSubmit(token, value)
@@ -1574,37 +1634,10 @@ app.Eject = (function(title, w, h) {
 })()
 
 //邀请
-$$("#about").on("show", function() {
+$$("#about").on("show", function () {
 
-    /* $$("#Eject").on("click",function(){
-    var creatediv= function(title,w,h){
-        var pup_box=$$('<div></div>');        //创建一个父div
-        //       pup_box.attr('id','parent');        //给父div设置id
-        pup_box.addClass('duan_pup_box');    //添加css样式
-        var content_box=$$('<div></div>');        //创建一个子div
-//        content_box.attr('id','child');            //给子div设置id
-        content_box.addClass('duan_content_box');    //添加css样式
-        var title_h=$$('<h1></h1>');             //创建标题
-        title_h.addClass('duan_title_h');
-        title_h.html(title);                    //添加标题内容
-        content_box.append(title_h);
 
-        var content_div=$$('<div></div>');             //创建内容div
-        content_div.addClass('duan_content');
-        content_div.html('内容');
-        content_box.append(content_div);
-
-        var btn_p=$$('<p></p>');         //按钮盒子div
-        btn_p.addClass('duan_btn_p');
-        btn_p.html('<span class="cancel_btn">取消</span><span class="ensure">确定</span>');  //按钮
-        content_box.append(btn_p);
-        content_box.appendTo(pup_box);        //将子div添加到父div中
-        pup_box.appendTo($$('#about'));            //将父div添加到body中
-
-        content_box.css({width:w,height:h,marginTop:-h/2,marginLeft:-w/2});
-    }*/
-
-    $$('#Eject').on('click', function() {
+    $$('#Eject').on('click', function () {
         var token = app.storage.get("userArr").token;
         app.Eject(token)
 
@@ -1679,6 +1712,8 @@ app.asklsit = (function() {
                 var tpl = Template7.compile(detailsr_tpl);
                 $$("#question_result_1").html(tpl(obj));
 
+                $$("#question_result_1").find("a").attr("href", "javascript:void(0);");
+
                 if (data.data.answer.length != 0) {
                     var detailsr_tpl = $$('script#question_solve_list').html();
                     var tpl = Template7.compile(detailsr_tpl);
@@ -1688,7 +1723,7 @@ app.asklsit = (function() {
                 }
 
             } else {
-                app.toast("出现异常！");
+                app.toast(data.errorMessage || "出现异常！");
             }
         }
 
@@ -1696,12 +1731,14 @@ app.asklsit = (function() {
     }
 })();
 
+
 //选中大咖大赏金额回传
-app.getBigKaPrice = (function(page) {
-    return function(page) {
+app.getBigKaPrice = (function (page) {
+    return function (page) {
         var bigKaPrice = {
             bigKaPrice: page.query.bigKaPrice ? page.query.bigKaPrice : 0
         };
+        bigKaPrice.bigKaPrice = Number(bigKaPrice.bigKaPrice).toFixed(2);
         var params = [];
         params.push(bigKaPrice);
         var userType = $$("#mister_p").attr("data-userType");
@@ -1713,17 +1750,17 @@ app.getBigKaPrice = (function(page) {
         if (bigKaPrice.bigKaPrice == 0 && page.query.expert_id) {
             $$("#lowest_amt_sum").attr("style", "display:none;");
             $$("#reward_money").attr("style", "");
-            $$("#reward_money").attr("data-required", "true");
+            $$("#mister_p").attr("data-required", "true");
         } else {
             $$("#lowest_amt_sum").attr("style", "");
             $$("#reward_money").attr("style", "display:none;");
-            $$("#reward_money").attr("data-required", "false");
+            $$("#mister_p").attr("data-required", "false");
         }
     }
 })();
 
 //提问提交后页面数据加载
-f7app.onPageInit('questionResult', function(page) {
+f7app.onPageInit('questionResult', function (page) {
 
     console.log(page.url);
     //绑定返回键
@@ -1746,7 +1783,7 @@ f7app.onPageInit('questionResult', function(page) {
         "questions": page.query.questions,
         "cost": page.query.cost || 0,
         "post_type": page.query.post_type,
-        "payType": page.query.payType,
+        "pay_mode": page.query.pay_mode,
 
     };
 
@@ -1755,11 +1792,43 @@ f7app.onPageInit('questionResult', function(page) {
         $$("#questions_result-bj").attr("href", "javascript:void(0);");
     }
 
-    app.asklsit(token, param);
+    if (page.query.dataSource) {
+
+        var data = app.storage.get(token);
+
+        if (data.errorCode == 0) {
+
+            var ask = data.data.ask;
+            var obj = {};
+            obj.ask_time = ask.ask_dateTime;
+            obj.ask_bureau = ask.region_name;
+            obj.cost = ask.cost;
+            obj.askContext = ask.questions;
+            var detailsr_tpl = $$('script#question_solve').html();
+            var tpl = Template7.compile(detailsr_tpl);
+            $$("#question_result_1").html(tpl(obj));
+
+            if (data.data.answer.length != 0) {
+                var detailsr_tpl = $$('script#question_solve_list').html();
+                var tpl = Template7.compile(detailsr_tpl);
+                $$("#question_result_2").html(tpl(data.data.answer));
+            } else {
+                app.toast(data.errorMessage);
+            }
+
+        } else {
+            app.toast(data.errorMessage || "出现异常！");
+        }
+
+        app.storage.rem(token);
+    } else {
+        app.asklsit(token, param);
+    }
+
 });
 
 //提问提交后页面数据加载
-f7app.onPageInit('tax_bureau', function(page) {
+f7app.onPageInit('tax_bureau', function (page) {
 
     var token = app.storage.get("userArr").token;
 
@@ -1768,10 +1837,10 @@ f7app.onPageInit('tax_bureau', function(page) {
     });
 
 
-    $$("#menu_list_1").on('click', function(event) {
+    $$("#menu_list_1").on('click', function (event) {
         var self = this;
         demoPicker2.setData(taxData1);
-        demoPicker2.show(function(items) {
+        demoPicker2.show(function (items) {
             var t1 = items[0].text;
             var t2 = items[1].text;
 
@@ -1780,10 +1849,10 @@ f7app.onPageInit('tax_bureau', function(page) {
         });
     }, false);
 
-    $$("#menu_list_2").on('click', function(event) {
+    $$("#menu_list_2").on('click', function (event) {
         var self = this;
         demoPicker2.setData(taxData2);
-        demoPicker2.show(function(items) {
+        demoPicker2.show(function (items) {
             var t1 = items[0].text;
             var t2 = items[1].text;
 
@@ -1792,10 +1861,10 @@ f7app.onPageInit('tax_bureau', function(page) {
         });
     }, false);
 
-    $$("#menu_list_3").on('click', function(event) {
+    $$("#menu_list_3").on('click', function (event) {
         var self = this;
         demoPicker2.setData(taxData3);
-        demoPicker2.show(function(items) {
+        demoPicker2.show(function (items) {
             var t1 = items[0].text;
             var t2 = items[1].text;
 
@@ -1804,15 +1873,20 @@ f7app.onPageInit('tax_bureau', function(page) {
         });
     }, false);
 
-    $$("#doResult").on("click", function() {
-        app.getTaxBureauPrice(token, $$("#input_up_data").attr("data-value"), function(data) {
+    $$("#doResult").on("click", function () {
+        app.getTaxBureauPrice(token, $$("#input_up_data").attr("data-value"), function (data) {
             var data = JSON.parse(data);
             console.log(data);
             var cost = 0;
+            app.storage.set("askObj-tax-bureau-text", $$("#input_up_data").val());
             if (data.errorCode == "0") {
                 cost = Number(data.data.price);
             }
-            view.main.loadPage('index/ask.html?taxbureau=' + $$("#input_up_data").attr("data-value") + '&cost=' + cost);
+            if (page.query.flag == 'about') {
+                view.about.loadPage('index/ask.html?taxbureau=' + $$("#input_up_data").attr("data-value") + '&cost=' + cost + '&flag=about');
+            } else {
+                view.main.loadPage('index/ask.html?taxbureau=' + $$("#input_up_data").attr("data-value") + '&cost=' + cost);
+            }
         });
 
     });
@@ -1820,9 +1894,9 @@ f7app.onPageInit('tax_bureau', function(page) {
 });
 
 //选中当地税局金额回传
-app.getTaxBureauPrice = (function() {
+app.getTaxBureauPrice = (function () {
 
-    return function(token, region_code, succCallBack) {
+    return function (token, region_code, succCallBack) {
         var param = {
             "token": token,
             "code": region_code
@@ -1832,22 +1906,170 @@ app.getTaxBureauPrice = (function() {
     }
 })();
 
+app.__log = (function () {
+    return function (e, data) {
+        $$('#log').innerHTML += "\n" + e + " " + (data || '');
+
+    }
+})();
+var audio_context;
+var recorder;
+var sign = 'stop';
+var audioNum = 1;
+app.switch = (function () {
+    return function (button) {
+        console.log(sign);
+        if (sign == 'stop') {
+            recorder && recorder.record();
+            $$('#recLoader').css('display', 'inline-block');
+            sign = 'start';
+        } else if (sign == 'start') {
+            recorder && recorder.stop();
+            app.createDownloadLink(audioNum);
+            $$('#recLoader').css('display', 'none');
+            recorder.clear();
+            sign = 'stop';
+            audioNum++;
+        }
+        //            button.disabled = true;
+        //            button.nextElementSibling.disabled = false;
+        app.__log('Recording...');
+
+    }
+})();
+
+
+app.createDownloadLink = (function () {
+    return function (audioNum) {
+        recorder && recorder.exportWAV(function (blob) {
+            var url = URL.createObjectURL(blob);
+            var li = document.createElement('li');
+            var au = document.createElement('audio');
+            var hf = document.createElement('a');
+            console.info(url);
+            var name;
+            if (audioNum < 10) {
+                name = '0' + audioNum;
+            } else {
+                name = audioNum;
+            }
+            $$('#previewList').append('<div style="font-size:12px;float:left;margin-right: 7px;"><div><img src="../static/images/icon/audio_file.png" width="30px;"></div><div>' + '音频' + name + '</div></div>')
+            au.controls = true;
+            au.src = url;
+            hf.href = url;
+            hf.download = new Date().toISOString() + '.wav';
+            hf.innerHTML = hf.download;
+            li.appendChild(au);
+            li.appendChild(hf);
+            //recordingslist.appendChild(li);
+        });
+    }
+})();
+app.startUserMedia = (function () {
+    return function (stream) {
+        var input = audio_context.createMediaStreamSource(stream);
+        app.__log('Media stream created.');
+
+        // Uncomment if you want the audio to feedback directly
+        //input.connect(audio_context.destination);
+        //app.__log('Input connected to audio context destination.');
+
+        recorder = new Recorder(input);
+        app.__log('Recorder initialised.');
+    }
+})();
+window.onload = function init() {
+    try {
+        // webkit shim
+        window.AudioContext = window.AudioContext || window.webkitAudioContext;
+        navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
+        window.URL = window.URL || window.webkitURL;
+
+        audio_context = new AudioContext;
+        app.__log('Audio context set up.');
+        app.__log('navigator.getUserMedia ' + (navigator.getUserMedia ? 'available.' : 'not present!'));
+    } catch (e) {
+        alert('No web audio support in this browser!');
+    }
+
+    navigator.getUserMedia({
+        audio: true
+    }, app.startUserMedia, function (e) {
+        app.__log('No live audio input: ' + e);
+    });
+};
+
+
 //提问
-f7app.onPageInit('asklsit', function(page) {
+f7app.onPageInit('asklsit', function (page) {
+
+    $$('#recLoader').css('display', 'none');
+    $$('#uploadFile').change(function (file) {
+        console.log(file)
+        console.log($$('#uploadFile').files)
+
+    })
+
+    doUpload = (function () {
+        return function () {
+            var formData = new FormData($("#uploadForm")[0]);
+            console.log(formData);
+            app.doAjax(root.interFace.getUserBalance, 'post', {
+                "token": 'token',
+                "code": formData
+            }, function () {});
+            /* $.ajax({
+                 url: 'http://localhost:8080/cfJAX_RS/rest/file/upload',
+                 type: 'POST',
+                 data: {
+                     "token": 'token',
+                     "code": 'formData'
+                 },
+                 dataType:'json',
+                 async: false,
+                 cache: false,
+                 contentType: false,
+                 processData: false,
+                 success: function (returndata) {
+                     alert(returndata);
+                 },
+                 error: function (returndata) {
+                     alert(returndata);
+                 }
+             });*/
+        }
+    })();
+
+    var askObjQuestions = app.storage.get("askObj-questions");
+    if (askObjQuestions) {
+        $$("#questions").val(askObjQuestions);
+        $$("#askdi").attr("style", "width:100%;");
+        flag = true;
+    }
 
     console.log(page.url);
     //绑定返回键
-    window.localStorage["page"] = 'about';
+    window.localStorage["page"] = 'main';
 
     var token = app.storage.get("userArr").token;
     app.getBigKaPrice(page);
 
     var ask_type = "0";
-    var ask_region = $$('#ask_region').attr("data-id") || "";
+    var ask_region = "";
     var cost = 0;
 
+    if (page.query.flag == 'about') {
+        var href = $$("#selectTaxBureau").attr("href");
+        href += "?flag=about";
+        $$("#selectTaxBureau").attr("href", href);
+        var hrefBigShot = $$("#askBigShotBtn").attr("href");
+        hrefBigShot += "?flag=about";
+        $$("#askBigShotBtn").attr("href", hrefBigShot);
+    }
+
     if (page.query.expert_id) {
-        $$("#selectTaxBureau").attr("href", "javascript:void(0);");
+        // $$("#selectTaxBureau").attr("href", "javascript:void(0);");
+        $$("#askBigShotBtn").attr("style", "background: #b6dcff;");
         ask_type = "1";
     }
 
@@ -1855,14 +2077,20 @@ f7app.onPageInit('asklsit', function(page) {
 
     if (page.query.taxbureau && page.query.taxbureau != "null") {
         enableAskRegion = false;
-        $$("#askBigShotBtn").attr("href", "javascript:void(0);");
-        ask_type = "1";
+        // $$("#askBigShotBtn").attr("href", "javascript:void(0);");
+        $$("#selectTaxBureau").attr("style", "background: #b6dcff;");
+        ask_type = "2";
         ask_region = page.query.taxbureau;
+
+        if (app.storage.get("askObj-tax-bureau-text")) {
+            $$("#ask_region").val(app.storage.get("askObj-tax-bureau-text"));
+        }
+
         cost = page.query.cost;
         if (!cost || cost == 0) {
             $$("#lowest_amt_sum").attr("style", "display:none;");
             $$("#reward_money").attr("style", "");
-            $$("#reward_money").attr("data-required", "true");
+            $$("#mister_p").attr("data-required", "true");
         } else {
             $$("#lowest_amt_sum").html(cost);
         }
@@ -1878,16 +2106,34 @@ f7app.onPageInit('asklsit', function(page) {
 
     cityPicker3.setData(cityData3);
     if (enableAskRegion) {
-        $$("#ask_region").on('click', function(event) {
+
+        if (app.storage.get("askObj-ask-region-text")) {
+            $$("#ask_region").val(app.storage.get("askObj-ask-region-text"), 2000);
+        }
+        if (app.storage.get("askObj-ask-region-value1")) {
+            cityPicker3.pickers[0].setSelectedValue(app.storage.get("askObj-ask-region-value1"), 2000);
+        }
+        if (app.storage.get("askObj-ask-region-value2")) {
+            cityPicker3.pickers[1].setSelectedValue(app.storage.get("askObj-ask-region-value2"), 2000);
+        }
+        if (app.storage.get("askObj-ask-region-value3")) {
+            cityPicker3.pickers[2].setSelectedValue(app.storage.get("askObj-ask-region-value3"), 2000);
+        }
+        $$("#ask_region").on('click', function (event) {
             var self = this;
-            cityPicker3.show(function(items) {
+            cityPicker3.show(function (items) {
                 var t = (items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
                 self.value = t;
                 self.setAttribute("data-id", items[2].value);
+                ask_region = items[2].value;
+                app.storage.set("askObj-ask-region-value1", items[0].value);
+                app.storage.set("askObj-ask-region-value2", items[1].value);
+                app.storage.set("askObj-ask-region-value3", items[2].value);
+                app.storage.set("askObj-ask-region-text", t);
             });
         }, false);
     } else {
-        $$("#ask_region").on('click', function(event) {
+        $$("#ask_region").on('click', function (event) {
             app.toast("您已经选择过税局了，不需要选择地区了！");
         }, false);
     }
@@ -1896,14 +2142,18 @@ f7app.onPageInit('asklsit', function(page) {
         layer: 1
     });
 
-    $$("#ask_ask_attribute").on('click', function(event) {
+    if (app.storage.get("askObj-ask-attribute-text")) {
+        $$("#ask_ask_attribute").val(app.storage.get("askObj-ask-attribute-text"), 2000);
+    }
+
+    $$("#ask_ask_attribute").on('click', function (event) {
 
         var self = this;
-        app.queryTaxProperty(token, "01", function(data) {
+        app.queryTaxProperty(token, "01", function (data) {
             var array = [];
             var data = JSON.parse(data);
             if (data) {
-                $$.each(data.data, function(i, e) {
+                $$.each(data.data, function (i, e) {
                     var obj = {};
                     obj.value = e.tax_code;
                     obj.text = e.tax_name;
@@ -1911,10 +2161,15 @@ f7app.onPageInit('asklsit', function(page) {
                 });
             }
             taxPicker01.setData(array);
-            taxPicker01.show(function(items) {
+            if (app.storage.get("askObj-ask-attribute-value")) {
+                taxPicker01.pickers[0].setSelectedValue(app.storage.get("askObj-ask-attribute-value"), 2000);
+            }
+            taxPicker01.show(function (items) {
                 var t = (items[0] || {}).text;
                 self.value = t;
                 self.setAttribute("data-id", items[0].value);
+                app.storage.set("askObj-ask-attribute-value", items[0].value);
+                app.storage.set("askObj-ask-attribute-text", t);
             });
         });
     }, false);
@@ -1924,13 +2179,17 @@ f7app.onPageInit('asklsit', function(page) {
         layer: 1
     });
 
-    $$("#ask_tax_type").on('click', function(event) {
+    if (app.storage.get("askObj-tax-type-text")) {
+        $$("#ask_tax_type").val(app.storage.get("askObj-tax-type-text"), 2000);
+    }
+
+    $$("#ask_tax_type").on('click', function (event) {
         var self = this;
-        app.queryTaxProperty(token, "02", function(data) {
+        app.queryTaxProperty(token, "02", function (data) {
             var array = [];
             var data = JSON.parse(data);
             if (data) {
-                $$.each(data.data, function(i, e) {
+                $$.each(data.data, function (i, e) {
                     var obj = {};
                     obj.value = e.tax_code;
                     obj.text = e.tax_name;
@@ -1938,10 +2197,15 @@ f7app.onPageInit('asklsit', function(page) {
                 });
             }
             taxPicker02.setData(array);
-            taxPicker02.show(function(items) {
+            if (app.storage.get("askObj-tax-type-value")) {
+                taxPicker02.pickers[0].setSelectedValue(app.storage.get("askObj-tax-type-value"), 2000);
+            }
+            taxPicker02.show(function (items) {
                 var t = (items[0] || {}).text;
                 self.value = t;
                 self.setAttribute("data-id", items[0].value);
+                app.storage.set("askObj-tax-type-value", items[0].value);
+                app.storage.set("askObj-tax-type-text", t);
             });
         });
     }, false);
@@ -1951,13 +2215,17 @@ f7app.onPageInit('asklsit', function(page) {
         layer: 1
     });
 
-    $$("#ask_collection_procedure").on('click', function(event) {
+    if (app.storage.get("askObj-collection-procedure-text")) {
+        $$("#ask_collection_procedure").val(app.storage.get("askObj-collection-procedure-text"), 2000);
+    }
+
+    $$("#ask_collection_procedure").on('click', function (event) {
         var self = this;
-        app.queryTaxProperty(token, "03", function(data) {
+        app.queryTaxProperty(token, "03", function (data) {
             var array = [];
             var data = JSON.parse(data);
             if (data) {
-                $$.each(data.data, function(i, e) {
+                $$.each(data.data, function (i, e) {
                     var obj = {};
                     obj.value = e.tax_code;
                     obj.text = e.tax_name;
@@ -1965,10 +2233,15 @@ f7app.onPageInit('asklsit', function(page) {
                 });
             }
             taxPicker03.setData(array);
-            taxPicker03.show(function(items) {
+            if (app.storage.get("askObj-collection-procedure-value")) {
+                taxPicker03.pickers[0].setSelectedValue(app.storage.get("askObj-collection-procedure-value"), 2000);
+            }
+            taxPicker03.show(function (items) {
                 var t = (items[0] || {}).text;
                 self.value = t;
                 self.setAttribute("data-id", items[0].value);
+                app.storage.set("askObj-collection-procedure-value", items[0].value);
+                app.storage.set("askObj-collection-procedure-text", t);
             });
         });
     }, false);
@@ -1978,13 +2251,17 @@ f7app.onPageInit('asklsit', function(page) {
         layer: 1
     });
 
-    $$("#ask_business_type").on('click', function(event) {
+    if (app.storage.get("askObj-business-type-text")) {
+        $$("#ask_business_type").val(app.storage.get("askObj-business-type-text"), 2000);
+    }
+
+    $$("#ask_business_type").on('click', function (event) {
         var self = this;
-        app.queryTaxProperty(token, "04", function(data) {
+        app.queryTaxProperty(token, "04", function (data) {
             var array = [];
             var data = JSON.parse(data);
             if (data) {
-                $$.each(data.data, function(i, e) {
+                $$.each(data.data, function (i, e) {
                     var obj = {};
                     obj.value = e.tax_code;
                     obj.text = e.tax_name;
@@ -1992,10 +2269,15 @@ f7app.onPageInit('asklsit', function(page) {
                 });
             }
             taxPicker04.setData(array);
-            taxPicker04.show(function(items) {
+            if (app.storage.get("askObj-business-type-value")) {
+                taxPicker04.pickers[0].setSelectedValue(app.storage.get("askObj-business-type-value"), 2000);
+            }
+            taxPicker04.show(function (items) {
                 var t = (items[0] || {}).text;
                 self.value = t;
                 self.setAttribute("data-id", items[0].value);
+                app.storage.set("askObj-business-type-value", items[0].value);
+                app.storage.set("askObj-business-type-text", t);
             });
         });
     }, false);
@@ -2004,8 +2286,11 @@ f7app.onPageInit('asklsit', function(page) {
 
     var flag = false;
 
-    $$("#questions").keyup(function() {
+    $$("#questions").keyup(function () {
         if ($$(this).val()) {
+
+            app.storage.set("askObj-questions", $$(this).val());
+
             $$("#askdi").attr("style", "width:100%;");
             flag = true;
         } else {
@@ -2015,26 +2300,35 @@ f7app.onPageInit('asklsit', function(page) {
     });
 
 
-    $$("#askdi").on("click", function() {
+    $$("#askdi").on("click", function () {
         var post_type = $$("#mister_p").attr("data-userType");
         var questions = $$("#questions").val();
 
+        if (questions) {
+            flag = true;
+        }
+
         if (page.query.expert_id) {
 
-            var reward_money = $$("#reward_money").attr("data-required");
+            cost = page.query.bigKaPrice;
 
-            if (reward_money == "true" && !$$("#reward_money").val()) {
-                flag = false;
-                app.toast("您已经选择了大咖，请输入金额！");
-            } else {
-                cost = Number($$("#reward_money").val());
-                flag = true;
+            if (!cost || isNaN(cost)) {
+                var reward_money = $$("#mister_p").attr("data-required");
+
+                if (reward_money == "true" && !$$("#reward_money").val()) {
+                    flag = false;
+                    app.toast("您已经选择了大咖，请输入金额！");
+                } else {
+                    cost = Number($$("#reward_money").val());
+                    flag = true;
+                }
             }
+
         }
 
         if (page.query.cost || page.query.cost == 0) {
 
-            var reward_money = $$("#reward_money").attr("data-required");
+            var reward_money = $$("#mister_p").attr("data-required");
 
             if (reward_money == "true" && !$$("#reward_money").val()) {
                 flag = false;
@@ -2048,6 +2342,10 @@ f7app.onPageInit('asklsit', function(page) {
         var lowest_amt_sum = $$('#lowest_amt_sum');
         if (!isNaN(lowest_amt_sum)) {
             cost = Number(lowest_amt_sum.text());
+        }
+
+        if (isNaN(cost)) {
+            cost = 0;
         }
 
         $$(this).attr("data-ask_type", ask_type);
@@ -2065,12 +2363,34 @@ f7app.onPageInit('asklsit', function(page) {
             'cost': cost
         }
 
+        if (cost == 0) {
+            param.pay_mode = "wu";
+        }
+
         if (flag) {
             if (page.query.flag == "about") {
-                view.about.loadPage('index/askResult.html?ask_type=' + ask_type + '&expert_id=' + param.expert_id + '&region=' + param.ask_region + '&propertys=' + param.ask_ask_attribute + '&types=' + param.ask_tax_type + '&procedures=' + param.ask_collection_procedure + '&businesses=' + param.ask_business_type + '&questions=' + questions + '&cost=' + param.cost + '&post_type=' + post_type + '&flag=about');
+                if (cost != 0) {
+                    app.askPayTypeInit(token);
+                } else {
+                    app.toast("仅选择题库，本环节无需支付费用！");
+                    setTimeout(function () {
+                        f7app.closeModal('.modal.modal-in');
+                        view.about.loadPage('index/askResult.html?ask_type=' + ask_type + '&expert_id=' + param.expert_id + '&region=' + param.ask_region + '&propertys=' + param.ask_ask_attribute + '&types=' + param.ask_tax_type + '&procedures=' + param.ask_collection_procedure + '&businesses=' + param.ask_business_type + '&questions=' + questions + '&cost=' + param.cost + '&post_type=' + post_type + '&pay_mode=' + param.pay_mode);
+                    }, 1000);
+
+                }
             } else {
-                app.askPayTypeInit(token);
-                // view.main.loadPage('index/askResult.html?ask_type=' + ask_type + '&expert_id=' + param.expert_id + '&region=' + param.ask_region + '&propertys=' + param.ask_ask_attribute + '&types=' + param.ask_tax_type + '&procedures=' + param.ask_collection_procedure + '&businesses=' + param.ask_business_type + '&questions=' + questions + '&cost=' + param.cost + '&post_type=' + post_type);
+                if (cost != 0) {
+                    app.askPayTypeInit(token);
+                } else {
+                    app.toast("仅选择题库，本环节无需支付费用！");
+                    setTimeout(function () {
+                        f7app.closeModal('.modal.modal-in');
+                        view.main.loadPage('index/askResult.html?ask_type=' + ask_type + '&expert_id=' + param.expert_id + '&region=' + param.ask_region + '&propertys=' + param.ask_ask_attribute + '&types=' + param.ask_tax_type + '&procedures=' + param.ask_collection_procedure + '&businesses=' + param.ask_business_type + '&questions=' + questions + '&cost=' + param.cost + '&post_type=' + post_type + '&pay_mode=' + param.pay_mode);
+                    }, 1000);
+
+                }
+
             }
 
         } else {
@@ -2081,19 +2401,42 @@ f7app.onPageInit('asklsit', function(page) {
     })
 });
 
-//ASK支付页面选择
-app.askPayTypeInit = (function() {
-    return function(token) {
+//查阅答案支付页面选择
+app.answerDetailPayTypeInit = (function() {
+    return function(bank_id) {
         myApp.modal({
             title: '请选择支付方式',
             text: '<div id="pay-model">' +
                 '<div>' +
-                '<a id="pay-ye" onclick="app.askpaymodel(1)"><img src="../static/images/img/icond_ask_balance.png" alt="余额" height="50"></a>' +
-                '<a id="pay-czk" onclick="app.askpaymodel(2)"><img src="../static/images/img/icond_ask_card.png" alt="储值卡" height="50"></a>' +
-                '<a id="pay-zfb" onclick="app.askpaymodel(3)"><img src="../static/images/img/icond_ask_ali.png" alt="支付宝" height="50"></a>' +
-                '<a id="pay-wx" onclick="app.askpaymodel(4)"><img src="../static/images/img/icond_ask_wechat.png" alt="微信" height="50"></a>' +
+                '<a id="pay-ye" onclick="app.answerDetailpaymodel(\'yue\', ' + bank_id + ')"><img src="../static/images/img/icond_ask_balance.png" alt="收益" height="50"></a>' +
+                '<a id="pay-czk" onclick="app.answerDetailpaymodel(\'sy\', ' + bank_id + ')"><img src="../static/images/img/icond_ask_card.png" alt="储值卡" height="50"></a>' +
+                '<a id="pay-zfb" onclick="app.answerDetailpaymodel(\'ali\', ' + bank_id + ')"><img src="../static/images/img/icond_ask_ali.png" alt="支付宝" height="50"></a>' +
+                '<a id="pay-wx" onclick="app.answerDetailpaymodel(\'wx\', ' + bank_id + ')"><img src="../static/images/img/icond_ask_wechat.png" alt="微信" height="50"></a>' +
                 '</div>' +
-                '<div><p>余额&nbsp;&nbsp;&nbsp;&nbsp;储值卡&nbsp;&nbsp;&nbsp;&nbsp;支付宝&nbsp;&nbsp;&nbsp;&nbsp;微信</p></div>' +
+                '<div><p>收益&nbsp;&nbsp;&nbsp;&nbsp;储值卡&nbsp;&nbsp;&nbsp;&nbsp;支付宝&nbsp;&nbsp;&nbsp;&nbsp;微信</p></div>' +
+                '</div>',
+            buttons: [{
+                text: '取消',
+                bold: true,
+                close: true
+            }]
+        });
+    }
+})();
+
+//ASK支付页面选择
+app.askPayTypeInit = (function() {
+    return function() {
+        myApp.modal({
+            title: '请选择支付方式',
+            text: '<div id="pay-model">' +
+                '<div>' +
+                '<a id="pay-ye" onclick="app.askpaymodel(\'yue\')"><img src="../static/images/img/icond_ask_balance.png" alt="收益" height="50"></a>' +
+                '<a id="pay-czk" onclick="app.askpaymodel(\'sy\')"><img src="../static/images/img/icond_ask_card.png" alt="储值卡" height="50"></a>' +
+                '<a id="pay-zfb" onclick="app.askpaymodel(\'ali\')"><img src="../static/images/img/icond_ask_ali.png" alt="支付宝" height="50"></a>' +
+                '<a id="pay-wx" onclick="app.askpaymodel(\'wx\')"><img src="../static/images/img/icond_ask_wechat.png" alt="微信" height="50"></a>' +
+                '</div>' +
+                '<div><p>收益&nbsp;&nbsp;&nbsp;&nbsp;储值卡&nbsp;&nbsp;&nbsp;&nbsp;支付宝&nbsp;&nbsp;&nbsp;&nbsp;微信</p></div>' +
                 '</div>',
             buttons: [{
                 text: '取消',
@@ -2105,10 +2448,11 @@ app.askPayTypeInit = (function() {
 })();
 
 //askpaymodel的方法
-app.askpaymodel = (function() {
-    return function(payModel) {
+app.askpaymodel = (function () {
+    return function (payModel) {
 
         var token = app.storage.get("userArr").token;
+
         var ask_type = $$("#askdi").attr("data-ask_type");
         var ask_region = $$("#askdi").attr("data-ask_region") || "";
         var ask_ask_attribute = $$('#ask_ask_attribute').attr("data-id") || "";
@@ -2121,27 +2465,291 @@ app.askpaymodel = (function() {
         var questions = $$("#questions").val();
 
         f7app.closeModal();
-        //余额支付
-        view.main.loadPage('index/askResult.html?ask_type=' + ask_type + '&expert_id=' + expert_id + '&region=' + ask_region + '&propertys=' + ask_ask_attribute + '&types=' + ask_tax_type + '&procedures=' + ask_collection_procedure + '&businesses=' + ask_business_type + '&questions=' + questions + '&cost=' + cost + '&post_type=' + post_type + '&payModel=' + payModel.toString());
+
+        if (payModel == 'ali') {
+            var param = {
+                "token": token,
+                "ask_type": ask_type,
+                "expert_id": expert_id,
+                "region": ask_region,
+                "propertys": ask_ask_attribute,
+                "types": ask_tax_type,
+                "procedures": ask_collection_procedure,
+                "businesses": ask_business_type,
+                "questions": questions,
+                "cost": cost,
+                "post_type": post_type,
+                "pay_mode": payModel,
+                "flag": "ask"
+            };
+            app.aliPayAskFunction(token, param);
+        } else if (payModel == 'wx') {
+            var param = {
+                "token": token,
+                "ask_type": ask_type,
+                "expert_id": expert_id,
+                "region": ask_region,
+                "propertys": ask_ask_attribute,
+                "types": ask_tax_type,
+                "procedures": ask_collection_procedure,
+                "businesses": ask_business_type,
+                "questions": questions,
+                "cost": cost,
+                "post_type": post_type,
+                "pay_mode": payModel,
+                "flag": "ask"
+            };
+            app.wxPayAskFunction(token, param);
+        } else {
+            //支付
+            view.main.loadPage('index/askResult.html?ask_type=' + ask_type + '&expert_id=' + expert_id + '&region=' + ask_region + '&propertys=' + ask_ask_attribute + '&types=' + ask_tax_type + '&procedures=' + ask_collection_procedure + '&businesses=' + ask_business_type + '&questions=' + questions + '&cost=' + cost + '&post_type=' + post_type + '&pay_mode=' + payModel);
+        }
     }
 })();
 
-//获取储蓄卡余额
-app.getUserBalance = (function() {
+//answerDetailpaymodel获取
+app.answerDetailpaymodel = (function() {
+    return function(payModel, bank_id) {
 
-    return function(token) {
+        var token = app.storage.get("userArr").token;
+
+        f7app.closeModal();
+
+        var param = {
+            "token": token,
+            "cost": "3",
+            "flag": payModel
+        };
+        var succCallBack = function(data, status, response) {
+            var data = JSON.parse(data);
+            console.log(data);
+            if (data.errorCode == 0 || data.errorCode == 909) {
+
+                if (payModel == 'wx') {
+                    var wxData = data.wx;
+                    var partnerid = wxData.partnerid;
+                    var prepayid = wxData.prepayid;
+                    var noncestr = wxData.noncestr;
+                    var timestamp = wxData.timestamp;
+                    var sign = wxData.sign;
+                    //调用微信原生接口
+                    var params = {
+                        partnerid: partnerid, // merchant id
+                        prepayid: prepayid, // prepay id
+                        noncestr: noncestr, // nonce
+                        timestamp: timestamp, // timestamp
+                        sign: sign, // signed string
+                    };
+
+                    Wechat.sendPaymentRequest(params, function() {
+                        app.findAskBankInfo(bank_id);
+                    }, function(reason) {
+                        app.toast(reason || "支付失败！");
+                    });
+                } else if (payModel == 'ali') {
+                    var uuid = data.aliId; //订单号
+                    console.log(uuid);
+
+                    app.storage.set(token, data);
+
+                    var amt = data.money; //支付金额
+                    var vipType = "提问阿里支付"; //支付类型
+
+                    //支付宝原生接口
+                    var out_trade_no = uuid; //订单号
+                    var subject = vipType; //商品名称（vip类型）
+                    var body = "xx"; //描述
+                    var total_fee = amt; //价格
+                    var callbackUrl = "http://1c59h33192.iok.la:14681/tz-core/novalidate/alipay/AlipayNotifyUrl.do";
+                    alipay.pay(out_trade_no, subject, body, total_fee, function(data) {
+                        //支付成功
+                        if (data.substring(16, 20) == "9000") {
+                            app.findAskBankInfo(bank_id);
+                        } else {
+                            app.toast("支付失败！");
+                        }
+
+                    }, function(error) {
+                        app.toast("支付失败！");
+                    }, callbackUrl);
+                } else {
+                    app.findAskBankInfo(bank_id);
+                }
+            } else {
+                app.toast(data.errorMessage || "出现异常！");
+            }
+        }
+
+        var bankPayInfoResult = root.interFace.bankPayInfoResult;
+        return app.doAjax(bankPayInfoResult, 'post', param, succCallBack);
+    }
+})();
+
+//获取题库内容
+app.findAskBankInfo = (function() {
+    return function(bank_id) {
+
+        var token = app.storage.get("userArr").token;
+
+        var param = {
+            "token": token,
+            "bank_id": bank_id.toString()
+        };
+        var succCallBack = function(data, status, response) {
+            var data = JSON.parse(data);
+            console.log(data);
+            if (data.errorCode == 0) {
+                app.storage.set("findAskBankInfo", data);
+                view.main.loadPage('index/quest-details.html?dataSource=storage');
+            } else {
+                app.toast(data.errorMessage || "出现异常！");
+            }
+        }
+
+        var findAskBankInfo = root.interFace.findAskBankInfo;
+        return app.doAjax(findAskBankInfo, 'post', param, succCallBack);
+    }
+})();
+
+//题库详细信息
+f7app.onPageInit('questionDetail', function(page) {
+
+    console.log(page.url);
+    //绑定返回键
+    window.localStorage["page"] = 'main';
+
+    var userArr = app.storage.get("userArr");
+
+    if (userArr == null) {
+        return false
+    }
+
+    var token = userArr.token;
+
+    console.log(app.storage.get("findAskBankInfo"));
+
+    var data = app.storage.get("findAskBankInfo");
+
+    var ask_bank_detail_tpl = $$('script#ask_bank_detail_tpl').html();
+    var tpl = Template7.compile(ask_bank_detail_tpl);
+    $$("#bankDetails").html(tpl(data.bank));
+
+});
+
+//提问阿里支付
+app.aliPayAskFunction = (function () {
+
+    return function (token, param) {
+
+        var succCallBack = function (data, status, response) {
+            var data = JSON.parse(data);
+            console.log(data);
+            if (data.errorCode == 0) {
+
+                var uuid = data.aliId; //订单号
+                console.log(uuid);
+
+                app.storage.set(token, data);
+
+                var amt = data.money; //支付金额
+                var vipType = "提问阿里支付"; //支付类型
+
+                //支付宝原生接口
+                var out_trade_no = uuid; //订单号
+                var subject = vipType; //商品名称（vip类型）
+                var body = "xx"; //描述
+                var total_fee = amt; //价格
+                var callbackUrl = "http://1c59h33192.iok.la:14681/tz-core/novalidate/alipay/AlipayNotifyUrl.do";
+                alipay.pay(out_trade_no, subject, body, total_fee, function (data) {
+                    //支付成功
+                    if (data.substring(16, 20) == "9000") {
+                        view.main.loadPage('index/askResult.html?dataSource=storage');
+                    } else {
+                        app.toast("支付失败！");
+                    }
+
+                }, function (error) {
+                    app.toast("支付失败！");
+                }, callbackUrl);
+            } else {
+                app.toast(data.errorMessage || "出现异常！");
+            }
+        };
+
+        var aliPayInfoResul = root.interFace.aliPayInfoResul;
+        return app.doAjax(aliPayInfoResul, 'post', param, succCallBack);
+
+    }
+
+})();
+
+//提问微信支付
+app.wxPayAskFunction = (function () {
+
+    return function (token, param) {
+
+        var succCallBack = function (data, status, response) {
+            var data = JSON.parse(data);
+            console.log(data);
+
+            if (data.errorCode == 0) {
+
+                var askResult = {
+                    data: {
+                        answer: data.answer,
+                        ask: data.ask
+                    },
+                    errorCode: data.errorCode,
+                    errorMessage: data.errorMessage
+                };
+
+                app.storage.set(token, askResult);
+
+                var wxData = data.wx;
+                var partnerid = wxData.partnerid;
+                var prepayid = wxData.prepayid;
+                var noncestr = wxData.noncestr;
+                var timestamp = wxData.timestamp;
+                var sign = wxData.sign;
+                //调用微信原生接口
+                var params = {
+                    partnerid: partnerid, // merchant id
+                    prepayid: prepayid, // prepay id
+                    noncestr: noncestr, // nonce
+                    timestamp: timestamp, // timestamp
+                    sign: sign, // signed string
+                };
+
+                Wechat.sendPaymentRequest(params, function () {
+                    view.main.loadPage('index/askResult.html?dataSource=storage');
+                }, function (reason) {
+                    app.toast(reason || "支付失败！");
+                });
+            } else {
+                app.toast(data.errorMessage || "出现异常！");
+            }
+        }
+
+        var wxPayInfoResul = root.interFace.wxPayInfoResul;
+        return app.doAjax(wxPayInfoResul, 'post', param, succCallBack);
+
+    }
+
+})();
+
+//获取储蓄卡余额
+app.getUserBalance = (function () {
+
+    return function (token) {
         var param = {
             "token": token
         }
-        var succCallBack = function(data, status, response) {
+        var succCallBack = function (data, status, response) {
             var data = JSON.parse(data);
             if (data.errorCode == 0) {
                 var userInfo = data.data[0];
-                $$("#total_money").html(Number(userInfo.balance).toFixed(2));
-                if (userInfo.userType == "1") {
-                    $$("#mister_p").html(userInfo.userTypeName);
-                    $$("#mister_p").attr("data-userType", userInfo.userType);
-                }
+                $$("#mister_p").attr("data-userType", userInfo.userType);
+                $$("#user-type-name").html(userInfo.userTypeName);
             } else if (data.errorCode == 100) {
                 app.toast(data.errorMessage || "请重新登录！");
             } else {
@@ -2155,9 +2763,9 @@ app.getUserBalance = (function() {
 })();
 
 //提问大咖列表加载
-app.askBigKaList = (function(token) {
+app.askBigKaList = (function (token) {
 
-    return function(token) {
+    return function (token) {
         var param = {
             "token": token,
             "taxproperty_code": "",
@@ -2165,53 +2773,62 @@ app.askBigKaList = (function(token) {
             "realName": ""
         }
 
-        var succCallBack = function(data, status, response) {
+        var succCallBack = function (data, status, response) {
             var data = JSON.parse(data);
-            if (data.data.length > 0) {
+            if (data.errorCode == 0) {
 
-                var result = data.data;
-                for (var i = 0; i < result.length; i++) {
-                    var expert = result[i];
-                    expert.cpa = false;
-                    expert.a_cpa = false;
-                    expert.cpv = false;
-                    expert.cta = false;
-                    expert.bar = false;
-                    expert.cpa_g = false;
-                    expert.other = false;
-                    var major = expert.major;
-                    if (major) {
-                        var majorArray = major.split(',');
-                        for (var j = 0; j < majorArray.length; j++) {
-                            if (majorArray[j] == '注册会计师') {
-                                expert.cpa = true;
-                            }
-                            if (majorArray[j] == '美国注册会计师') {
-                                expert.a_cpa = true;
-                            }
-                            if (majorArray[j] == '注册资产评估师') {
-                                expert.cpv = true;
-                            }
-                            if (majorArray[j] == '注册税务师') {
-                                expert.cta = true;
-                            }
-                            if (majorArray[j] == '律师') {
-                                expert.bar = true;
-                            }
-                            if (majorArray[j] == '特许公认会计师') {
-                                expert.cpa_g = true;
-                            }
-                            if (majorArray[j] == '其他') {
-                                expert.other = true;
+                if (data.data.length > 0) {
+
+                    var result = data.data;
+                    for (var i = 0; i < result.length; i++) {
+                        var expert = result[i];
+                        expert.cpa = false;
+                        expert.a_cpa = false;
+                        expert.cpv = false;
+                        expert.cta = false;
+                        expert.bar = false;
+                        expert.cpa_g = false;
+                        expert.other = false;
+                        var major = expert.major;
+                        if (major) {
+                            var majorArray = major.split(',');
+                            for (var j = 0; j < majorArray.length; j++) {
+                                if (majorArray[j] == '注册会计师') {
+                                    expert.cpa = true;
+                                }
+                                if (majorArray[j] == '美国注册会计师') {
+                                    expert.a_cpa = true;
+                                }
+                                if (majorArray[j] == '注册资产评估师') {
+                                    expert.cpv = true;
+                                }
+                                if (majorArray[j] == '注册税务师') {
+                                    expert.cta = true;
+                                }
+                                if (majorArray[j] == '律师') {
+                                    expert.bar = true;
+                                }
+                                if (majorArray[j] == '特许公认会计师') {
+                                    expert.cpa_g = true;
+                                }
+                                if (majorArray[j] == '其他') {
+                                    expert.other = true;
+                                }
                             }
                         }
+                        if (!expert.path_url) {
+                            expert.path_url = "../static/images/logo.jpg";
+                        }
+
                     }
-
+                    var askList = $$("script#askBigKaList").html();
+                    var tpl = Template7.compile(askList);
+                    $$("#askBigKaList").html(tpl(result));
+                } else {
+                    app.toast("没有获取到大咖列表！");
                 }
-                var askList = $$("script#askBigKaList").html();
-                var tpl = Template7.compile(askList);
-                $$("#askBigKaList").html(tpl(result));
-
+            } else {
+                app.toast(data.errorMessage || "出现异常！");
             }
 
             console.log(data);
@@ -2222,7 +2839,7 @@ app.askBigKaList = (function(token) {
 })();
 
 //提问大咖
-f7app.onPageInit('services', function(page) {
+f7app.onPageInit('bigshotPage', function (page) {
 
     console.log(page.url);
     //绑定返回键
@@ -2236,7 +2853,7 @@ f7app.onPageInit('services', function(page) {
 
     var token = userArr.token;
     app.askBigKaList(token);
-    $$("#askBigKaConfirm").on("click", function() {
+    $$("#askBigKaConfirm").on("click", function () {
 
         var checks = $$("[name=my-checkbox]");
         var checksArr = [];
@@ -2249,10 +2866,17 @@ f7app.onPageInit('services', function(page) {
         }
 
         if (checksArr.length > 0) {
-            view.main.loadPage('index/ask.html?bigKaPrice=' + bigKaPrice + '&expert_id=' + checksArr.toString());
-            //view.main.back();
+            if (page.query.flag == 'about') {
+                view.about.loadPage('index/ask.html?bigKaPrice=' + bigKaPrice + '&expert_id=' + checksArr.toString() + '&flag=about');
+            } else {
+                view.main.loadPage('index/ask.html?bigKaPrice=' + bigKaPrice + '&expert_id=' + checksArr.toString());
+            }
         } else {
-            f7app.alert('请至少选择一个大咖！');
+            if (page.query.flag == 'about') {
+                view.about.loadPage('index/ask.html?flag=about');
+            } else {
+                view.main.loadPage('index/ask.html');
+            }
         }
 
     })
@@ -2260,32 +2884,33 @@ f7app.onPageInit('services', function(page) {
 });
 
 //回答方法
-app.answersj = (function() {
-    return function(token, account, cash) {
+app.answersj = (function () {
+    return function (token, account, cash) {
         var param = {
             "token": token,
             "ask_id": "6",
             "answer": "这个问题不是很好回答",
             // "files": "1.mp3,2.doc,3.xls,4.pdf"
         }
-        var succCallBack = function(data, status, response) {
+        var succCallBack = function (data, status, response) {
             var data = JSON.parse(data);
 
             console.log(data);
         }
 
-        return app.doAjax(root.interFace.ask, 'post', param, succCallBack);
+        return app.doAjax(root.interFace.answer, 'post', param, succCallBack);
     }
 })();
 
 //回答
-f7app.onPageInit('answersj', function(page) {
+f7app.onPageInit('answersj', function (page) {
 
     console.log(page.url);
     //绑定返回键
     window.localStorage["page"] = 'about';
 
-    $$("#answer_click").on("click", function() {
+
+    $$("#answer_click").on("click", function () {
         var token = app.storage.get("userArr").token;
         app.answersj(token);
 
@@ -2293,8 +2918,8 @@ f7app.onPageInit('answersj', function(page) {
 });
 
 //采纳并申请加入题库方法
-app.taxbureau = (function() {
-    return function(token, uisi) {
+app.taxbureau = (function () {
+    return function (token, uisi) {
         var param = {
             "token": token,
             "ask_id": "1",
@@ -2303,7 +2928,7 @@ app.taxbureau = (function() {
             "answer_belong": "1"
         }
 
-        var succCallBack = function(data, status, response, address) {
+        var succCallBack = function (data, status, response, address) {
             var data = JSON.parse(data);
 
             console.log(data)
@@ -2314,15 +2939,15 @@ app.taxbureau = (function() {
 })();
 
 //对回答问题的用户进行评分方法
-app.taxbu_score = (function() {
-    return function(token, uisi) {
+app.taxbu_score = (function () {
+    return function (token, uisi) {
         var param = {
             "token": token,
             "answer_belong": "123456789@qq.com",
             "score": 1
         }
 
-        var succCallBack = function(data, status, response, address) {
+        var succCallBack = function (data, status, response, address) {
             var data = JSON.parse(data);
 
             console.log(data)
@@ -2333,7 +2958,7 @@ app.taxbu_score = (function() {
 })();
 
 //采纳并申请加入题库
-f7app.onPageInit('taxbureau', function(page) {
+f7app.onPageInit('taxbureau', function (page) {
     /*var token = app.storage.get("userArr").token;
     console.log(token);
     app.ticketlist(token);*/
@@ -2342,12 +2967,12 @@ f7app.onPageInit('taxbureau', function(page) {
     //绑定返回键
     window.localStorage["page"] = 'about';
 
-    $$("#taxbu_dsc").on("click", function() {
+    $$("#taxbu_dsc").on("click", function () {
         var token = app.storage.get("userArr").token;
         console.log(token);
         app.taxbureau(token);
     })
-    $$("#Clickalike").on("click", function() {
+    $$("#Clickalike").on("click", function () {
         var token = app.storage.get("userArr").token;
         console.log(token);
         app.taxbu_score(token);

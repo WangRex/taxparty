@@ -12,7 +12,7 @@
 </div>
 <div class="pages">
     <!-- Page, data-page contains page name-->
-    <div data-page="services" class="page">
+    <div data-page="tongqikebi" class="page">
         <!-- Scrollable page content-->
         <div class="page-content " id="hougai">
             <div class="content-block tqkb">
@@ -62,10 +62,14 @@
                                 <div class="col-50">
                                     <div class="inner">同期资料财年</div>
                                 </div>
-                                <div class="col-50">
+                                <div class="col-15">
                                     <div class="inner">
                                         <input type="text" class="" id="baseYear" readonly>
-                                        <img src="../static/images/img/select-sm.png" class="s_icon" style="position: absolute;right:45px;top: 0;margin: 8px;">
+                                        <img src="../static/images/img/select-sm.png" class="s_icon">
+                                    </div>
+                                </div>
+                                <div class="col-25">
+                                    <div class="inner">
                                     </div>
                                 </div>
                             </div>
@@ -84,8 +88,8 @@
                                             </div>
                                         </div>
                                         <div class="col-10">
-                                            <div class="inner">
-                                                &nbsp;&nbsp;-
+                                            <div class="inner" style="font-size: 24px;line-height: 0.8;">
+                                                &nbsp;-
                                             </div>
                                         </div>
                                         <div class="col-25">
@@ -162,19 +166,23 @@
                                 </div>
                             </div>
                             <div class="row no-gutter">
-                                <div class="col-50">
+                                <div class="col-30">
+                                    <div class="inner">草稿时间</div>
+                                    <!--
                                     <div class="row">
                                         <div class="col-50">
-                                            <div class="inner">草稿时间</div>
                                         </div>
                                         <div class="col-50">
                                             <div class="inner">
-                                                <input style="color:#e46b09;width:10px;border:0px;" value="4" id="expect_date">个工作日
                                             </div>
                                         </div>
                                     </div>
+-->
                                 </div>
-                                <div class="col-50">
+                                <div class="col-25">
+                                    <input style="color:#e46b09;width:10px;border:0px;" value="4" id="expect_date">个工作日
+                                </div>
+                                <div class="col-45">
                                     <div class="inner" style="font-size:10px;color:#ccc">每减少一天加急增加200.00元</div>
                                 </div>
                             </div>
@@ -209,18 +217,18 @@
                             </div>
                             <div class="row no-gutter">
                                 <div class="col-70">
-                                    <div class="inner">是否需要发票</div>
+                                    <div class="inner">需要发票</div>
                                 </div>
                                 <div class="col-30">
                                     <div class="row inner yes_button" id="mask_box">
                                         <div class="col-50">
                                             <div class="inner">
-                                                <input type="button" value="是" name="yes" class="active" id="draw_billy">
+                                                <input type="button" value="是" name="yes" id="draw_billy">
                                             </div>
                                         </div>
                                         <div class="col-50">
                                             <div class="inner">
-                                                <input type="button" value="否" name="no" id="draw_billn">
+                                                <input type="button" value="否" name="no" class="active" id="draw_billn">
                                             </div>
                                         </div>
                                     </div>
@@ -236,16 +244,16 @@
                         <div class="row no-gutter">
                             <div class="col-50">
                                 <div class="row no-gutter">
-                                    <div class="col-70">
+                                    <div class="col-60">
                                         <div class="inner">需要完整同期资料报告，请联系</div>
                                     </div>
-                                    <div class="col-30">
+                                    <div class="col-40">
                                         <img class="QQ" src="../static/images/img/data-fooer-lcon.gif" width="38" height="40">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-50">
-                                <b class="button button-big button-fill color-main data-button" id="post_btn">提交确认</b>
+                                <b class="button button-big button-fill color-main data-button" id="post_btn">确认提交</b>
                             </div>
                         </div>
                     </div>

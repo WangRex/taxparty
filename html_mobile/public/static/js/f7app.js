@@ -70,7 +70,7 @@ var view = {
 // Export selectors engine
 var $$ = Dom7;
 
-Dom7.ajax({
+/*Dom7.ajax({
     url: 'http://shsj.clpsgroup.com.cn/tz-core/novalidate/queryAdList.do',
     type: 'get',
     async: true,
@@ -105,7 +105,8 @@ Dom7.ajax({
     error: function (xhr, type, errorThrown) {
         console.log(xhr);
     }
-});
+});*/
+
 window.localStorage["backStatus"] = true;//初始化返回键状态 
 window.localStorage["page"] = 'main';
 document.addEventListener("backbutton", function () {
@@ -124,3 +125,24 @@ document.addEventListener("backbutton", function () {
     	window.localStorage["backStatus"] = true;
     }
 }, false); // 返回键
+//接收推送消息||缓存推送过来的消息
+function getNewMessage(msg){
+	$$("#message-count").show();
+	var msg = JSON.parse(msg);
+	var json = {"key":"username"};
+	var username = "";
+	InvokeApp.getItem(function(result){
+		username = result;
+		var msgList = window.localStorage[username];//区分不同账号缓存
+		if(msgList){
+			var oldMsgList = JSON.parse(window.localStorage[username]);
+			oldMsgList.unshift(msg);
+			window.localStorage[username] = JSON.stringify(oldMsgList);
+		}else{
+			var msgList=new Array();
+			msgList.unshift(msg);
+			window.localStorage[username] = JSON.stringify(msgList);
+		}
+	},function(){},json);//调用原生插件获取登录成功时缓存的用户名
+	
+}

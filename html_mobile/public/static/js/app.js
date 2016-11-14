@@ -12,6 +12,13 @@ var INTERFACE_URL = "http://shsj.clpsgroup.com.cn/tz-core";
 //var INTERFACE_URL = "http://remote.clps.com.cn:15880/tz-core";
 // 郭兴磊
 //var INTERFACE_URL = "http://192.168.1.114:8080/tz-core";
+//var INTERFACE_URL = "http://192.168.1.115:8080/tz-core";
+//var INTERFACE_URL = "http://101.201.210.240:8083/tz-core";
+// var INTERFACE_URL = "http://192.168.1.4:8080/tz-core";
+//var INTERFACE_URL = "http://101.201.210.240:8083/tz-core";
+// var INTERFACE_URL = "http://192.168.1.115:8080/tz-core";
+// var INTERFACE_URL = "http://101.201.210.240:8083/tz-core";
+// var INTERFACE_URL = "http://1c59h33192.iok.la:14681/tz-core";
 
 var root = {
     interFace: {
@@ -67,8 +74,8 @@ var root = {
         getInvoiceHistory: '/rest/myApp/getInvoiceHistory', //取得可开票的金额和历史信息
         queryUserInvoiceCount: INTERFACE_URL + '/rest/myApp/queryUserInvoiceCount.do', //可开票的金额和历史信息
         submitReceipt: INTERFACE_URL + '/rest/myApp/submitReceipt.do', //确认发票收货
-//        checkInvitation: INTERFACE_URL + '/rest/myApp/checkInvitation.do', //邀请验证
-//        getAllFriends: INTERFACE_URL + '/rest/myApp/getAllFriends.do', //下线列表
+        //        checkInvitation: INTERFACE_URL + '/rest/myApp/checkInvitation.do', //邀请验证
+        //        getAllFriends: INTERFACE_URL + '/rest/myApp/getAllFriends.do', //下线列表
         getAllAsks: INTERFACE_URL + '/rest/myApp/queryAllAsk.do', //问答咨询一览
         getAllAnswers: INTERFACE_URL + '/rest/myApp/queryAllAnswer.do', //问答解答一览
         getAskInfo: INTERFACE_URL + '/answer/getAskInfo.do', //提问详情
@@ -114,6 +121,7 @@ var root = {
         queryServiceFee: INTERFACE_URL + '/rest/myApp/queryServiceFee.do', //查询用户收入信息列表
         queryServiceByExist: INTERFACE_URL + '/rest/myApp/queryServiceByExist.do', //根据条件查询专家列表
         updateUserLevel: INTERFACE_URL + '/rest/myApp/updateUserLevel.do', //用户申请等级-解答者或线下服务者
+        findUserEmail: INTERFACE_URL + '/rest/myApp/findUserEmail.do', //获得同期资料以及国际税收的默认邮箱
         saveInternationalInfo: INTERFACE_URL + '/rest/home/saveInternationalInfo.do', //保存国际税收信息
         saveCollectionInfo: INTERFACE_URL + '/rest/home/saveCollectionInfo.do', //保存收藏信息
         saveCollection: INTERFACE_URL + '/rest/news/saveCollection.do', //新闻收藏
@@ -128,9 +136,14 @@ var root = {
         queryTaxProperty: INTERFACE_URL + '/rest/option/queryTaxProperty.do', //获取题库添加初始化来源
         exit: INTERFACE_URL + '/rest/exit.do', //退出登录
         qureyBestPrise: INTERFACE_URL + '/rest/myApp/queryBestPrice.do', //查询最低价
-        queryPayPwd: INTERFACE_URL +'/rest/myApp/queryPayPwd.do',//修改支付密码
-        getUserLevel: INTERFACE_URL +'/rest/myApp/selectServicesByUserId.do',//查询用户申请等级-解答者或线下服务者
-        Checking: INTERFACE_URL +'/rest/myApp/queryServicesChecking.do',//查询申请前面还有多少人审核
+        queryPayPwd: INTERFACE_URL + '/rest/myApp/queryPayPwd.do', //修改支付密码
+        getUserLevel: INTERFACE_URL + '/rest/myApp/selectServicesByUserId.do', //查询用户申请等级-解答者或线下服务者
+        Checking: INTERFACE_URL + '/rest/myApp/queryServicesChecking.do', //查询申请前面还有多少人审核
+        getTaxBureauPrice: INTERFACE_URL + '/rest/ask/getBureauPrice.do', //获取税局的签约金额
+        aliPayInfoResul: INTERFACE_URL + '/rest/pay/aliPayInfoResul.do', //支付宝付款接口
+        wxPayInfoResul: INTERFACE_URL + '/rest/pay/wxPayInfoResul.do', //微信付款接口
+        bankPayInfoResult: INTERFACE_URL + '/rest/pay/bankPayInfoResult.do', //查阅答案的支付接口
+        findAskBankInfo: INTERFACE_URL + '/rest/ask/findAskBankInfo.do', //查阅答案
 
         //Aimee.Chen
         yaoqinma: INTERFACE_URL + '/rest/myApp/submitInvierrorCode.do', //重复验证邀请码
@@ -138,7 +151,7 @@ var root = {
         shunzi: INTERFACE_URL + '/rest/myApp/checkInvitation.do', //检查是否是下线
         weixinyaoqinma: INTERFACE_URL + '/rest/myApp/subInviteCodeToFriend.do', //发送给微信好友
         askBigKa: INTERFACE_URL + '/rest/myApp/queryServiceByExist.do',
-        messages:INTERFACE_URL + '/rest/myApp/findOpenimInfo.do',
+        messages: INTERFACE_URL + '/rest/myApp/findOpenimInfo.do',
 
     },
     error: {
@@ -150,9 +163,9 @@ var root = {
 window.app = {};
 
 
-app.init = (function () {
+app.init = (function() {
 
-    var call = function () {
+    var call = function() {
 
         var enablePhonegap = false;
         if (enablePhonegap) {
@@ -171,7 +184,7 @@ app.init = (function () {
  *   loader
  */
 
-app.loader = (function () {
+app.loader = (function() {
         function show() {
             f7app.showIndicator()
         }
@@ -188,8 +201,8 @@ app.loader = (function () {
     /*
      *    弹出提示框组件
      */
-app.toast = (function () {
-    return function (tit, txt) {
+app.toast = (function() {
+    return function(tit, txt) {
         var params = {};
 
         if (arguments.length === 1) {
@@ -201,7 +214,7 @@ app.toast = (function () {
 
         f7app.modal(params);
 
-        setTimeout(function () {
+        setTimeout(function() {
             f7app.closeModal('.modal.modal-in');
         }, 2000)
     }
@@ -209,22 +222,22 @@ app.toast = (function () {
 /*
  *    本地存储
  */
-app.storage = (function () {
+app.storage = (function() {
     function setParams(key, jsonObj) {
-        localStorage.setItem(key, JSON.stringify(jsonObj));
+        window.sessionStorage.setItem(key, JSON.stringify(jsonObj));
     }
 
     function getParams(key) {
-        var strObj = localStorage.getItem(key);
+        var strObj = window.sessionStorage.getItem(key);
         return JSON.parse(strObj);
     }
 
     function remParams(obj) {
-        localStorage.removeItem(obj);
+        window.sessionStorage.removeItem(obj);
     }
 
     function clrParams() {
-        localStorage.clear();
+        window.sessionStorage.clear();
         console.log('clear')
     }
 
@@ -241,7 +254,7 @@ app.storage = (function () {
  *  邮箱&手机号
  */
 
-app.empty = (function () {
+app.empty = (function() {
         return {
             tel: /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/,
             emi: /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/
@@ -251,8 +264,8 @@ app.empty = (function () {
      *   ajax
      */
 
-app.doAjax = (function () {
-    return function (interFace, type, param, succCallBack) {
+app.doAjax = (function() {
+    return function(interFace, type, param, succCallBack) {
         console.log('接口:' + interFace);
         console.log('类型:' + type);
         console.log('输入:' + JSON.stringify(param));
@@ -264,18 +277,19 @@ app.doAjax = (function () {
             data: JSON.stringify(param),
             contentType: "application/json;charset=UTF-8",
             timeout: root.timeout,
-            beforeSend: function (request) {
+            beforeSend: function(request) {
                 app.loader.show();
             },
-            success: function (data, status, response) {
+            success: function(data, status, response) {
                 succCallBack(data, status, response)
             },
-            complete: function () {
+            complete: function() {
                 app.loader.hide();
             },
-            error: function (xhr, type, errorThrown) {
+            error: function(xhr, type, errorThrown) {
                 console.log(xhr);
                 app.toast('通讯错误，请重试。');
+                app.loader.hide();
             }
         });
     }
@@ -285,7 +299,7 @@ app.doAjax = (function () {
 /*
  *   获取当前时间
  */
-var D = (function () {
+var D = (function() {
 
     var oDate = new Date(); //实例一个时间对象；
     var oYear = oDate.getFullYear(); //获取系统的年；
@@ -295,8 +309,8 @@ var D = (function () {
     var oMinutes = oDate.getMinutes(); //分
     var oSeconds = oDate.getSeconds(); //秒
 
-    oMonth = oMonth.length > 1 ? "" + oMonth : "0" + oMonth;
-    oDay = oDay.length > 2 ? "0" + oDay : "" + oDay;
+    oMonth = oMonth.toString().length > 1 ? "" + oMonth : "0" + oMonth;
+    oDay = oDay.toString().length > 1 ? "" + oDay : "0" + oDay;
 
     return {
         y: oYear,
@@ -312,28 +326,29 @@ var D = (function () {
 
 /* ===== Mui PopPicker ===== */
 mui.init();
-(function ($, window) {
+(function($, window) {
 
-    $.ready(function () {
+    $.ready(function() {
 
         //选择服务地点
-        (function () {
+        (function() {
             var cityPicker3 = new $.PopPicker({
                 layer: 3
             });
 
             cityPicker3.setData(cityData3);
-            $$("#showCityPicker3").on('click', function (event) {
+            $$("#showCityPicker3").on('click', function(event) {
                 var self = this;
-                cityPicker3.show(function (items) {
+                cityPicker3.show(function(items) {
                     var t = (items[0] || {}).text + " " + (items[1] || {}).text + " " + (items[2] || {}).text;
                     self.value = t;
                     if ($$("#problem_des").val() && t && $$("#showDataPicker").val() && $$("#offer").val()) {
-                        $$("#submitFounds").attr("style", "");
                         $$("#submitFounds").attr("data-flag", "true");
+                        $$("#submitFounds").removeAttr("disabled");
+
                     } else {
-                        $$("#submitFounds").attr("style", "background-color: #e3e3e3 !important;");
                         $$("#submitFounds").attr("data-flag", "false");
+                        $$("#submitFounds").attr("disabled", "disabled");
                     }
                     self.setAttribute("data-id", items[2].value);
                     console.log(items[0].value + '---' + items[1].value + '----' + items[2].value)
@@ -396,7 +411,7 @@ mui.init();
         })();
 
         //选择服务时间
-        (function () {
+        (function() {
 
             var curData = D.y + '-' + D.m + '-' + D.d + ' ' + D.h + ':' + D.mi
             var options = {
@@ -406,26 +421,28 @@ mui.init();
             };
 
             var picker = new $.DtPicker(options);
-            $$("#showDataPicker").on('click', function () {
+            $$("#showDataPicker").on('click', function() {
                 var self = this;
                 var id = self.getAttribute('id');
-                picker.show(function (rs) {
+                picker.show(function(rs) {
                     console.log(rs.text);
                     self.value = rs.text;
                     if ($$("#problem_des").val() && $$("#showCityPicker3").val() && rs.text && $$("#offer").val()) {
-                        $$("#submitFounds").attr("style", "");
                         $$("#submitFounds").attr("data-flag", "true");
+                        $$("#submitFounds").removeAttr("disabled");
+
+
                     } else {
-                        $$("#submitFounds").attr("style", "background-color: #e3e3e3 !important;");
+                        $$("#submitFounds").attr("disabled", "disabled");
                         $$("#submitFounds").attr("data-flag", "false");
                     }
                 });
             }, false);
         })();
 
-        (function () {
+        (function() {
 
-            $(document).on("click", "a", function () {
+            $(document).on("click", "a", function() {
                 return false
             })
 

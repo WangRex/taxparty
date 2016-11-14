@@ -3,7 +3,7 @@
 <div class="navbar">
     <div class="navbar-inner">
         <div class="left">
-            <a href="#" class="back link"> <i class="m-icon m-icon-back"></i>
+            <a href="#" id="applicationGoBack" class="back link"> <i class="m-icon m-icon-back"></i>
             </a>
         </div>
         <div class="center sliding">申请解答者</div>
@@ -17,116 +17,337 @@
         <div class="page-content">
             <div class="content-block withdrawals-bj" style="margin: 0px; padding: 0px;">
                 <div class="withdrawals-bj">
-                    <div id="application_list"></div>
-                    <div class="list-block" id="apply">
-                        <ul>
-                            <!-- Text inputs -->
-                            <li>
-                                <div class="item-content">
-                                    <div class="item-title label"><b>真实姓名</b></div>
-                                    <div class="item-input">
-                                        <input id="real_name" type="text" placeholder="">
-                                    </div>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="item-content">
-                                    <div class="item-title label">
-                                        <div class="item-media">
-                                            <i class="card-Inco" style="width: 30px; height: 25px;padding-left: 0px;"></i><b>身份证上传</b></div>
-                                    </div>
-                                    <div class="item-input">
-                                        <input id="card_id" type="text" placeholder="">
-                                    </div>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="item-content">
-                                    <div class="image-item">
-                                        <div class="about-img1"></div>
-                                    </div>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="item-content">
-                                    <div class="item-title label"><b>手机号</b></div>
-                                    <div class="item-input">
-                                        <input id="phone_number" type="text" placeholder="选填" style="text-align: right">
-                                    </div>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="item-content">
-                                    <div class="item-title label"><b>工作地点</b></div>
-                                    <div class="item-input">
-                                        <input id="region_code" type="text" placeholder="精确到区县" required="required" style="text-align: right">
-                                    </div>
-                                </div>
-                            </li>
-
-                            <!-- Select -->
-                            <li>
-                                <div class="item-content">
-                                    <div class="item-title label"><b>专业资格</b></div>
-                                    <div class="item-input">
-                                        <input id="major" type="text" placeholder="" required="required" style="text-align: right" >
-                                    </div>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="item-content">
-                                    <div class="image-item">
-                                        <div class="about-img1"></div>
-                                    </div>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="item-content">
-                                    <div class="item-title label"><b>工作单位及职称</b></div>
-                                    <div class="item-input">
-                                        <input id="company_post" type="text" placeholder="选填" style="text-align: right">
-                                    </div>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="item-content">
-                                    <div class="item-title label"><b>擅长的税务领域</b></div>
-                                    <div class="item-input">
-                                        <input type="text" placeholder="可多选" class="expert-input" id="taxproperty_code" readonly style="text-align: right">
-                                    </div>
-                                </div>
-                            </li>
-
-                            <li>
-                                <label class="label-checkbox item-content" style="margin-top: 20px;">
-                                    <input id="first" type="checkbox" name="my-checkbox" value="Books">
-                                    <div class="item-media">
-                                        <div class="row answer-gai "style="padding-right: 20px;">
-                                            <div class="col-10 withdrawals-lcon">
-                                                <i  class="icon icon-form-checkbox icon-checked"></i>
-                                            </div>
-                                            <div class="col-88">
-                                                <div class="item-title-row">
-                                                    <b style="font-size:14px">我阅读并同意《税务在线服务协议》</b>
+                    <div id="application_list">
+                        <div class="list-block" style="margin-top: 20px;margin-bottom:0px;" id="apply">
+                            <ul style="color:#D6D0CA;padding-bottom: 20px;">
+                                <!-- Text inputs -->
+                                <li>
+                                    <div class="item-content">
+                                        <div class="item-input">
+                                            <div class="row">
+                                                <div class="col-80">
+                                                    <input id="real_name" type="search" placeholder="真实姓名" value="">
+                                                </div>
+                                                <div class="col-20" style="line-height:43px;">
+                                                    选填
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </label>
-                                <b class="button button-big button-fill color-main" id="submit" >提交确认</b>
-                            </li>
+                                </li>
 
-                        </ul>
+                                <li>
+                                    <div class="item-content">
+                                        <div class="item-input">
+                                            <div class="row" style="line-height: 43px;">
+                                                <div class="col-15">
+                                                    <i class="card-Inco"></i>
+                                                </div>
+                                                <div class="col-65">
+                                                    <div>身份证上传</div>
+                                                    <input id="card_id" type="hidden" placeholder="身份证上传" style="position: absolute;left: 42px;" disabled="disabled">
+                                                </div>
+                                                <div class="col-20" style="line-height:43px;">
+                                                    选填
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <!--<div class="item-content">
+                                        <div id="idCardImageBox" class="row" style="width:100%;">
+                                            <div class="col-50">
+                                                <div class="about-img" id="idCardPicker">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>-->
+                                    <div class="swiper-container order" style="height: 100px;">
+                                        <div class="swiper-wrapper" id="idCardImageBox">
+                                            <div class="swiper-slide">
+                                                <div class="list-block media-list">
+                                                    <div class="item-content">
+                                                        <div class="item-media">
+                                                            <div class="about-img" id="idCardPicker">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </li>
+
+                                <li>
+                                    <div class="item-content">
+                                        <div class="item-input">
+                                            <div class="row">
+                                                <div class="col-80">
+                                                    <input id="phone_number" type="tel" placeholder="手机号" value="">
+                                                </div>
+                                                <div class="col-20" style="line-height:43px;">
+                                                    选填
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="item-content">
+
+                                        <div class="item-input">
+                                            <div class="row">
+                                                <div class="col-60">
+                                                    <input id="region_code" type="text" placeholder="工作地点" value="">
+                                                </div>
+                                                <div class="col-40" style="line-height:43px;text-align: center;">
+                                                    精确到区县
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="item-content">
+
+
+                                        <div class="row" style="width:100%;">
+                                            <div class="col-100">
+                                                <a href="#" class="item-link smart-select" data-page-title="专业资格" data-back-text=" " style="line-height:43px;">
+                                                    <!-- "multiple" attribute for multiple select-->
+                                                    <select name="major" id="majorList" multiple>
+                                                        <!-- options grouped within "optgroup" tag-->
+                                                        <optgroup label="专业资格">
+                                                            <option value="注册会计师">注册会计师</option>
+                                                            <option value="注册税务师">注册税务师</option>
+                                                            <option value="律师">律师</option>
+                                                            <option value="特许公认会计师">特许公认会计师</option>
+                                                            <option value="美国注册会计师">美国注册会计师</option>
+                                                            <option value="注册资产评估师">注册资产评估师</option>
+                                                            <option value="其他">其他</option>
+                                                        </optgroup>
+                                                    </select>
+                                                    <div class="item-inner" id="majorTitle">
+                                                        <div class="item-title"  style="margin-left:0px;line-height: 21px;">专业资格</div>
+                                                        <div class="item-after" id="majorSummary" style="margin-left:0px;line-height: 21px;"></div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <!-- <div class="col-30" style="line-height:43px;">
+                                                可多选&nbsp;<img src="../static/images/img/select-sm.png" class="s_icon">
+                                            </div>-->
+
+                                        </div>
+
+
+
+
+
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="swiper-container order" style="height: 100px;">
+                                        <div class="swiper-wrapper" id="majorImageBox">
+                                            <div class="swiper-slide">
+                                                <div class="list-block media-list">
+                                                    <div class="item-content">
+                                                        <div class="item-media">
+                                                            <div class="about-img" id="majorPicker">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li style="display:none;">
+                                    <div class="item-content">
+                                        <div class="item-input">
+                                            <div class="row">
+                                                <div class="col-80">
+                                                    <input id="line_service_slogan" type="search" placeholder="线下服务口号">
+                                                </div>
+                                                <div class="col-20" style="line-height:43px;">
+                                                    选填
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="item-content">
+                                        <div class="item-input">
+                                            <div class="row">
+                                                <div class="col-80">
+                                                    <input id="company_post" type="text" value="" placeholder="工作单位及职称">
+                                                </div>
+                                                <div class="col-20" style="line-height:43px;">
+                                                    选填
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </li>
+
+                                <li style="display:none;">
+                                    <div class="item-content">
+                                        <div class="item-input">
+                                            <div class="row">
+                                                <div class="col-80">
+                                                    <input id="service_region_id" type="search" placeholder="线下服务区域">
+                                                </div>
+                                                <div class="col-20" style="line-height:43px;">
+                                                    选填
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="item-content">
+                                        <div class="item-input">
+
+                                            <div class="row" style="width:100%;">
+                                                <div class="col-100">
+                                                    <a href="#" class="item-link smart-select" data-page-title="擅长的税务领域" data-back-text=" " style="line-height:43px;">
+                                                        <!-- "multiple" attribute for multiple select-->
+                                                        <select name="taxproperty_code" id="taxpropertyList" multiple>
+                                                        <!-- options grouped within "optgroup" tag-->
+                                                        <optgroup label="问题属性" value="01">
+                                                            <option value="0101">财务会计类</option>
+                                                            <option value="0102">法规实务类</option>
+                                                            <option value="0103">税务软件类</option>
+                                                        </optgroup>
+                                                        <optgroup label="税种类别" value="02">
+                                                            <option value="0201">增值税</option>
+                                                            <option value="0202">消费税</option>
+                                                            <option value="0203">企业所得税</option>
+                                                            <option value="0204">国际税收</option>
+                                                            <option value="0205">个人所得税</option>
+                                                            <option value="0206">房产税</option>
+                                                            <option value="0207">车辆购置税</option>
+                                                            <option value="0208">城镇土地使用税</option>
+                                                            <option value="0209">土地增值税</option>
+                                                            <option value="0210">耕地占用税</option>
+                                                            <option value="0211">资源税</option>
+                                                            <option value="0212">契税</option>
+                                                            <option value="0213">印花税</option>
+                                                            <option value="0214">关税</option>
+                                                        </optgroup>
+                                                        <optgroup label="征管程序" value="03">
+                                                            <option value="0301">税务登记</option>
+                                                            <option value="0302">税务认定</option>
+                                                            <option value="0303">发票管理</option>
+                                                            <option value="0304">纳税申报</option>
+                                                            <option value="0305">证明办理</option>
+                                                        </optgroup>
+                                                        <optgroup label="业务类型" value="04">
+                                                            <option value="0401">营改增</option>
+                                                            <option value="0402">企业所得税汇算清缴</option>
+                                                            <option value="0403">税收优惠</option>
+                                                            <option value="0404">非居民税收</option>
+                                                            <option value="0405">特别纳税调整</option>
+                                                            <option value="0406">关联申报</option>
+                                                            <option value="0407">税收协定</option>
+                                                            <option value="0408">情报交换</option>
+                                                            <option value="0409">国际税务磋商</option>
+                                                            <option value="0410">纳税评估</option>
+                                                            <option value="0411">税务稽查</option>
+                                                            <option value="0412">进出口退税</option>
+                                                            <option value="0413">税务行政复议/诉讼</option>
+                                                            <option value="0414">其他税务检查</option>
+                                                        </optgroup>
+
+                                                    </select>
+                                                        <div class="item-inner" id="taxpropertyTitle">
+                                                            <div class="item-title" style="line-height: 21px;">擅长的税务领域</div>
+                                                            <div class="item-after" id="taxpropertySummary" style="margin-left:0px;line-height: 21px;"></div>
+                                                        </div>
+                                                    </a>
+
+                                                </div>
+                                                <!--<div class="col-30" style="line-height:43px;">
+                                                    可多选&nbsp;<img src="../static/images/img/select-sm.png" class="s_icon">
+                                                </div>-->
+
+                                            </div>
+
+
+                                            <!--<div class="row">
+                                                <div class="col-75" id="taxproperty_array">
+
+                                                    <div class="row  taxproperty_code">
+                                                        <div class="col-100">
+                                                            <input type="text" placeholder="擅长的税务领域" class="expert-input" value="" readonly="" id="taxproperty_code">
+                                                        </div>
+                                                    </div>'
+
+                                                </div>
+                                                <div class="col-25" style="line-height:43px;">
+                                                    可多选
+                                                </div>
+                                                <div class="col-75"></div>
+                                                <div class="col-25"><button id="resetTaxproperty" class="button">重置</button></div>
+                                            </div>-->
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <!--<label class="label-checkbox item-content" style="margin-top: 20px;">
+                                    <div class="item-media">
+                                        <div class="row answer-gai "style="padding-right: 20px;">
+                                            <div class="col-10 withdrawals-lcon">
+                                                <i  class="icon icon-form-checkbox icon-checked" style="width:15px;height:15px;"></i>
+                                            </div>
+                                            <div class="col-88">
+                                                <div class="item-title-row">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </label>-->
+                                    <div style="padding-left: 21px;">
+                                        <div class="">
+                                            <div class="">
+                                                <div id="agreementBox" style="width: 16px; height: 16px; border: 1px solid rgb(157, 157, 161); border-radius: 16px; margin-top: 3px; float: left; background-size: 16px 16px; background-repeat: no-repeat;" class="">
+                                                </div>
+                                            </div>
+                                            <div class="" style="padding-bottom: 10px;">
+
+                                                <span style="font-size:14px;color:black;" class="">&nbsp;<a>我阅读并同意《税务在线服务协议》</a>
+                                                </span>
+                                                <!--<label class="label-checkbox item-content"><div class="item-media"><i class="icon icon-form-checkbox" style="width:15px;height:15px;background-color:none"></i></div><div class="item-inner" style="margin-left:0px;"> </div></label>-->
+                                                <!--                                        <input id="first" type="checkbox" name="my-checkbox">-->
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <center>
+                                        <div class="button button-big button-fill color-main" style="width:90%;" id="submit">提 交</div>
+                                    </center>
+                                </li>
+
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>

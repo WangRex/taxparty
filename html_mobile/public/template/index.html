@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="../static/lib/css/welcomescreen.css">
     <link rel="stylesheet" href="../static/lib/swiper/swiper.min.css">
     <link rel="stylesheet" href="../static/lib/mui/mui.picker.all.css">
+    <link rel="stylesheet" href="../static/lib/webuploader/webuploader.css">
     <!-- Path to your custom app styles-->
     <link rel="stylesheet" href="../static/css/app.css">
     <link rel="stylesheet" href="../static/css/subsidiary.css">
@@ -33,9 +34,9 @@
                 <div class="navbar-inner">
                     <div class="center sliding">税聚</div>
                     <div class="right">
-                        <a href="index/msg.html" class="link">
+                        <a class="link" id="msg-btn">
                             <img src="../static/images/img/message.png" style="width:44px; margin-right:-10px">
-                            <div class='index-message-tip-icon'></div>
+                            <div id="message-count" class='index-message-tip-icon'></div>
                         </a>
                     </div>
                 </div>
@@ -97,7 +98,7 @@
                                 <a href="index/add.html" class="col-33 btn">
                                     <span>+</span>
                                 </a>
-                                <a href="index/answer-plus.html" class="col-66 btn">
+                                <a href="javascript:void(0);" class="col-66 btn" onclick="app.checkIdentityAnswer();">
                                     <img src="../static/images/icon/home/answer.png" alt="">
                                     <div>
                                         <span>ANSWER</span>
@@ -124,7 +125,7 @@
                     <div class="page-content seek_mod">
                         <div class="buttons-row find_me_tab">
                             <a href="#tab1_find" class="button tab-link button-big active">寻Ta</a>
-                            <a href="#tab2_find" id="findme" class="button tab-link button-big ">寻我</a>
+                            <a  id="findme" class="button tab-link button-big ">寻我</a>
                         </div>
                         <div class="tabs">
                             <div id="tab1_find" class="tab active">
@@ -170,7 +171,7 @@
                                                     <div class="item-inner">
                                                         <div class="item-title label">出价金额</div>
                                                         <div class="item-input">
-                                                            <input type="number" placeholder="0.00" class="mo" id="offer">
+                                                            <input type="number" placeholder="0.00" class="mo" id="offer" onkeypress="return app.myNumberic(event)">
                                                         </div>
                                                         <span style="width:150%;padding-left: 10px;">元</span>
                                                     </div>
@@ -179,7 +180,6 @@
                                             <li>
                                                 <div class="item-content">
                                                     <div class="item-inner">
-                                                        <div class="item-title label">&nbsp;</div>
                                                         <div class="item-input">
                                                             <p class="tips"></p>
                                                         </div>
@@ -188,7 +188,7 @@
                                             </li>
                                             <li>
                                                 <div style="height:20px"></div>
-                                                <b class="button button-big button-fill color-main" id="submitFounds" style="background-color: #e3e3e3 !important;" data-flag="false">叫人</b>
+                                                <b class="button button-big button-fill color-main" id="submitFounds" data-flag="false" style="background-color: #e3e3e3 !important;" disabled="disabled">叫人</b>
                                                 <p style="font-size:13px">税聚已为您验证每位财税人士的三证：身份证、工作证和专业等级证书</p>
                                             </li>
                                         </ul>
@@ -236,7 +236,7 @@
                 </div>
             </div>
             <div class="pages navbar-through toolbar-through">
-                <div data-page="about" class="page">
+                <div data-page="about" class="page" id="aboutPage">
                     <div class="page-content about">
                         <div id="user_list"></div>
                     </div>
@@ -267,7 +267,8 @@
     </div>
     <script src="../static/lib/lab/LAB.min.js"></script>
     <script type="text/javascript">
-    $LAB.script('../static/js/init.js').wait();
+        $LAB.script('../static/js/init.js').wait();
+
     </script>
     <script src="https://g.alicdn.com/aliww/??h5.openim.sdk/1.0.6/scripts/wsdk.js,h5.openim.kit/0.3.3/scripts/kit.js?mobile=1" charset="utf-8"></script>
     <script type="text/template7" id="tobarBtn_tpl">
@@ -288,7 +289,7 @@
             <span class="tabbar-label">我的</span>
         </a>
     </script>
-      <script type="text/template7" id="tobarBtn_not_tpl">
+    <script type="text/template7" id="tobarBtn_not_tpl">
         <a href="#home" class="tab-link active">
             <i class="icon_index"></i>
             <span class="tabbar-label">咨询</span>
@@ -306,38 +307,19 @@
             <span class="tabbar-label">我的</span>
         </a>
     </script>
-       <script type="text/template7" id="home_tpl">
-        <div class="row withdrawals-row">
-            <div class="col-50 withdrawals-money">
-                <div><img src="../static/images/img/hand-dollar.png" style="
-    width: 40px;
-    margin-left: -100px;
-    margin-top: -30px;
-">
-                    <div style="
-    font-size: 14px;
-    margin-left: -100px;
-    color: #ccc;
-">Today</div>
+    <script type="text/template7" id="home_tpl">
+        <div class="row withdrawals-row" style="line-height: 19px;">
+            <div class="withdrawals-money" style="padding:0px;">
+                <div style="width: 40px;padding-top: 15px;">
+                    <img src="../static/images/img/hand-dollar.png" style="width:35px;">
+                    <div style="font-size: 14px;color: #ccc;width: 40px;line-height: 3;">Today</div>
                 </div>
-                <div style="
-    margin-top: -60px;
-    margin-left: 60px;
-    font-size: 35px;
-    width:102.5px;
-">{{gross_income}}
-                    <div style="
-    font-size: 18px;
-    font-weight: bolder;
-    margin-left: 100px;
-    margin-top: -30px;
-">元</div>
-                </div>
+                <div style="font-size: 30px;width: 100px;position: absolute;top: 83px;text-align: right;left: 53px;">{{gross_income}}</div>
+                <div style="font-size: 14px;font-weight: bolder;width: 20px;float: left;position: absolute;top: 88px;left: 158px;">元</div>
             </div>
-            <div class="col-15 money-cont">
-                <span style="
-    margin-left: 20px;
-">from</span>
+
+            <div class="col-15" style="line-height: 78px;margin-left: 125px;">
+                <span>from</span>
             </div>
             <div class="col-35 withdrawals-time">
                 <div><i class="withdrawals-lcon-1"></i>题库<span>{{question_income}}</span></div>
@@ -364,21 +346,21 @@
             <div class="bar ask_bar">
                 <b>问</b>
                 <div class='marquee'>
-                    <marquee direction="up"behavior="scroll" scrollamount="1" scrolldelay="100" loop="-1" width="100%" height="18" hspace="0" vspace="0">
-                    {{#each this}}
-                        <span>{{questions}}</span>
-                    {{/each}}    
+                    <marquee direction="up" behavior="scroll" scrollamount="1" scrolldelay="100" loop="-1" width="100%" height="18" hspace="0" vspace="0">
+                        {{#each this}}
+                        <span>{{questions}}</span> {{/each}}
                     </marquee>
                 </div>
             </div>
             <style>
-                .marquee{
+                .marquee {
                     height: 18px;
                     margin-top: -18px;
                     display: block;
                     width: 100%;
-                    background-color: rgb(0, 0, 0,0);
+                    background-color: rgb(0, 0, 0, 0);
                 }
+
             </style>
         </a>
     </script>
@@ -387,12 +369,12 @@
             <div class="bar answer_bar">
                 <b>答</b>
                 <div class='marquee'>
-                    <marquee direction="up"behavior="scroll" scrollamount="1" scrolldelay="100" loop="-1" width="100%" height="18" hspace="0" vspace="0">
-                    {{#each this}}
-                        <span>{{answer_context}}</span>
-                    {{/each}}    
+                    <marquee direction="up" behavior="scroll" scrollamount="1" scrolldelay="100" loop="-1" width="100%" height="18" hspace="0" vspace="0">
+                        {{#each this}}
+                        <span>{{answer_context}}</span> {{/each}}
                     </marquee>
                 </div>
+            </div>
             </div>
         </a>
     </script>
@@ -452,360 +434,581 @@
         </div>
         {{/each}}
     </script>
-    <!-- 资讯列表template -->
-    <script type="text/template7" id="news_list_tpl">
-        {{#each this}}
-        <li class="swipeout " data-id="{{new_id}} ">
-            <div class="swipeout-content ">
-                <a href="news/newsDetails.html?id={{new_id}}" class="item-content ">
-                    <div class="item-inner ">
-                        <div class="item-title "><b>{{new_title}}</b></div>
-                        <div class="item-text ">{{new_content}}</div>
-                    </div>
-                </a>
-                <div class="item-subtitle ">
-                    <div class="row no-gutter ">
-                        <div class="col-40 ">
-                            <span class="time-md ">{{time_y}}年{{time_m}}月{{time_d}}日</span>
-                            <span class="time-h ">{{time_mi}}</span>
+            <!-- 资讯列表template -->
+            <script type="text/template7" id="news_list_tpl">
+                {{#each this}}
+                <li class="swipeout " data-id="{{new_id}} ">
+                    <div class="swipeout-content ">
+                        <a href="news/newsDetails.html?id={{new_id}}" class="item-content ">
+                            <div class="item-inner ">
+                                <div class="item-title "><b>{{new_title}}</b></div>
+                                <div class="item-text ">{{new_content}}</div>
+                            </div>
+                        </a>
+                        <div class="item-subtitle ">
+                            <div class="row no-gutter ">
+                                <div class="col-40 ">
+                                    <span class="time-md ">{{time_y}}年{{time_m}}月{{time_d}}日</span>
+                                    <span class="time-h ">{{time_mi}}</span>
+                                </div>
+                                <div class="col-60 ">
+                                    <span>阅读:&nbsp;{{new_hits}}</span>
+                                    <span><img src="../static/images/img/unfavorite.png" width="13px;" alt="收藏"></span>
+                                    <span><img src="../static/images/img/thumb51.png" width="13px;" alt="点赞">{{new_like}}</span>
+                                    <span><i class="m-icon m-icon-chatbubble "></i>{{new_reviews}}</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-60 ">
-                            <span>阅读:&nbsp;{{new_hits}}</span>
-                            <span><img src="../static/images/img/unfavorite.png" width="13px;" alt="收藏"></span>
-                            <span><img src="../static/images/img/thumb51.png" width="13px;" alt="点赞">{{new_like}}</span>
-                            <span><i class="m-icon m-icon-chatbubble "></i>{{new_reviews}}</span>
+                    </div>
+                </li>
+                {{/each}}
+            </script>
+            <!-- 资讯-收藏列表 -->
+            <script type="text/template7 " id="collect_news_list_tpl">
+                {{#each this}}
+                <li class="swipeout ">
+                    <div class="swipeout-content ">
+                        <a href="news/newsDetails.html?id={{new_id}}" class="item-content ">
+                            <div class="item-inner ">
+                                <div class="item-title ">{{new_title}}</div>
+                                <div class="item-text ">{{new_content}}</div>
+                            </div>
+                            <div class="item-media ">
+                                <img src="../static/images/jpg.jpg " alt=" " width="80 ">
+                            </div>
+                        </a>
+                        <div class="item-subtitle ">
+                            <div class="row no-gutter ">
+                                <div class="col-40 ">
+                                    <span class="time-md ">{{new_subtime}}</span>
+                                </div>
+                                <div class="col-60 ">
+                                    <span>阅读:{{new_hits}}</span>
+                                    <span><img src="../static/images/img/shou_03.png" width="13px;" alt="点赞">{{new_like}}</span>
+                                    <span><i class="m-icon m-icon-chatbubble "></i>{{new_reviews}}</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <div class="swipeout-actions-right">
+                        <a onclick="app.disCollectNews({{tuc_id}})" class="swipeout-delete" id="disCollectNewsBtn">取消收藏</a>
+                    </div>
+                </li>
+                {{/each}}
+            </script>
+            <script type="text/template7 " id="news_data_tpl">
+                <div class="act_post ">
+                    <h3>{{title}}</h3>
+                    <p>{{context}}</p>
                 </div>
-            </div>
-        </li>
-        {{/each}}
-    </script>
-    <!-- 资讯-收藏列表 -->
-    <script type="text/template7 " id="collect_news_list_tpl">
-        {{#each this}}
-        <li class="swipeout ">
-            <div class="swipeout-content ">
-                <a href="news/newsDetails.html?id={{new_id}}" class="item-content ">
-                    <div class="item-inner ">
-                        <div class="item-title ">{{new_title}}</div>
-                        <div class="item-text ">{{new_content}}</div>
-                    </div>
-                    <div class="item-media ">
-                        <img src="../static/images/jpg.jpg " alt=" " width="80 ">
-                    </div>
-                </a>
-                <div class="item-subtitle ">
-                    <div class="row no-gutter ">
-                        <div class="col-40 ">
-                            <span class="time-md ">{{new_subtime}}</span>
-                        </div>
-                        <div class="col-60 ">
-                            <span>阅读:{{new_hits}}</span>
-                            <span><img src="../static/images/img/shou_03.png" width="13px;" alt="点赞">{{new_like}}</span>
-                            <span><i class="m-icon m-icon-chatbubble "></i>{{new_reviews}}</span>
-                        </div>
-                    </div>
+                <div class="act_time ">
+                    <span class="time-md ">{{time_m}}月{{time_d}}日</span>
+                    <span class="time-h ">{{time_mi}}</span>
                 </div>
-            </div>
-            <div class="swipeout-actions-right">
-                <a onclick="app.disCollectNews({{tuc_id}})" class="swipeout-delete" id="disCollectNewsBtn">取消收藏</a>
-            </div>
-        </li>
-        {{/each}}
-    </script>
-    <script type="text/template7 " id="news_data_tpl">
-        <div class="act_post ">
-            <h3>{{title}}</h3>
-            <p>{{context}}</p>
-        </div>
-        <div class="act_time ">
-            <span class="time-md ">{{time_m}}月{{time_d}}日</span>
-            <span class="time-h ">{{time_mi}}</span>
-        </div>
-        <div class="list-block ">
-            <ul class="right ">
-                <li>
-                    <span>阅读:&nbsp;{{reads}}</span>
-                    <span id="collectBtn" data-id="{{inform_id}}">
+                <div class="list-block ">
+                    <ul class="right ">
+                        <li>
+                            <span>阅读:&nbsp;{{reads}}</span>
+                            <span id="collectBtn" data-id="{{inform_id}}">
                     {{#if collect_flag}}
                     <img src="../static/images/img/favorite.png" width="13px;" alt="收藏">
                     {{else}}
                     <img src="../static/images/img/unfavorite.png" width="13px;" alt="收藏">
                     {{/if}}收藏</span>
-                    <span id="likeBtn" data-id="{{inform_id}}" data-like-flag={{like_flag}}>
+                            <span id="likeBtn" data-id="{{inform_id}}" data-like-flag={{like_flag}}>
                     {{#if like_flag}}
                     <img src="../static/images/img/thumb52.png" width="13px;" alt="点赞">
                     {{else}}
                     <img src="../static/images/img/thumb51.png" width="13px;" alt="点赞">
                     {{/if}}
                     {{likes}}</span>
-                    <span><i class="m-icon m-icon-chatbubble "></i><span id="commentsCount">{{comments}}</span></span>
-                </li>
-            </ul>
-        </div>
-    </script>
-    <script type="text/template7 " id="comment_list_tpl">
-        <div class="list-block ">
-            <ul>
+                            <span><i class="m-icon m-icon-chatbubble "></i><span id="commentsCount">{{comments}}</span></span>
+                        </li>
+                    </ul>
+                </div>
+            </script>
+            <script type="text/template7 " id="comment_list_tpl">
+                <div class="list-block ">
+                    <ul>
+                        {{#each this}}
+                        <li class="align-top ">
+                            <div class="item-content ">
+                                <div class="item-inner ">
+                                    <div class="item-input ">
+                                        <p>
+                                            <span>{{username}}</span>
+                                            <span style="float: right;">{{time}}</span>
+                                        </p>
+                                        <p>
+                                            <span>{{comment}}</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </script>
+            <script type="text/template7 " id="common_tpl">
+                <div class="list-block ">
+                    <ul>
+                        <li class="align-top ">
+                            <div class="item-content ">
+                                <div class="item-inner ">
+                                    <div class="item-input ">
+                                        <textarea class=" " id="textarea_val"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="list-block inset ">
+                    <a class="button button-big button-fill color-red" data-id="{{inform_id}}" id="commonBtn">提交</a>
+                </div>
+            </script>
+            <!-- 资金一览-->
+            <script type="text/template7" id="duanlist">
                 {{#each this}}
-                <li class="align-top ">
-                    <div class="item-content ">
-                        <div class="item-inner ">
-                            <div class="item-input ">
-                                <p>
-                                    <span>{{username}}</span>
-                                    <span style="float: right;">{{time}}</span>
-                                </p>
-                                <p>
-                                    <span>{{comment}}</span>
-                                </p>
-                            </div>
-                        </div>
+                <div class="row capital-list">
+                    <!--<div class="col-5"></div>-->
+                    <div class="col-25">
+                        <center><span>{{trans_date}}</span></center>
                     </div>
-                </li>
-                {{/each}}
-            </ul>
-        </div>
-    </script>
-    <script type="text/template7 " id="common_tpl">
-        <div class="list-block ">
-            <ul>
-                <li class="align-top ">
-                    <div class="item-content ">
-                        <div class="item-inner ">
-                            <div class="item-input ">
-                                <textarea class=" " id="textarea_val"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="list-block inset ">
-            <a class="button button-big button-fill color-red" data-id="{{inform_id}}" id="commonBtn">提交</a>
-        </div>
-    </script>
-    <!-- 资金一览-->
-    <script type="text/template7" id="duanlist">
-        {{#each this}}
-        <div class="row capital-list">
-            <!--<div class="col-5"></div>-->
-            <div class="col-25">
-                <center><span>{{trans_date}}</span></center>
-            </div>
-            <div class="col-25">
-                <center><span style="
+                    <div class="col-25">
+                        <center><span style="
     margin-left: -10px;
 ">{{trans_time}}</span></center>
-            </div>
-            <div class="col-25">
-                <center><span>{{tran_uasge}}</span></center>
-            </div>
-            <div class="col-25">
-                <center><span style="
+                    </div>
+                    <div class="col-25">
+                        <center><span>{{tran_uasge}}</span></center>
+                    </div>
+                    <div class="col-25">
+                        <center><span style="
     margin-left: -15px;
 ">{{tran_amt}}</span></center>
-            </div>
-        </div>
-        {{/each}}
-    </script>
-    <!-- 详情列表 待定 -->
-    <script type="text/template7 " id="detailsr_list_tpl">
-        {{#each this}}
-        <li>
-            <a href="index/queryDetails.html " class="item-content " onclick="app.queryDetails({{law_id}}) ">
-                <div class="item-inner ">
-                    <div class="item-subtitle ">{{law_att}}</div>
-                    <div class="item-subbox ">
-                        <div class="item-title ">{{law_name}}</div>
-                        <div class="item-text ">{{law_cont}}</div>
                     </div>
                 </div>
-            </a>
-        </li>
-        {{/each}}
-    </script>
-    <!--题库一览-->
-    <script type="text/template7" id="perstik">
-        <div class="buttons-row consult_tab">
-            <a class="btn_tab border-right-white"><b>{{total}}</b></br><span>题库总数（条）</span></a>
-            <a class="btn_tab"><b>{{profit}}</b></br><span>题库收益（元）</span></a>
-        </div>
-    </script>
-    <script type="text/template7" id="perstikxsa">
-        {{#each this}}
-        <div class="item-title list-box-cont ques-fine">
-            <div><span>编号:</span1>{{bank_id}}</span></div>
-            <div><span>来源:</span><span>{{tax_name}}</span></div>
-            <div><span>入库时间:</span> <span>{{submit_time}}</span></div>
-        </div>
-        <div class="item-title list-box-cont ques-fine">
-            <div><span>预览数:</span1>{{adoption_count}}</span></div>
-            <div><span>适用地区:</span><span>{{region_name}}</span></div>
-            <div><span>类型:</span> <span>{{tax_name2}}</span></div>
-        </div>
-        <div class="ques-fine-cont">
-            <div style="color:#E74C3C;font-weight:bold;margin-left:10px;">问：<span style="color:black">{{ask_title}}</span></div>
-            <div style="margin-left:10px;">
-                答：<span>{{answer}}</span>
-            </div>
-        </div>
-        {{/each}}
-    </script>
-    <!-- 问答咨询-->
-    <script type="text/template7" id="tationzans">
-        <div class="col-55">
-            <div class="buttons-ro problem-top">
-                <i class="problem-lcon"></i><b>{{count}}</b>
-                </br><span>支付金额</span>
-            </div>
-        </div>
-        <div class="col-45 problem-top problem-top-right">
-            <div>解答总数：<span>{{adopt}} 条</span>
-            </div>
-            <br/>
-            <div>采纳数量：<span>{{total}} 条</span>
-            </div>
-        </div>
-    </script>
-    <script type="text/template7" id="tationzans_lsit">
-        {{#each this}}
-        <div class="list-block media-list ansyer-list ">
-            <div class="item-content ansyer-list-locn problem-location">
-                <div class=" item-media ">
-                    <img src="../static/images/jpg.jpg" width="60" style="margin-right:10px;">
-                </div>
-                <div class="ansyer-list-box" style="margin-left:4px;">
-                    <div class="item-title-row">
-                        <div class="item-title list-box-cont">
-                            <span style="font-weight:bolder;">ASK </span><span>{{ask_dateTime}}</span>
+                {{/each}}
+            </script>
+            <!-- 详情列表 待定 -->
+            <script type="text/template7 " id="detailsr_list_tpl">
+                {{#each this}}
+                <li>
+                    <a href="index/queryDetails.html " class="item-content " onclick="app.queryDetails({{law_id}}) ">
+                        <div class="item-inner ">
+                            <div class="item-subtitle ">{{law_att}}</div>
+                            <div class="item-subbox ">
+                                <div class="item-title ">{{law_name}}</div>
+                                <div class="item-text ">{{law_cont}}</div>
+                            </div>
                         </div>
+                    </a>
+                </li>
+                {{/each}}
+            </script>
+            <!--题库一览-->
+            <script type="text/template7" id="perstik">
+                <div class="buttons-row consult_tab">
+                    <a class="btn_tab border-right-white"><b>{{total}}</b></br><span>题库总数（条）</span></a>
+                    <a class="btn_tab"><b>{{profit}}</b></br><span>题库收益（元）</span></a>
+                </div>
+            </script>
+            <script type="text/template7" id="perstikxsa">
+                {{#each this}}
+                <div style="width: 100%;height: 10px;background-color: #f3f3f3;"></div>
+
+                <div class="row" style="margin-left: 20px;">
+                    <div class="item-title list-box-cont col-50" style="line-height: 2;">
+                        <div><span>编号：</span1>{{bank_id}}</span></div>
+                        <div><span>来源：</span><span>{{tax_name}}</span></div>
+                        <div><span>入库时间：</span> <span>{{submit_time}}</span></div>
                     </div>
-                    <div class=" list-box-cont">
-                        <img class="person-cont" src="../static/images/img/answer_03.png" width="20"> <span>{{region_name}}</span>
+                    <div class="item-title list-box-cont col-50" style="line-height: 2;">
+                        <div><span>浏览数：</span1>{{adoption_count}}</span></div>
+                        <div><span>适用地区：</span><span>{{region_name}}</span></div>
+                        <div><span>类型：</span> <span>{{tax_name2}}</span></div>
                     </div>
-                    <div class="ansyer-Label">
-                        <span>{{types}}</span>
+                </div>
+                <div class="ques-fine-cont">
+                    <div><span style="color:#E74C3C">问：</span><span style="color:black">{{ask_title}}</span></div>
+                    <div style="margin-top:10px;">
+                        答：<span>{{answer}}</span>
                     </div>
                 </div>
-                <img class="zuomian" src="../static/images/img/ansyer-lcon.png" width="23" height="30"> <span class="ansyer-number">{{cost}}</span>
-                </br>
-                {{#js_compare "this.state === '0'"}}
-                <div class="problem-location-son problem-location-son-2" style="margin-left:-4%;">待</div>{{/js_compare}} {{#js_compare "this.state === '1'"}}
-                <div class="problem-location-son problem-location-son-2" style="margin-left:-4%;">待</div>{{/js_compare}} {{#js_compare "this.state === '2'"}}
-                <div class="problem-location-son" style="background: #b2d8b8;margin-left:-4%;">完</div>{{/js_compare}}
-                <!--   <div class="problem-location-son problem-location-son-2">待</div>-->
-            </div>
-        </div>
-        <div class="answer-plus-data"><b>{{questions}}</b> </div>
-        <p class="xsjxxs"></p>
-        </div>
-        {{/each}}
-    </script>
-    <!-- 问答解答-->
-    <script type="text/template7" id="tationzans_2">
-        <div id="problem-bj" class="row">
-            <div class="col-55">
-                <div class="buttons-ro problem-top">
-                    <i class="problem-lcon"></i><b>{{count}}</b>
-                    </br><span>获得金额</span>
+                {{/each}}
+            </script>
+            <!-- 问答咨询-->
+            <script type="text/template7" id="tationzans">
+                <div class="col-55">
+                    <div class="buttons-ro problem-top">
+                        <i class="problem-lcon"></i><b>{{count}}</b>
+                        </br><span>支付金额</span>
+                    </div>
                 </div>
-            </div>
-            <div class="col-45 problem-top problem-top-right">
-                <div>解答总数：<span>{{adopt}} 条</span>
+                <div class="col-45 problem-top problem-top-right">
+                    <div>解答总数：<span>{{adopt}} 条</span>
+                    </div>
+                    <br/>
+                    <div>采纳数量：<span>{{total}} 条</span>
+                    </div>
                 </div>
-                <br/>
-                <div>采纳数量：<span>{{total}} 条</span>
-                </div>
-            </div>
-        </div>
-    </script>
-    <script type="text/template7" id="tationzans_lsit_2">
-        {{#each this}}
-        <div class="list-block media-list ansyer-list ">
-            <div class="item-content ansyer-list-locn problem-location">
-                <div class=" item-media ">
-                    <img src="../static/images/jpg.jpg" width="60" style="margin-right:10px;">
-                </div>
-                <div class="ansyer-list-box" style="margin-left:4px;">
-                    <div class="item-title-row">
-                        <div class="item-title list-box-cont">
-                            <span style="font-weight:bolder;">ANS </span><span>{{answer_dateTime}}</span>
+            </script>
+            <script type="text/template7" id="tationzans_lsit">
+                {{#each this}}
+                <div class="list-block media-list ansyer-list ">
+                    <div class="item-content ansyer-list-locn problem-location">
+                        <div class=" item-media ">
+                            <img src="../static/images/jpg.jpg" width="60" style="margin-right:10px;">
                         </div>
-                    </div>
-                    <div class=" list-box-cont">
-                        <img class="person-cont" src="../static/images/img/answer_03.png" width="20"> <span>{{region_name}}</span>
-                    </div>
-                    <div class="ansyer-Label">
-                        <span>{{types}}</span>
-                    </div>
-                </div>
-                <img class="zuomian" src="../static/images/img/ansyer-lcon.png" width="23" height="30">
-                <div class="ansyer-number">{{cost}}</div>
-                </br>
-                {{#js_compare "this.state === '0'"}}
-                <div class="problem-location-son problem-location-son-2" style="margin-left:-4%;">待</div>{{/js_compare}} {{#js_compare "this.state === '1'"}}
-                <div class="problem-location-son problem-location-son-2" style="margin-left:-4%;">待</div>{{/js_compare}} {{#js_compare "this.state === '2'"}}
-                <div class="problem-location-son" style="background: #b2d8b8;margin-left:-4%;">完</div>{{/js_compare}}
-            </div>
-            <div class="answer-plus-data"><b>{{questions}}</b> </div>
-            <div class="answer-plus-data answer-plus-data-font">答：{{answer_context}}</div>
-            <p class="xsjxxs"></p>
-        </div>
-        {{/each}}
-    </script>
-    <!-- 问答-回答-问题列表 -->
-    <script type="text/template7 " id="answer_questions_list_tpl">
-        {{#each this}}
-        <div class="content-block-inner">
-            <div class="ansyer-box ">
-                <div class="list-block media-list ansyer-list">
-                    <div class="item-content ansyer-list-locn">
-                        <div class=" item-media ansyer-list-locn ">
-                            <img src="{{avatar}}" width="60" height="60" style="margin-right:6px;">
-                        </div>
-                        <div class="ansyer-list-box">
+                        <div class="ansyer-list-box" style="margin-left:4px;">
                             <div class="item-title-row">
                                 <div class="item-title list-box-cont">
-                                    <span>{{ask_time}}</span>
+                                    <span style="font-weight:bolder;">ASK </span><span>{{ask_dateTime}}</span>
                                 </div>
                             </div>
                             <div class=" list-box-cont">
                                 <img class="person-cont" src="../static/images/img/answer_03.png" width="20"> <span>{{region_name}}</span>
                             </div>
-                            <div class="ansyer-Label" style="width: 100%;border: none;">
-                                {{#each this.tax_tags}}
-                                <span style="border: 1px solid #d4d4d4;float: left;margin-left: 5px;">{{this}}</span> 
-                                {{/each}}
+                            <div class="ansyer-Label">
+                                <span>{{types}}</span>
                             </div>
                         </div>
-                        <div class='col-30'>
-                        <div class='row'>
-                        <div class='col-40'>
-                        <img src="../static/images/img/ansyer-lcon.png" width="25" height="33">
+                        <img class="zuomian" src="../static/images/img/ansyer-lcon.png" width="23" height="30" style="position: absolute;right: 55px;"> <span class="ansyer-number" style="position: absolute;right: 23px;top: 14px;">{{cost}}</span>
+                        </br>
+                        {{#js_compare "this.state === '0'"}}
+                        <div class="problem-location-son problem-location-son-2" style="margin-left:-4%;">待</div>{{/js_compare}} {{#js_compare "this.state === '1'"}}
+                        <div class="problem-location-son problem-location-son-2" style="margin-left:-4%;">待</div>{{/js_compare}} {{#js_compare "this.state === '2'"}}
+                        <div class="problem-location-son" style="background: #b2d8b8;margin-left:-4%;">完</div>{{/js_compare}}
+                        <!--   <div class="problem-location-son problem-location-son-2">待</div>-->
+                    </div>
+                </div>
+                <div class="answer-plus-data"><span>{{questions}}</span> </div>
+                <p class="xsjxxs"></p>
+        </div>
+        {{/each}}
+        </script>
+        <!-- 问答解答-->
+        <script type="text/template7" id="tationzans_2">
+            <div id="problem-bj" class="row">
+                <div class="col-55">
+                    <div class="buttons-ro problem-top">
+                        <i class="problem-lcon"></i><b>{{count}}</b>
+                        </br><span>获得金额</span>
+                    </div>
+                </div>
+                <div class="col-45 problem-top problem-top-right">
+                    <div>解答总数：<span>{{adopt}} 条</span>
+                    </div>
+                    <br/>
+                    <div>采纳数量：<span>{{total}} 条</span>
+                    </div>
+                </div>
+            </div>
+        </script>
+        <script type="text/template7" id="tationzans_lsit_2">
+            {{#each this}}
+            <div class="list-block media-list ansyer-list ">
+                <div class="item-content ansyer-list-locn problem-location">
+                    <div class=" item-media ">
+                        <img src="../static/images/jpg.jpg" width="60" style="margin-right:10px;">
+                    </div>
+                    <div class="ansyer-list-box" style="margin-left:4px;">
+                        <div class="item-title-row">
+                            <div class="item-title list-box-cont">
+                                <span style="font-weight:bolder;">ANS </span><span>{{answer_dateTime}}</span>
+                            </div>
                         </div>
-                        <div class='col-60'>
-                        <div class="ansyer-number">{{cost}}</div>
+                        <div class=" list-box-cont">
+                            <img class="person-cont" src="../static/images/img/answer_03.png" width="20"> <span>{{region_name}}</span>
                         </div>
+                        <div class="ansyer-Label">
+                            <span>{{types}}</span>
                         </div>
+                    </div>
+                    <img class="zuomian" src="../static/images/img/ansyer-lcon.png" width="23" height="30">
+                    <div class="ansyer-number">{{cost}}</div>
+                    </br>
+                    {{#js_compare "this.state === '0'"}}
+                    <div class="problem-location-son problem-location-son-2" style="margin-left:-4%;">待</div>{{/js_compare}} {{#js_compare "this.state === '1'"}}
+                    <div class="problem-location-son problem-location-son-2" style="margin-left:-4%;">待</div>{{/js_compare}} {{#js_compare "this.state === '2'"}}
+                    <div class="problem-location-son" style="background: #b2d8b8;margin-left:-4%;">完</div>{{/js_compare}}
+                </div>
+                <div class="answer-plus-data"><b>{{questions}}</b> </div>
+                <div class="answer-plus-data answer-plus-data-font">答：{{answer_context}}</div>
+                <p class="xsjxxs"></p>
+            </div>
+            {{/each}}
+        </script>
+        <!-- 问答-回答-问题列表 -->
+        <script type="text/template7 " id="answer_questions_list_tpl">
+            {{#each this}}
+            <div class="content-block-inner" id="answerList">
+                <div>
+                    <div class="list-block media-list ansyer-list">
+                        <div class="item-content" style="padding-left:0;">
+                            <div class="item-media">
+                                <img src="{{avatar}}" class="answer-avatar">
+                            </div>
+                            <div class="ansyer-list-box" style="left:70px;">
+                                <div class="item-title-row">
+                                    <div class="item-title list-box-cont">
+                                        <span>{{ask_time}}</span>
+                                    </div>
+                                </div>
+                                <div class="list-box-cont">
+                                    <img class="person-cont" src="../static/images/img/answer_03.png" width="20"> <span>{{region_name}}</span>
+                                </div>
+                                <div class="ansyer-Label" style="width: 100%;border: none;">
+                                    {{#each this.tax_tags}}
+                                    <div style="border: 1px solid #d4d4d4;float: left;margin-left: 5px;">{{this}}</div>
+                                    {{/each}}
+                                </div>
+                            </div>
+                            <div class='row' style="margin-top: -20px;">
+
+                                <div class='col-30'>
+                                    <img src="../static/images/img/ansyer-lcon.png" width="25" height="33" style="margin-right:30px">
+                                </div>
+
+                                <div class='col-70'>
+                                    <div class="ansyer-number">{{cost}}</div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="answer-plus-data"><b>{{ask}}</b></div>
+                </div>
+                <div class="answer-frame">
+                    <a class="ac_2" data-ask="{{ask}}"><span class="m-icon m-icon-compose" style="color: #c8c7cc;"></span></a>
+                    <a href="javascript:void(0);" data-askid="{{ask_id}}" class="answerQuestionBtn"><span class="m-icon m-icon-chatbubble chatbubble-icn" style="color: #c8c7cc;"></span> </a>
+                </div>
+            </div>
+            {{/each}}
+        </script>
+        <!-- 我的-专家列表 -->
+        <script type="text/template7" id="expert_list_tpl">
+            {{#each this}}
+            <li data-serviceid="{{services_id}}">
+                <div class="item-content item-width">
+                    <div class="item-media item-round">
+                        <img class="ft-movielist-item-img" src="../static/images/jpg.jpg">
+                    </div>
+                    <div class="item-inner item-no expert-zize">
+                        <div class="item-title-row">
+                            <div class="item-title item-name">{{real_name}}<span class="level_x">
+                        {{#js_compare "this.integrals === 1"}}★{{/js_compare}}
+                        {{#js_compare "this.integrals === 2"}}★★{{/js_compare}}
+                        {{#js_compare "this.integrals === 3"}}★★★{{/js_compare}}
+                        {{#js_compare "this.integrals === 4"}}★★★★{{/js_compare}}
+                        {{#js_compare "this.integrals === 5"}}★★★★★{{/js_compare}}
+                        {{#js_compare "this.integrals === 6"}}★★★★★★{{/js_compare}}
+                        </span></div>
+                            <div class="item-address">专家地区：<span>{{region_name1}}-{{region_name}}</span></div>
+                            <div class="item-address">咨询费：<span class="monery_span">{{lowest_amt}}元</span>起</div>
                         </div>
                     </div>
                 </div>
-                <div class="answer-plus-data"><b>{{ask}}</b></div>
+                <div class="row-items">
+                    {{#if cpa}}<span class="cpa">注册会计师</span>{{/if}}{{#if a_cpa}}<span class="a_cpa">美国注册会计师</span>{{/if}}{{#if cpv}}<span class="cpv">注册资产评估师</span>{{/if}}{{#if cta}}<span class="cta">注册税务师</span>{{/if}}{{#if bar}}<span class="bar">律师</span>{{/if}}{{#if cpa_g}}<span class="cpa_g">特许公认会计师</span>{{/if}}{{#if other}}<span class="other">其他</span>{{/if}}
+                </div>
+            </li>
+            {{/each}}
+        </script>
+        //解答详情页面
+        <script type="text/template7 " id="question_solve">
+            <a href="index/answer.html">
+                <div class="ansyer-box ">
+                    <div class="list-block media-list ansyer-list">
+                        <div class="item-content ansyer-list-locn">
+                            <div class=" item-media ansyer-list-locn ">
+                                <img src="../static/images/jpg.jpg" width="50">
+                            </div>
+                            <div class="ansyer-list-box">
+                                <div class="item-title-row">
+                                    <div class="item-title list-box-cont">
+                                        <span>{{ask_time}}</span>
+                                    </div>
+                                </div>
+                                <div class=" list-box-cont">
+                                    <img class="person-cont" src="../static/images/img/answer_03.png" width="20"> <span>{{ask_bureau}}</span>
+                                </div>
+                            </div>
+                            <img src="../static/images/img/ansyer-lcon.png" width="23" height="30"> <span class="ansyer-number">{{cost}}</span>
+                        </div>
+                    </div>
+                    <div class="answer-plus-data"><b>{{askContext}}</b></div>
+                </div>
+            </a>
+        </script>
+        //解答详情页面
+        <script type="text/template7 " id="question_solve_list">
+            {{#each this}}
+            <div class="ques-list">
+                <div class="ques-list-left"><b>题</br>库</b></div>
+                <div>
+                    <div class="ques-list-left-data">{{ask_title}}</div>
+                    <div>
+                        <div class="item-title list-box-cont ques-list-time">
+                            <span>入库时间:{{submit_time}}</span>
+                            <a href="javascript:void(0);"> <b class="button  button-fill color-main ques-button" onclick="app.answerDetailPayTypeInit({{bank_id}});">查看答案</b></a>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="answer-frame">
-                <a class="ac_2" data-ask="{{ask}}"><span class="m-icon m-icon-compose"></span></a>
-                <a href="javascript:void(0);" data-askid="{{ask_id}}" class="answerQuestionBtn"><span class="m-icon m-icon-chatbubble chatbubble-icn"></span> </a>
+            {{/each}}
+        </script>
+        //解答详情页面
+        <script type="text/template7 " id="question_solve_item">
+            {{#each this}}
+            <div class="item-content item-width bureau answer-gai">
+                <div class="item-media item-round bureau-img">
+                    <img src="../static/images/jpg.jpg" width="50">
+                </div>
+                <div class="item-inner">
+                    <div class="item-title-row bureau-row">
+                        <div class="item-title item-name">{{nick_name}}<span class="level_x">{{star}}</span></div>
+                        <div class="row-items bureau-row-items">
+                            {{#each major}} <span class="a_cpa">{{this}}</span>{{/each}}
+                        </div>
+                        <div class="item-address"> <span>{{answer_time}}</span></div>
+                    </div>
+                </div>
+                <P class="ques-p">{{answer_context}}</P>
+                <div class="row no-gutter like_row">
+                    <div class="col-20"><a href="#" class="pump ask_a" onclick="app.pump1({{expert_id}}), app.balance()"><span id="pump1">追问</span></a></div>
+                    <div class="col-20">
+                        <!--<img id="Clickalike" src="/static/images/img/shou_03.png" alt="点赞">-->
+                        <a id="starLaw1{{answer_id}}" style="color:orange;" onclick="app.agree({{answer_id}})">
+                            <!--<span id="starSpan1" class="m-icon m-icon-star"></span>-->
+                            <img id="starSpan1" src="../static/images/img/shou_03.png" class="good" alt="点赞">
+                        </a>
+                    </div>
+                    <div class="col-20">
+                        <!--<img src="/static/images/img/shou_06.png" alt="踩">-->
+                        <a id="starLaw2{{answer_id}}" style="color:orange;" onclick="app.disagree({{answer_id}})">
+                            <!--<span id="starSpan2" class="m-icon m-icon-star"></span>-->
+                            <img src="../static/images/img/shou_06.png" alt="踩" id="starSpan2" class="worse">
+                        </a>
+                    </div>
+                    <div class="col-40">
+                        <a href="#" class="button apply-button taxbu_dsc" onclick="app.adopt({{answer_id}},{{answer_belong}},{{ask_id}},{{ask_belong}});app.adopt1()"><span id="collect"  class="mention">采纳并申请加入题库</span></a>
+                    </div>
+                </div>
             </div>
-        </div>
-        {{/each}}
-    </script>
-    <!-- 我的-专家列表 -->
-    <script type="text/template7" id="expert_list_tpl">
-        {{#each this}}
-        <li data-serviceid="{{services_id}}">
+            {{/each}}
+        </script>
+        <!-- 法规收藏列表  -->
+        <!-- 法规收藏列表  -->
+        <script type="text/template7 " id="detailsr_list_tpl1">
+            {{#each this}}
+            <li class="swipeout">
+                <div class="item-inner swipeout-content item-content ">
+                    <a class="" onclick="app.queryDetails({{law_id}}) ">
+                        <div class="item-subtitle ">{{law_att}}</div>
+                        <div class=" row">
+                            <div class="col-80 item-title" style="color:black;"><strong>{{law_name}}</strong>
+                                <div class="item-text">
+                                    <div class="law-title-sub-content">{{law_cont}}</div>
+                                </div>
+                            </div>
+                            <div class="col-20 law-title-collect-icon">
+                                <span class="filled" style="font-size: 50px"></span></div>
+                        </div>
+                    </a>
+                </div>
+                <div class="swipeout-actions-right"><a onclick="app.discollect({{law_id}})" class="swipeout-delete" id="cancle1">取消收藏</a></div>
+            </li>
+            {{/each}}
+        </script>
+        <!-- 法规搜索列表 -->
+        <script type="text/template7 " id="law_search_tpl">
+            {{#each this}}
+            <li class="swipeout">
+                <a class="item-content " onclick="app.queryDetails({{law_id}}) ">
+                    <div class="item-inner swipeout-content item-content">
+                        <div class="item-subtitle ">{{law_att}}</div>
+                        <div class="">
+                            <div class="item-title "><strong>{{law_name}}</strong></div>
+                            <div class="item-text ">{{law_cont}}</div>
+                        </div>
+                    </div>
+                    <div class="swipeout-actions-right"><a href="#" class="swipeout-delete">Delete</a></div>
+                </a>
+            </li>
+            {{/each}}
+        </script>
+        <!-- 法规详情页面 -->
+        <script type="text/template7 " id="law_detail_tpl">
+            {{#each this}}
+            <div class="item-inner " style="padding-left: 8px;padding-right: 8px;padding-top:10px;">
+                <div class="item-subtitle law-title-font" style="font-size:15px;">{{law_att}}{{release_dateTime}}{{law_num}}</div>
+                <div style="padding-top:10px;">
+                    <div class="item-title law-title law-title-font"><strong>{{law_name}}</strong></div>
+                    <div class="item-text " style="text-indent:2em;font-size:15px;">{{law_cont}}</div>
+                </div>
+            </div>
+            {{/each}}
+        </script>
+        <!-- 我的-发票-发票合计信息 -->
+        <script type="text/template7" id="post_total_tpl">
+            <div class="row listpage">
+                <a href="" class="col-50 color-white list-count">
+                    <span class="weight">{{number}}</span>
+                    <span>发票数量(个)</span>
+                </a>
+                <a class="col-50 list-money color-white">
+                    <span class="weight">{{amount}}</span>
+                    <span>发票金额(元)</span>
+                </a>
+            </div>
+        </script>
+        <!-- 我的-发票-发票列表 -->
+        <script type="text/template7" id="post_list_tpl">
+            {{#each this}}
+            <div class="postmsg">
+                <div class="content-block home_pnel listpostinfo">
+                    <p class="detail" style="color:black;">{{express_name}}{{express_number}} {{#js_compare "this.status === '0'"}}<span id="status{{invoice_id}}" class="yellow">达</span>{{else}}<span class="blue" id="status{{invoice_id}}">待</span>{{/js_compare}}</p>
+                </div>
+                <div class="postdetail">
+                    <div class="recivername">
+                        <p class="reciver">
+                            <span>收件人:</span>
+                            <span>{{recipient}}</span>
+                        </p>
+                        <p class="listmoneycount">
+                            <span>发票金额:</span>
+                            <span>{{invoice_amount}}</span>
+                        </p>
+                    </div>
+                    <div class="linnum"><span>联系电话:</span><span>{{telephone}}</span></div>
+                    <div class="linnum"><span>地址:</span><span>{{express_address}}</span></div>
+                </div>
+                <div class="postmessage">
+                    <div class="prod">
+                        <p class="product">
+                            <span class="prodfee">合计:
+                                        <span class="tranfee">￥{{price}}元</span>
+                            <span class="zongfee">(含运费￥10.00元)</span>
+                            </span>
+                            <span class="countnum">共1件商品</span>
+                        </p>
+                    </div>
+                    <div class="poststatus">
+                        <p>
+                            {{#js_compare "this.status === '0'"}}<span>交易成功</span>{{/js_compare}} {{#js_compare "this.status === '1'"}}<span>正在审核</span>{{/js_compare}} {{#js_compare "this.status === '2'"}}<span id="buttonSure{{invoice_id}}" class="button sure" data-invoiceid="{{invoice_id}}">确认收货</span>{{/js_compare}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </script>
+        <!-- 我的-专家-专家详细信息 -->
+        <script type="text/template7" id="expert_details_tpl">
             <div class="item-content item-width">
+                <img src="../static/images/img/icon_close_alt2.png" id="icon_close_alt2" style="position: absolute;right: 0px;top: 0px;z-index: 100;" />
                 <div class="item-media item-round">
                     <img class="ft-movielist-item-img" src="../static/images/jpg.jpg">
                 </div>
@@ -819,477 +1022,268 @@
                         {{#js_compare "this.integrals === 5"}}★★★★★{{/js_compare}}
                         {{#js_compare "this.integrals === 6"}}★★★★★★{{/js_compare}}
                         </span></div>
+                    </div>
+                    <div class="row-items">
+                        {{#if cpa}}<span class="cpa">注册会计师</span>{{/if}}{{#if a_cpa}}<span class="a_cpa">美国注册会计师</span>{{/if}}{{#if cpv}}<span class="cpv">注册资产评估师</span>{{/if}}{{#if cta}}<span class="cta">注册税务师</span>{{/if}}{{#if bar}}<span class="bar">律师</span>{{/if}}{{#if cpa_g}}<span class="cpa_g">特许公认会计师</span>{{/if}}{{#if other}}<span class="other">其他</span>{{/if}}
+                    </div>
+                    <div class="row-items">
                         <div class="item-address">专家地区：<span>{{region_name1}}-{{region_name}}</span></div>
+                        <div class="item-address">专家单位：<span>{{service_region_name}}</span></div>
+                        <div class="item-address">回答数量：<span>{{answer_count}}条</span></div>
                         <div class="item-address">咨询费：<span class="monery_span">{{lowest_amt}}元</span>起</div>
                     </div>
-                </div>
-            </div>
-            <div class="row-items">
-                {{#if cpa}}<span class="cpa">注册会计师</span>{{/if}}{{#if a_cpa}}<span class="a_cpa">美国注册会计师</span>{{/if}}{{#if cpv}}<span class="cpv">注册资产评估师</span>{{/if}}{{#if cta}}<span class="cta">注册税务师</span>{{/if}}{{#if bar}}<span class="bar">律师</span>{{/if}}{{#if cpa_g}}<span class="cpa_g">特许公认会计师</span>{{/if}}{{#if other}}<span class="other">其他</span>{{/if}}
-            </div>
-        </li>
-        {{/each}}
-    </script>
-    //解答详情页面
-    <script type="text/template7 " id="question_solve">
-        <a href="index/answer.html">
-            <div class="ansyer-box ">
-                <div class="list-block media-list ansyer-list">
-                    <div class="item-content ansyer-list-locn">
-                        <div class=" item-media ansyer-list-locn ">
-                            <img src="../static/images/jpg.jpg" width="50">
-                        </div>
-                        <div class="ansyer-list-box">
-                            <div class="item-title-row">
-                                <div class="item-title list-box-cont">
-                                    <span>{{ask_time}}</span>
-                                </div>
-                            </div>
-                            <div class=" list-box-cont">
-                                <img class="person-cont" src="../static/images/img/answer_03.png" width="20"> <span>{{ask_bureau}}</span>
-                            </div>
-                        </div>
-                        <img src="../static/images/img/ansyer-lcon.png" width="23" height="30"> <span class="ansyer-number">{{cost}}</span>
-                    </div>
-                </div>
-                <div class="answer-plus-data"><b>{{askContext}}</b></div>
-            </div>
-        </a>
-    </script>
-    //解答详情页面
-    <script type="text/template7 " id="question_solve_list">
-        {{#each this}}
-        <div class="ques-list">
-            <div class="ques-list-left"><b>题</br>库</b></div>
-            <div>
-                <div class="ques-list-left-data">{{ask_title}}</div>
-                <div>
-                    <div class="item-title list-box-cont ques-list-time">
-                        <span>入库时间:{{submit_time}}</span>
-                        <a href="index/quest-details.html"> <b class="button  button-fill color-main ques-button">查看答案</b></a>
+                    <div class="row-items">
+                        <a href="/index/answer.html?userId={{user_id}}" class="button button-big button-fill" style="background-color: #ff9500;" data-id="{{user_id}}" id="askBtn">向他提问</a>
                     </div>
                 </div>
             </div>
-        </div>
-        {{/each}}
-    </script>
-    //解答详情页面
-    <script type="text/template7 " id="question_solve_item">
-        {{#each this}}
-        <div class="item-content item-width bureau answer-gai">
-            <div class="item-media item-round bureau-img">
-                <img src="../static/images/jpg.jpg" width="50">
-            </div>
-            <div class="item-inner">
-                <div class="item-title-row bureau-row">
-                    <div class="item-title item-name">{{nick_name}}<span class="level_x">{{star}}</span></div>
-                    <div class="row-items bureau-row-items">
-                        {{#each major}} <span class="a_cpa">{{this}}</span>{{/each}}
+        </script>
+        <!-- 寻他-订单列表-专家-专家详细信息 -->
+        <script type="text/template7" id="seek_expert_details_tpl">
+            <img src="/static/images/img/icon_close_alt2.png" id="icon_close_alt2" style="position:absolute;right: 2px;top: 3px;width: 35px;">
+
+            <div style="background-color: white;height: 290px;border-radius: 13px;padding-top: 20%;">
+                <center>
+                    <div>
+                        <img src="/static/images/logo.jpg" width="60" style="border-radius:30px;">
                     </div>
-                    <div class="item-address"> <span>{{answer_time}}</span></div>
-                </div>
-            </div>
-            <P class="ques-p">{{answer_context}}</P>
-            <div class="row no-gutter like_row">
-                <div class="col-20"><a href="#" class="pump ask_a" onclick="app.pump1({{expert_id}}), app.balance()"><span id="pump1">追问</span></a></div>
-                <div class="col-20">
-                    <!--<img id="Clickalike" src="/static/images/img/shou_03.png" alt="点赞">-->
-                    <a id="starLaw1{{answer_id}}" style="color:orange;" onclick="app.agree({{answer_id}})">
-                        <!--<span id="starSpan1" class="m-icon m-icon-star"></span>-->
-                        <img id="starSpan1" src="../static/images/img/shou_03.png" class="good" alt="点赞">
-                    </a>
-                </div>
-                <div class="col-20">
-                    <!--<img src="/static/images/img/shou_06.png" alt="踩">-->
-                    <a id="starLaw2{{answer_id}}" style="color:orange;" onclick="app.disagree({{answer_id}})">
-                        <!--<span id="starSpan2" class="m-icon m-icon-star"></span>-->
-                        <img src="../static/images/img/shou_06.png" alt="踩" id="starSpan2" class="worse">
-                    </a>
-                </div>
-                <div class="col-40">
-                    <a href="#" class="button apply-button taxbu_dsc" onclick="app.adopt({{answer_id}},{{answer_belong}},{{ask_id}},{{ask_belong}});app.adopt1()"><span id="collect"  class="mention">采纳并申请加入题库</span></a>
-                </div>
-            </div>
-        </div>
-        {{/each}}
-    </script>
-    <!-- 法规收藏列表  -->
-    <!-- 法规收藏列表  -->
-    <script type="text/template7 " id="detailsr_list_tpl1">
-        {{#each this}}
-        <li class="swipeout">
-            <div class="item-inner swipeout-content item-content ">
-                <a class="" onclick="app.queryDetails({{law_id}}) ">
-                    <div class="item-subtitle ">{{law_att}}</div>
-                    <div class=" row">
-                        <div class="col-80 item-title" style="color:black;"><strong>{{law_name}}</strong>
-                        <div class="item-text"><div class="law-title-sub-content">{{law_cont}}</div></div>
-        </div>
-                        <div class="col-20 law-title-collect-icon">
-                            <span class="filled" style="font-size: 50px"></span></div>
+                    <b>{{real_name}}</b>
+                    <br>
+                    <div class="row-items" style="padding-top: 10px;padding-left: 0px;">
+                        {{#if cpa}}<span class="cpa">注册会计师</span>{{/if}} {{#if a_cpa}}<span class="a_cpa">美国注册会计师</span>{{/if}} {{#if cpv}}<span class="cpv">注册资产评估师</span>{{/if}} {{#if cta}}<span class="cta">注册税务师</span>{{/if}} {{#if bar}}<span class="bar">律师</span>{{/if}} {{#if cpa_g}}<span class="cpa_g"><br/>特许公认会计师</span>{{/if}} {{#if other}}<span class="other">其他</span>{{/if}}
                     </div>
-                </a>
+                    <button class="button button-big button-fill color-main" style="margin-top: 30%;width: 85%;" onclick="app.adoptExpert('{{service_id}}', '{{help_id}}')">采 纳</button>
+                </center>
+                <span style="font-size:8px;color:gray;">采纳后查阅抢单人的联系方式</span>
             </div>
-            <div class="swipeout-actions-right"><a onclick="app.discollect({{law_id}})" class="swipeout-delete" id="cancle1">取消收藏</a></div>
-        </li>
-        {{/each}}
-    </script>
-    <!-- 法规搜索列表 -->
-    <script type="text/template7 " id="law_search_tpl">
-        {{#each this}}
-        <li class="swipeout">
-            <a class="item-content " onclick="app.queryDetails({{law_id}}) ">
-                <div class="item-inner swipeout-content item-content">
-                    <div class="item-subtitle ">{{law_att}}</div>
-                    <div class="">
-                        <div class="item-title "><strong>{{law_name}}</strong></div>
-                        <div class="item-text ">{{law_cont}}</div>
-                    </div>
-                </div>
-                <div class="swipeout-actions-right"><a href="#" class="swipeout-delete">Delete</a></div>
-            </a>
-        </li>
-        {{/each}}
-    </script>
-    <!-- 法规详情页面 -->
-    <script type="text/template7 " id="law_detail_tpl">
-        {{#each this}}
-        <div class="item-inner " style="padding-left: 8px;padding-right: 8px;">
-            <div class="item-subtitle law-title-font">{{law_att}}</div>
-            <div class="">
-                <div class="item-title law-title law-title-font"><strong>{{law_name}}</strong></div>
-                <br>
-                <div class="item-text " style="text-indent:2em;">{{law_cont}}</div>
-            </div>
-        </div>
-        {{/each}}
-    </script>
-    <!-- 我的-发票-发票合计信息 -->
-    <script type="text/template7" id="post_total_tpl">
-        <div class="row listpage">
-            <a href="" class="col-50 color-white list-count">
-                <span class=" weight Txtalign">{{number}}</span>
-                <span>发票数量(个)</span>
-            </a>
-            <a class="col-50 list-money color-white">
-                <span class=" weight Txtalign">{{amount}}</span>
-                <span>发票金额(元)</span>
-            </a>
-        </div>
-    </script>
-    <!-- 我的-发票-发票列表 -->
-    <script type="text/template7" id="post_list_tpl">
-        {{#each this}}
-        <div class="postmsg">
-            <div class="content-block home_pnel listpostinfo">
-                <p class="detail">{{express_name}}{{express_number}} {{#js_compare "this.status === '0'"}}<span id="status{{invoice_id}}" class="yellow">达</span>{{else}}<span class="blue" id="status{{invoice_id}}">待</span>{{/js_compare}}</p>
-            </div>
-            <div class="postdetail">
-                <div class="recivername">
-                    <p class="reciver">
-                        <span>收件人:</span>
-                        <span>{{recipient}}</span>
-                    </p>
-                    <p class="listmoneycount">
-                        <span>发票金额:</span>
-                        <span>{{invoice_amount}}</span>
-                    </p>
-                </div>
-                <div class="linnum"><span>联系电话:</span><span>{{telephone}}</span></div>
-                <div class="linnum"><span>地址:</span><span>{{express_address}}</span></div>
-            </div>
-            <div class="postmessage">
-                <div class="prod">
-                    <p class="product">
-                        <span class="prodfee">合计:
-                                        <span class="tranfee">￥{{express_fee}}元</span>
-                        <span class="zongfee">(含运费￥0.00元)</span>
-                        </span>
-                        <span class="countnum">共1件商品</span>
-                    </p>
-                </div>
-                <div class="poststatus">
-                    <p>
-                        {{#js_compare "this.status === '0'"}}<span>交易成功</span>{{/js_compare}} {{#js_compare "this.status === '1'"}}<span>正在审核</span>{{/js_compare}} {{#js_compare "this.status === '2'"}}<span id="buttonSure{{invoice_id}}" class="button sure" data-invoiceid="{{invoice_id}}">确认收货</span>{{/js_compare}}
-                    </p>
-                </div>
-            </div>
-        </div>
-        {{/each}}
-    </script>
-    <!-- 我的-专家-专家详细信息 -->
-    <script type="text/template7" id="expert_details_tpl">
-        <div class="item-content item-width">
-            <img src="../static/images/img/icon_close_alt2.png" id="icon_close_alt2" style="position: absolute;right: 0px;top: 0px;z-index: 100;" />
-            <div class="item-media item-round">
-                <img class="ft-movielist-item-img" src="../static/images/jpg.jpg">
-            </div>
-            <div class="item-inner item-no expert-zize">
-                <div class="item-title-row">
-                    <div class="item-title item-name">{{real_name}}<span class="level_x">
-                        {{#js_compare "this.integrals === 1"}}★{{/js_compare}}
-                        {{#js_compare "this.integrals === 2"}}★★{{/js_compare}}
-                        {{#js_compare "this.integrals === 3"}}★★★{{/js_compare}}
-                        {{#js_compare "this.integrals === 4"}}★★★★{{/js_compare}}
-                        {{#js_compare "this.integrals === 5"}}★★★★★{{/js_compare}}
-                        {{#js_compare "this.integrals === 6"}}★★★★★★{{/js_compare}}
-                        </span></div>
-                </div>
-                <div class="row-items">
-                    {{#if cpa}}<span class="cpa">注册会计师</span>{{/if}}{{#if a_cpa}}<span class="a_cpa">美国注册会计师</span>{{/if}}{{#if cpv}}<span class="cpv">注册资产评估师</span>{{/if}}{{#if cta}}<span class="cta">注册税务师</span>{{/if}}{{#if bar}}<span class="bar">律师</span>{{/if}}{{#if cpa_g}}<span class="cpa_g">特许公认会计师</span>{{/if}}{{#if other}}<span class="other">其他</span>{{/if}}
-                </div>
-                <div class="row-items">
-                    <div class="item-address">专家地区：<span>{{region_name1}}-{{region_name}}</span></div>
-                    <div class="item-address">专家单位：<span>{{service_region_name}}</span></div>
-                    <div class="item-address">回答数量：<span>{{answer_count}}条</span></div>
-                    <div class="item-address">咨询费：<span class="monery_span">{{lowest_amt}}元</span>起</div>
-                </div>
-                <div class="row-items">
-                    <a href="/index/answer.html?userId={{user_id}}" class="button button-big button-fill" style="background-color: #ff9500;" data-id="{{user_id}}" id="askBtn">向他提问</a>
-                </div>
-            </div>
-        </div>
-    </script>
-    <!-- 寻他-订单列表-专家-专家详细信息 -->
-    <script type="text/template7" id="seek_expert_details_tpl">
-        <img src="/static/images/img/icon_close_alt2.png" id="icon_close_alt2" style="position:absolute;right:0px;top:0px;">
-        <center><img src="/static/images/jpg.jpg" width="44" style="border-radius:30px;">
-            <br/><b>{{real_name}}</b>
-            <br/>
-            <div class="row-items">
-                {{#if cpa}}<span class="cpa">注册会计师</span>{{/if}}{{#if a_cpa}}<span class="a_cpa">美国注册会计师</span>{{/if}}{{#if cpv}}<span class="cpv">注册资产评估师</span>{{/if}}{{#if cta}}<span class="cta">注册税务师</span>{{/if}}{{#if bar}}<span class="bar">律师</span>{{/if}}{{#if cpa_g}}<span class="cpa_g">特许公认会计师</span>{{/if}}{{#if other}}<span class="other">其他</span>{{/if}}
-            </div>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <button class="button button-big button-fill color-main" onclick="app.adoptExpert('{{service_id}}', '{{help_id}}')">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;采 纳&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
-        </center><span style="font-size:8px;color:gray;">采纳后查阅抢单人的联系方式</span>
-    </script>
-    <!-- 我的 页面初始化template -->
-    <script type="text/template7" id="user_tpl">
-        <div class="" style="background-image: url(../static/images/background.jpg);background-size: cover;background-repeat: no-repeat">
-            <div class="about_banner">
-                <div class="header row">
-                    <div class="col-70">
-                        <div class="section row">
-                            <div class="col-40">
-                                <div class="avatar">
-                                    <div id="fileup" class="row image-list">
-                                        <div class="image-item space" id="avatar">
-                                            <input type="file" accept="image/jpeg,image/png,image/gif,image/bmp" id="image" value="">
+
+
+        </script>
+
+        <!-- 我的 页面初始化template -->
+        <script type="text/template7" id="user_tpl">
+            <div class="" style="background-image: url(../static/images/background.jpg);background-size: cover;background-repeat: no-repeat">
+                <div class="about_banner">
+                    <div class="header row">
+                        <div class="col-70">
+                            <div class="section row">
+                                <div class="col-40">
+                                    <div class="avatar">
+                                        <div id="fileup" class="row image-list">
+                                            <div class="image-item space" id="avatar">
+                                                <input type="file" accept="image/jpeg,image/png,image/gif,image/bmp" id="image" value="">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-60">
+                                    <a id="test" href="about/application.html">
+                                        <div id="marker1" class="about-marker-01"></div>
+                                    </a>
+                                    <br>
+                                    <a id="test1" href="about/service.html">
+                                        <div id="marker2" class="about-marker-02"></div>
+                                    </a>
+                                </div>
                             </div>
-                            <div class="col-60">
-                                <a id="test" href="about/application.html">
-                                    <div id="marker1" class="about-marker-01"></div>
-                                </a>
-                                <br>
-                                <a id="test1" href="about/service.html">
-                                    <div id="marker2" class="about-marker-02"></div>
-                                </a>
+                            <div class="username">
+                                <a href="./about/edituser.html" style="color: #676767"><span class="name">{{nick_name}}</span></a>
+                                <span class="dashed"></span>
+                                <span class="signboard" style="color: #676767">{{post_type}}</span>
+                            </div>
+                            <div class="userlike">
+                                {{#each star}}
+                                <i class="m-icon m-icon-star-filled"></i> {{/each}}
+                            </div>
+                            <div class="item-subtitle">
+                                {{#each major}}
+                                <a href="" class="tags" id="major123">{{this}}</a> {{/each}}
                             </div>
                         </div>
-                        <div class="username">
-                            <a href="./about/edituser.html" style="color: #676767"><span class="name">{{nick_name}}</span></a>
-                            <span class="dashed"></span>
-                            <span class="signboard" style="color: #676767">{{post_type}}</span>
+                        <div class="col-20">
+                            <a href="./about/edituser.html" style="color: #999999">
+                                <div class="about-vertical">{{signa}}</div>
+                            </a>
                         </div>
-                        <div class="userlike">
-                            {{#each star}}
-                            <i class="m-icon m-icon-star-filled"></i> {{/each}}
-                        </div>
-                        <div class="item-subtitle">
-                            {{#each major}}
-                            <a href="" class="tags" id="major123">{{this}}</a> {{/each}}
-                        </div>
+                        <div class="col-10"></div>
                     </div>
-                    <div class="col-20">
-                        <a href="./about/edituser.html" style="color: #999999">
-                            <div class="about-vertical">{{signa}}</div>
-                        </a>
-                    </div>
-                    <div class="col-10"></div>
-                </div>
-            </div>
-        </div>
-        <div class="content-block">
-            <div class="row" id="radio_tab">
-                <div class="col-33">
-                    <label class="label-radio item-content">
-                        <input type="radio" name="radio" value="SVIP" checked>
-                        <b class="button">SVIP</b>
-                    </label>
-                </div>
-                <div class="col-33">
-                    <label class="label-radio item-content">
-                        <input type="radio" name="radio" value="VIP">
-                        <b class="button">VIP</b>
-                    </label>
-                </div>
-                <div class="col-33">
-                    <label class="label-radio item-content">
-                        <input type="radio" name="radio" value="card">
-                        <b class="button">储值卡</b>
-                    </label>
                 </div>
             </div>
             <div class="content-block">
-                <div id="SVIP" class="infos">
-                    <span id="SVIP_1"></span><span><a href="#" data-popup=".popup-svip" class="open-popup" id="more_1">更多优惠</a></span>
+                <div class="row" id="radio_tab">
+                    <div class="col-33">
+                        <label class="label-radio item-content">
+                        <input type="radio" name="radio" value="SVIP" checked>
+                        <b class="button">SVIP</b>
+                    </label>
+                    </div>
+                    <div class="col-33">
+                        <label class="label-radio item-content">
+                        <input type="radio" name="radio" value="VIP">
+                        <b class="button">VIP</b>
+                    </label>
+                    </div>
+                    <div class="col-33">
+                        <label class="label-radio item-content">
+                        <input type="radio" name="radio" value="card">
+                        <b class="button">储值卡</b>
+                    </label>
+                    </div>
                 </div>
-                <div id="VIP" class="infos">
-                    <span id="VIP_1"></span><span><a href="#" data-popup=".popup-vip" class="open-popup" id="more_2">更多优惠</a></span>
-                </div>
-                <div id="card" class="infos">
-                    <span id="card_1"></span>
-                </div>
-            </div>
-            <!--SVIP更多优惠-->
-            <div class="popup popup-svip">
                 <div class="content-block">
-                    <br>
-                    <br>
-                    <h1 style="text-align:center" id="svip_t"></h1>
-                    <p>
-                        <a href="#" class="close-popup"></a>
-                    </p>
-                    <p id="svip_detail"></p>
+                    <div id="SVIP" class="infos">
+                        <span id="SVIP_1"></span><span><a href="#" data-popup=".popup-svip" class="open-popup" id="more_1">更多优惠</a></span>
+                    </div>
+                    <div id="VIP" class="infos">
+                        <span id="VIP_1"></span><span><a href="#" data-popup=".popup-vip" class="open-popup" id="more_2">更多优惠</a></span>
+                    </div>
+                    <div id="card" class="infos">
+                        <span id="card_1"></span>
+                    </div>
                 </div>
-            </div>
-            <!--VIP的更多优惠-->
-            <div class="popup popup-vip">
-                <div class="content-block">
-                    <br>
-                    <br>
-                    <h1 style="text-align:center" id="vip_t"></h1>
-                    <p>
-                        <a href="#" class="close-popup"></a>
-                    </p>
-                    <p id="vip_detail"></p>
+                <!--SVIP更多优惠-->
+                <div class="popup popup-svip">
+                    <div class="content-block">
+                        <br>
+                        <br>
+                        <h1 style="text-align:center" id="svip_t"></h1>
+                        <p>
+                            <a href="#" class="close-popup"></a>
+                        </p>
+                        <p id="svip_detail"></p>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-60">
-                    <div class="list-block">
-                        <div class="item-content">
-                            <div class="item-inner">
-                                <div class="item-title label">金额</div>
-                                <div class="item-input">
-                                    <input type="text" placeholder="金额" id="index-pay-money">
+                <!--VIP的更多优惠-->
+                <div class="popup popup-vip">
+                    <div class="content-block">
+                        <br>
+                        <br>
+                        <h1 style="text-align:center" id="vip_t"></h1>
+                        <p>
+                            <a href="#" class="close-popup"></a>
+                        </p>
+                        <p id="vip_detail"></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-60">
+                        <div class="list-block">
+                            <div class="item-content">
+                                <div class="item-inner">
+                                    <div class="item-title label">金额</div>
+                                    <div class="item-input">
+                                        <input type="text" placeholder="金额" id="index-pay-money">
+                                    </div>
+                                    <span style="width:30%;font-size:14px;color:#999">元</span>
                                 </div>
-                                <span style="width:30%;font-size:14px;color:#999">元</span>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-40">
-                    <b class="button button-big button-fill color-main" id="index-pay-btn">支付</b>
-                </div>
-            </div>
-        </div>
-        <div class="about_btn">
-            <div class="row no-gutter">
-                <a class="col-33" id="Eject">
-                    <img src="../static/images/icon/about/i_yq.png">
-                    <span>邀请</span>
-                    <div>{{friends}}</div>
-                </a>
-                <a href="about/problem.html" class="col-33">
-                    <img src="../static/images/icon/about/i_wd.png">
-                    <span>问答</span>
-                    <div>{{qa}}</div>
-                </a>
-                <a href="about/personal-uestions.html" class="col-33">
-                    <img src="../static/images/icon/about/i_tk.png">
-                    <span>题库</span>
-                    <div>{{bank}}</div>
-                </a>
-            </div>
-            <div class="row no-gutter">
-                <a href="about/expert.html" class="col-33">
-                    <img src="../static/images/icon/about/i_cw.png">
-                    <span>专家</span>
-                    <div>{{expert}}</div>
-                </a>
-                <a href="about/ticket.html" class="col-33">
-                    <img src="../static/images/icon/about/i_fp.png">
-                    <span>发票</span>
-                    <div>{{invoice}}</div>
-                </a>
-                <a href="about/withdrawals.html" class="col-33">
-                    <img src="../static/images/icon/about/i_qd.png">
-                    <span>提现</span>
-                    <div>{{postal}}</div>
-                </a>
-            </div>
-            <div class="row no-gutter">
-                <a href="about/capital.html" class="col-50">
-                    <img src="../static/images/icon/about/i_zj.png">
-                    <span>资金</span>
-                </a>
-                <a href="#about/custom.html" id="custom" class="col-50">
-                    <img src="../static/images/icon/about/i_kf.png">
-                    <span>客服</span>
-                </a>
-            </div>
-        </div>
-    </script>
-    <!-- 下线列表-->
-    <script type="text/template7 " id="assembly_list_tpl">
-        <div class="item-content">
-            <div class="navbar" style="height: 70px;background-color: white">
-                <div class="navbar-inner">
-                    <div class="col-30"><img src="../static/images/img/ren.png" style="width: 40px;"></div>
-                    <div class="col-10" style="font-size: 40px;font-weight: bold;margin-left: -15px;">{{total}}</div>
-                    <div style="font-size: 15px;font-weight: bold;margin-left: -25px;margin-top: 20px;">人</div>
-                    <div class="col-30"><img src="../static/images/img/shunshun1.jpg" style="width: 40px;margin-left: -15px;font-weight: bold;" class=""></div>
-                    <div class="col-30" style="font-size: 40px;">{{amount}}</div>
-                    <div style="margin-left: -25px;margin-right: 10px;font-size: 15px;font-weight: bold;margin-top: 10px;">元</div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="frame"> </div>
-        
-        {{#each data}}
-        <div class="list-block">
-            <li class="swipeout">
-                <div class="item-inner swipeout-content item-content ">
-                    <div class=" row">
-                        <div class="col-15"><img src="{{avatar}}" alt="头像" style="width:25px;height:45px;border-radius:45px"></div>
-                        <div class="col-33"><strong>{{nick_name}}</strong></div>
-                        <div class="col-20">
-                            <img src="../static/images/img/qian.png" alt=" " style="width: 35px;margin-left: 20px;"> </div>
-                        <div class="col-10" style="font-size: 20px;margin-left: -20px;margin-top: 6px;font-weight:bold;color: #F59A25;">{{return_amount}}</div>
-                        <div style="margin-top: 9px;margin-left: 5px;font-weight: bold;color: #F59A25;">元</div>
+                    <div class="col-40">
+                        <b class="button button-big button-fill color-main" id="index-pay-btn">支付</b>
                     </div>
                 </div>
-            </li>
-        </div>
-        {{/each}}
-   
-    </script>
-
-    <!-- option -->
-    <script type="text/template7" id="sj_option_tpl">
-        {{#each this}}
-        <option value="{{region_code}}">{{region_name}}</option>
-        {{/each}}
-    </script>
-    <!-- 提问大咖列表-->
-    <script type="text/template7" id="askBigKaList">
-        {{#each this}}
-        <li>
-            <div class="item-content item-width">
-                <div class="item-media item-round">
-                    <img class="ft-movielist-item-img" ng-src="{{path_url}}" src="{{path_url}}">
+            </div>
+            <div class="about_btn">
+                <div class="row no-gutter">
+                    <a class="col-33" id="Eject">
+                        <img src="../static/images/icon/about/i_yq.png">
+                        <span>邀请</span>
+                        <div>{{friends}}</div>
+                    </a>
+                    <a href="about/problem.html" class="col-33">
+                        <img src="../static/images/icon/about/i_wd.png">
+                        <span>问答</span>
+                        <div>{{qa}}</div>
+                    </a>
+                    <a href="about/personal-uestions.html" class="col-33">
+                        <img src="../static/images/icon/about/i_tk.png">
+                        <span>题库</span>
+                        <div>{{bank}}</div>
+                    </a>
                 </div>
-                <div class="item-inner item-no">
-                    <div class="item-title-row">
-                        <div class="item-title item-name">{{real_name}}<span class="level_x">
+                <div class="row no-gutter">
+                    <a href="about/expert.html" class="col-33">
+                        <img src="../static/images/icon/about/i_cw.png">
+                        <span>专家</span>
+                        <div>{{expert}}</div>
+                    </a>
+                    <a href="about/ticket.html" class="col-33">
+                        <img src="../static/images/icon/about/i_fp.png">
+                        <span>发票</span>
+                        <div>{{invoice}}</div>
+                    </a>
+                    <a href="about/withdrawals.html" class="col-33">
+                        <img src="../static/images/icon/about/i_qd.png">
+                        <span>提现</span>
+                        <div>{{postal}}</div>
+                    </a>
+                </div>
+                <div class="row no-gutter">
+                    <a href="about/capital.html" class="col-50">
+                        <img src="../static/images/icon/about/i_zj.png">
+                        <span>资金</span>
+                    </a>
+                    <a href="#about/custom.html" id="custom" class="col-50">
+                        <img src="../static/images/icon/about/i_kf.png">
+                        <span>客服</span>
+                    </a>
+                </div>
+            </div>
+        </script>
+        <!-- 下线列表-->
+        <script type="text/template7 " id="assembly_list_tpl">
+            <div class="item-content">
+                <div class="navbar" style="height: 70px;background-color: white">
+                    <div class="navbar-inner">
+                        <div class="col-30"><img src="../static/images/img/ren.png" style="width: 40px;"></div>
+                        <div class="col-10" style="font-size: 40px;font-weight: bold;margin-left: -15px;">{{total}}</div>
+                        <div style="font-size: 15px;font-weight: bold;margin-left: -25px;margin-top: 20px;">人</div>
+                        <div class="col-30"><img src="../static/images/img/shunshun1.jpg" style="width: 40px;margin-left: -15px;font-weight: bold;" class=""></div>
+                        <div class="col-30" style="font-size: 40px;">{{amount}}</div>
+                        <div style="margin-left: -25px;margin-right: 10px;font-size: 15px;font-weight: bold;margin-top: 10px;">元</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="frame"> </div>
+
+            {{#each data}}
+            <div class="list-block">
+                <li class="swipeout">
+                    <div class="item-inner swipeout-content item-content ">
+                        <div class=" row">
+                            <div class="col-15"><img src="{{avatar}}" alt="头像" style="width:25px;height:45px;border-radius:45px"></div>
+                            <div class="col-33"><strong>{{nick_name}}</strong></div>
+                            <div class="col-20">
+                                <img src="../static/images/img/qian.png" alt=" " style="width: 35px;margin-left: 20px;"> </div>
+                            <div class="col-10" style="font-size: 20px;margin-left: -20px;margin-top: 6px;font-weight:bold;color: #F59A25;">{{return_amount}}</div>
+                            <div style="margin-top: 9px;margin-left: 5px;font-weight: bold;color: #F59A25;">元</div>
+                        </div>
+                    </div>
+                </li>
+            </div>
+            {{/each}}
+
+        </script>
+
+        <!-- option -->
+        <script type="text/template7" id="sj_option_tpl">
+            {{#each this}}
+            <option value="{{region_code}}">{{region_name}}</option>
+            {{/each}}
+        </script>
+        <!-- 提问大咖列表-->
+        <script type="text/template7" id="askBigKaList">
+            {{#each this}}
+            <li>
+                <div class="item-content item-width">
+                    <div class="item-media item-round">
+                        <img class="ft-movielist-item-img" ng-src="{{path_url}}" src="{{path_url}}">
+                    </div>
+                    <div class="item-inner item-no">
+                        <div class="item-title-row">
+                            <div class="item-title item-name">{{real_name}}<span class="level_x">
                             {{#js_compare "this.integrals === 1"}}★{{/js_compare}}
                             {{#js_compare "this.integrals === 2"}}★★{{/js_compare}}
                             {{#js_compare "this.integrals === 3"}}★★★{{/js_compare}}
@@ -1297,624 +1291,504 @@
                             {{#js_compare "this.integrals === 5"}}★★★★★{{/js_compare}}
                             {{#js_compare "this.integrals === 6"}}★★★★★★{{/js_compare}}
                         </span></div>
-                        <div class="item-address">专家地区：<span>{{region_name1}}{{region_name}}</span></div>
-                        <div class="item-address">咨询费：<span class="monery_span">¥{{lowest_amt}}元</span>起</div>
-                    </div>
-                    <div class="item-title-row">
-                        <label class="label-checkbox">
+                            <div class="item-address">专家地区：<span>{{region_name1}}{{region_name}}</span></div>
+                            <div class="item-address">咨询费：<span class="monery_span">¥{{lowest_amt}}元</span>起</div>
+                        </div>
+                        <div class="item-title-row">
+                            <label class="label-checkbox">
                             <input type="checkbox" name="my-checkbox" id="{{lowest_amt}}" value="{{services_id}}">
                             <div class="item-media">
                                 <i class="icon icon-form-checkbox icon-checked"></i>
                             </div>
                         </label>
-                    </div>
-                </div>
-            </div>
-            <div class="row-items">
-                {{#if cpa}}<span class="cpa">注册会计师</span>{{/if}}{{#if a_cpa}}<span class="a_cpa">美国注册会计师</span>{{/if}}{{#if cpv}}<span class="cpv">注册资产评估师</span>{{/if}}{{#if cta}}<span class="cta">注册税务师</span>{{/if}}{{#if bar}}<span class="bar">律师</span>{{/if}}{{#if cpa_g}}<span class="cpa_g">特许公认会计师</span>{{/if}}{{#if other}}<span class="other">其他</span>{{/if}}
-            </div>
-        </li>
-        {{/each}}
-    </script>
-    <!-- 选中大咖大赏金额回传 -->
-    <script type="text/template7" id="lowest_amt_sum">
-        {{#each this}} {{bigKaPrice}} {{/each}}
-    </script>
-    <!-- 寻他-订单列表 -->
-    <script type="text/template7" id="seek_order_uncompleted_list_tpl">
-        {{#each this}}
-        <div class="card" id="card{{help_id}}" style="font-weight:bold;">
-            <div class="card-content">
-                <div class="row no-gutter">
-                    <div class="col-75">
-                        <div class="card-content-inner">
-                            <div class="rows">
-                                <div class="name">时间</div>
-                                <div class="conts">{{service_date}}</div>
-                            </div>
-                            <div class="rows">
-                                <div class="name">地点</div>
-                                <div class="conts">{{region_name}}</div>
-                            </div>
-                            <div class="rows">
-                                <div class="name">出价</div>
-                                <div class="conts">{{offer}}</div>
-                            </div>
-                            <p class="info">{{problem_des}}</p>
-                        </div>
-                    </div>
-                    <div class="col-25">
-                        <div class="panl" id="panl{{help_id}}">
-                            <div>{{status}}</div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="card-footer">
-                <div class="swiper-container">
-                    <div class="swiper-wrapper">
-                        {{serviceResult}}
-                    </div>
-                    <div class="swiper-scrollbar"></div>
+                <div class="row-items">
+                    {{#if cpa}}<span class="cpa">注册会计师</span>{{/if}}{{#if a_cpa}}<span class="a_cpa">美国注册会计师</span>{{/if}}{{#if cpv}}<span class="cpv">注册资产评估师</span>{{/if}}{{#if cta}}<span class="cta">注册税务师</span>{{/if}}{{#if bar}}<span class="bar">律师</span>{{/if}}{{#if cpa_g}}<span class="cpa_g">特许公认会计师</span>{{/if}}{{#if other}}<span class="other">其他</span>{{/if}}
                 </div>
-            </div>
-        </div>
-        {{/each}}
-    </script>
-    <!-- 寻他-订单列表 -->
-    <script type="text/template7" id="seek_img_list_tpl">
-        {{#each this}}
-        <div class="swiper-slide">
-            <div class="list-block media-list">
-                <div class="item-content">
-                    <div class="item-media">
-                        <img src="{{avatar}}" width="44" onclick="app.showExpert('{{user_id}}','{{help_id}}')" />
+            </li>
+            {{/each}}
+        </script>
+        <!-- 选中大咖大赏金额回传 -->
+        <script type="text/template7" id="lowest_amt_sum">
+            {{#each this}} {{bigKaPrice}} {{/each}}
+        </script>
+        <!-- 寻他-订单列表 -->
+        <script type="text/template7" id="seek_order_uncompleted_list_tpl">
+            {{#each this}}
+            <div class="card" id="card{{help_id}}" style="font-weight:bold;">
+                <div class="card-content">
+                    <div class="row no-gutter">
+                        <div class="col-75">
+                            <div class="card-content-inner">
+                                <div class="rows">
+                                    <div class="name">时间</div>
+                                    <div class="conts">{{submit_time}}</div>
+                                </div>
+                                <div class="rows">
+                                    <div class="name">地点</div>
+                                    <div class="conts">{{region_name}}</div>
+                                </div>
+                                <div class="rows">
+                                    <div class="name">出价</div>
+                                    <div class="conts">{{offer}}</div>
+                                </div>
+                                <p class="info">{{problem_des}}</p>
+                            </div>
+                        </div>
+                        <div class="col-25">
+                            <div class="panl" id="panl{{help_id}}">
+                                <div>{{status}}</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        {{/each}}
-    </script>
-    <!-- 寻他-订单列表 -->
-    <script type="text/template7" id="seek_order_list_tpl">
-        {{#each this}}
-        <div class="card bef">
-            <div class="card-content">
-                <div class="row no-gutter">
-                    <div class="col-75">
-                        <div class="card-content-inner">
-                            <div class="rows">
-                                <div class="name">时间</div>
-                                <div class="conts">{{service_date}}</div>
-                            </div>
-                            <div class="rows">
-                                <div class="name">地点</div>
-                                <div class="conts">{{region_name}}</div>
-                            </div>
-                            <div class="rows">
-                                <div class="name">出价</div>
-                                <div class="conts">{{offer}}</div>
-                            </div>
-                            <p class="info">{{problem_des}}</p>
+                <div class="card-footer">
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            {{serviceResult}}
                         </div>
-                    </div>
-                    <div class="col-25">
-                        {{#js_compare "this.tof_stt === '2'"}}
-                        <div class="panl" id="panl{{need_id}}">
-                            <div>进行中</div>
-                            <b class="button" onclick="app.completeFound({{help_user_id}}, {{need_id}});">完成</b>
-                        </div>
-                        {{/js_compare}} {{#js_compare "this.tof_stt === '0'"}}
-                        <div class="panl" style="background-color: #c1e0c6;">
-                            <div>已完成</div>
-                            {{#js_compare "this.Complaints_Status === '0'"}}
-                            <a href="seek/checkboxes.html?need_id={{help_id}}&services_id={{services_id}}" class="button">投诉</a> {{/js_compare}}
-                        </div>
-                        {{/js_compare}}
+                        <div class="swiper-scrollbar"></div>
                     </div>
                 </div>
             </div>
-            <div class="card-footer">
-                <div class="swiper-container">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <div class="list-block media-list">
-                                <div class="item-content">
-                                    <div class="item-media">
-                                        <img src="{{avatar}}" width="44" />
-                                    </div>
-                                    <div class="item-inner">
-                                        <div class="item-title-row">
-                                            <div class="item-title">
-                                                <span class="name">{{real_name}}</span>
-                                                <span class="tel"><i class="m-icon m-icon-phone"></i>{{phone_number}}</span>
-                                            </div>
+            {{/each}}
+        </script>
+        <!-- 寻他-订单列表 -->
+        <script type="text/template7" id="seek_img_list_tpl">
+            {{#each this}}
+            <div class="swiper-slide">
+                <div class="list-block media-list">
+                    <div class="item-content">
+                        <div class="item-media">
+                            <img src="{{avatar}}" width="44" onclick="app.showExpert('{{user_id}}','{{help_id}}')" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            {{/each}}
+        </script>
+        <!-- 寻他-订单列表 -->
+        <script type="text/template7" id="seek_img_list_tpl">
+            {{#each this}}
+            <div class="swiper-slide">
+                <div class="list-block media-list">
+                    <div class="item-content">
+                        <div class="item-media">
+                            <img src="{{avatar}}" width="44" onclick="app.showExpert('{{user_id}}','{{help_id}}')" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </script>
+        <!-- 寻他-订单列表 -->
+        <script type="text/template7" id="seek_order_list_tpl">
+            {{#each this}}
+            <div class="card bef">
+                <div class="card-content">
+                    <div class="row no-gutter">
+                        <div class="col-75">
+                            <div class="card-content-inner">
+                                <div class="rows">
+                                    <div class="name">时间</div>
+                                    <div class="conts">{{submit_time}}</div>
+                                </div>
+                                <div class="rows">
+                                    <div class="name">地点</div>
+                                    <div class="conts">{{region_name}}</div>
+                                </div>
+                                <div class="rows">
+                                    <div class="name">出价</div>
+                                    <div class="conts">{{offer}}</div>
+                                </div>
+                                <p class="info">{{problem_des}}</p>
+                            </div>
+                        </div>
+                        <div class="col-25">
+                            {{#js_compare "this.tof_stt === '2'"}}
+                            <div class="panl" id="panl{{need_id}}">
+                                <div>进行中</div>
+                                <b class="button" onclick="app.completeFound({{help_user_id}}, {{need_id}}, {{offer}})">完成</b>
+                            </div>
+                            {{/js_compare}} {{#js_compare "this.tof_stt === '0'"}}
+                            <div class="panl" style="background-color: #c1e0c6;">
+                                <div>已完成</div>
+                                {{#js_compare "this.Complaints_Status === '0'"}}
+                                <a href="seek/checkboxes.html?need_id={{need_id}}&services_id={{services_id}}" class="button">投诉</a> {{/js_compare}}
+                            </div>
+                            {{/js_compare}}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="list-block media-list">
+                                    <div class="item-content">
+                                        <div class="item-media">
+                                            <img src="{{avatar}}" width="44" />
                                         </div>
-                                        <div class="item-subtitle">
-                                            <div class="row-items">
-                                                {{#if cpa}}<span class="cpa">注册会计师</span>{{/if}}{{#if a_cpa}}<span class="a_cpa">美国注册会计师</span>{{/if}}{{#if cpv}}<span class="cpv">注册资产评估师</span>{{/if}}{{#if cta}}<span class="cta">注册税务师</span>{{/if}}{{#if bar}}<span class="bar">律师</span>{{/if}}{{#if cpa_g}}<span class="cpa_g">特许公认会计师</span>{{/if}}{{#if other}}<span class="other">其他</span>{{/if}}
+                                        <div class="item-inner">
+                                            <div class="item-title-row">
+                                                <div class="item-title">
+                                                    <span class="name">{{real_name}}</span>
+                                                    <span class="tel"><i class="m-icon m-icon-phone"></i>{{phone_number}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="item-subtitle">
+                                                <div class="row-items" style="padding:0px;">
+                                                    <div class="row" style="white-space: normal;width: 74%;">
+                                                        {{#if cpa}}
+                                                        <div class="cpa">注册会计师</div>{{/if}} {{#if a_cpa}}
+                                                        <div class="a_cpa">美国注册会计师</div>{{/if}} {{#if cpv}}
+                                                        <div class="cpv">注册资产评估师</div>{{/if}} {{#if cta}}
+                                                        <div class="cta">注册税务师</div>{{/if}} {{#if bar}}
+                                                        <div class="bar">律师</div>{{/if}} {{#if cpa_g}}
+                                                        <div class="cpa_g">特许公认会计师</div>{{/if}} {{#if other}}
+                                                        <div class="other">其他</div>{{/if}}
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="swiper-scrollbar"></div>
                         </div>
                     </div>
-                    <div class="swiper-scrollbar"></div>
+                </div>
+                {{/each}}
+        </script>
+        <!-- 寻他-订单-完成按钮 -->
+        <script type="text/template7" id="seek_order_comp_tpl">
+            <div>进行中</div>
+            <b class="button" onclick="app.completeFound('{{token}}', {{servers_id}}, {{help_id}}, {{offer}});">完成</b>
+        </script>
+        <!-- 寻他-订单-投诉按钮 -->
+        <script type="text/template7" id="seek_order_complaint_tpl">
+            <div>已完成</div>
+            <a href="seek/checkboxes.html?need_id={{need_id}}&services_id={{services_id}}" class="button">投诉</a>
+        </script>
+        //提现界面
+        <script type="text/template7" id="withdraw">
+
+            <div class="row withdrawals-row">
+                <div class="col-50 withdrawals-money" style="line-height:80px;padding-top: 0px;">
+                    <span style="font-size: 40px;">{{total_gross}}</span>
+                    <span style="font-size: 14px;">元</span>
+                </div>
+                <div class="col-15 money-cont" style="line-height:80px;padding-top: 0px;">
+                    <span>from</span>
+                </div>
+                <div class="col-35">
+                    <div><i class="withdrawals-lcon-1" style="margin-right:10px;"></i>题库<span style="margin-left:10px;">{{total_question}}</span>
+                    </div>
+                    <div><i class="withdrawals-lcon-2" style="margin-right:10px;"></i>好友<span style="margin-left:10px;">{{total_friend}}</span>
+                    </div>
+                    <div><i class="withdrawals-lcon-3" style="margin-right:10px;"></i>解答<span style="margin-left:10px;">{{total_answe}}</span>
+                    </div>
+                    <div><i class="withdrawals-lcon-4" style="margin-right:10px;"></i>平台<span style="margin-left:10px;">{{total_platform}}</span>
+                    </div>
                 </div>
             </div>
-        </div>
-        {{/each}}
-    </script>
-    <!-- 寻他-订单-完成按钮 -->
-    <script type="text/template7" id="seek_order_comp_tpl">
-        <div>进行中</div>
-        <b class="button" onclick="app.completeFound('{{token}}', {{servers_id}}, {{help_id}});">完成</b>
-    </script>
-    <!-- 寻他-订单-投诉按钮 -->
-    <script type="text/template7" id="seek_order_complaint_tpl">
-        <div>已完成</div>
-        <a href="seek/checkboxes.html?need_id={{need_id}}&services_id={{services_id}}" class="button">投诉</a>
-    </script>
-    //提现界面
-    <script type="text/template7" id="withdraw">
-        <div class="row withdrawals-row">
-            <div class="col-50 withdrawals-money">
-                <span>{{total_gross}}元</span>
-            </div>
-            <div class="col-15 money-cont">
-                <span>from</span>
-            </div>
-            <div class="col-35">
-                <div><i class="withdrawals-lcon-1"></i>题库<span>{{total_question}}</span>
-                </div>
-                <div><i class="withdrawals-lcon-2"></i>好友<span>{{total_friend}}</span>
-                </div>
-                <div><i class="withdrawals-lcon-3"></i>解答<span>{{total_answe}}</span>
-                </div>
-                <div><i class="withdrawals-lcon-4"></i>平台<span>{{total_platform}}</span>
-                </div>
-            </div>
-        </div>
-        <p class="withdrawals-prompt">本次最多可转<span>{{total_gross}}</span>元</p>
-        <div class="withdrawals-bj">
-            <div class="row person-box">
-                <div class="col-65">
-                    <i class="withdrawals-fooer-lcon-1"></i><b>转出金额</b>
-                </div>
-                <br><br>
-                <div class="col-35 ">
-                    <input class="withdrawals-input" id="money7" type="text" placeholder="请输入金额" style="border: none;background-color: gainsboro">
-                </div>
-            </div>
-            <label class="label-radio item-content "  >
+
+            <div style="height:40px;line-height:40px;padding-left: 20px;background-color: #f3f3f3;">本次可转<span style="color: #FF9213;" id="availiableMoney">{{total_gross}}</span>元</div>
+
+            <div style="margin-top:20px;margin-left:20px;">
+                <div class="withdrawals-bj">
+                    <div class="row person-box">
+                        <div class="col-55">
+                            <i class="withdrawals-fooer-lcon-1"></i><b>转出金额</b>
+                        </div>
+                        <br><br>
+                        <div class="col-45 ">
+                            <input class="withdrawals-input" id="money7" type="number" placeholder="请输入金额" onkeypress="return app.myNumberic(event)" style="border: none;width:100%;">
+                        </div>
+                    </div>
+
+                    <label class="label-radio item-content ">
                 <!-- Checked by default -->
                 <input type="radio" name="my-radio" value="Books" id="money1">
                 <div class="item-media">
                     <div class="row answer-gai ">
-                        <div class="col-10 withdrawals-lcon">
+                        <div class="col-5">
                             <i class="icon icon-form-radio icon-checked" ></i>
                         </div>
-                        <div class="col-50">
+                        <div class="col-40">
                             <div class="item-title-row">
                                 <i class="withdrawals-fooer-lcon-2"></i><b>支付宝账号</b>
                             </div>
                         </div>
-                        <div class="col-35">
+                        <div class="col-45">
                             <div class="item-title-row">
-                                <input type="number" id="airPlay" style="border: none;background-color: gainsboro">
+                                <input type="search" id="airPlay" style="border: none;width:100%;" placeholder="支付宝账号">
                             </div>
                         </div>
                     </div>
                 </div>
             </label>
-            <label class="label-radio item-content"  >
+
+                    <label class="label-radio item-content">
                 <!-- Checked by default -->
                 <input type="radio" name="my-radio" value="Books" id="money2">
                 <div class="item-media">
                     <div class="row answer-gai">
-                        <div class="col-10 withdrawals-lcon">
+                        <div class="col-5">
                             <i class="icon icon-form-radio icon-checked" ></i>
                         </div>
-                        <div class="col-50">
+                        <div class="col-40">
                             <div class="item-title-row">
                                 <i class="withdrawals-fooer-lcon-3"></i><b>微信账号</b>
                             </div>
                         </div>
-                        <div class="col-35">
+                        <div class="col-45">
                             <div class="item-title-row">
-                                <input type="number" id="weChat" style="border: none;background-color: gainsboro">
+                                <input type="search" id="weChat" style="border: none;width:100%;" placeholder="微信账号">
                             </div>
                         </div>
                     </div>
                 </div>
             </label>
-            <div class="withdrawals-fooer"> 由于资金需要在公司银行账户、支付宝及财付通账户进行划转，并受限于上述通道的规定，特温馨提示如下：</div>
+                    <div class="row" style="padding-bottom:10px;">
+                        <div class="col-100">由于资金需要在公司银行账户、支付宝及财付通账户进行划转，并受限于上述通道的规定，特温馨提示如下：</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-25">提现规则:</div>
+                        <div class="col-75">1.T+1(提现日的次日到账)</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-25"></div>
+                        <div class="col-75">2.提现到账时间逢法定节假日顺延</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-25"></div>
+                        <div class="col-75">3.用户对提现资金去向自行负责</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-25"></div>
+                        <div class="col-75">4.完成的提现申请不可撤销和追溯</div>
+                    </div>
+                </div>
+            </div>
+            <!--            <div class="withdrawals-fooer"> 由于资金需要在公司银行账户、支付宝及财付通账户进行划转，并受限于上述通道的规定，特温馨提示如下：</div>-->
+            <!--
             <div class="withdrawals-fooer">提现规则：1.T+1(提现日的次日到账)</div>
             <div class="withdrawals-fooer-2">2.提现到账时间逢法定节假日顺延</div>
             <div class="withdrawals-fooer-2">3.用户对提现资金去向自行负责</div>
             <div class="withdrawals-fooer-2">4.完成的提现申请不可撤销和追溯</div>
+-->
             </br>
             </br>
-            <div style="padding:0 15px">
+            <div style="width: 90%;margin-top: -20px;margin-left: auto;margin-right: auto;padding-bottom: 10px;">
                 <b id="Applydi" class="button button-big button-fill color-main">确认转出</b>
             </div>
-        </div>
-    </script>
-    <!--追问详情页面-->
-    <script type="text/template7" id="more_question">
-        {{#each this}}
-        <!--main-->
-        <!--头部切换-->
-        <div class="buttons-row consult_tab">
-            <a class="btn_tab"><img src="../static/images/img/ask_03.png" alt="请教当地税局">请教当地税局</a>
-            <a class="btn_tab"><img src="../static/images/img/ask_06.png" alt="题库查询">题库查询</a>
-            <a class="btn_tab"><img src="../static/images/img/ask_08.png" alt="直问财税大咖">直问财税大咖</a>
-        </div>
-        <!--头部切换-->
-        <p class="nature_p"><span>!</span>问题属性：为使您的咨询得到最准确的答复</p>
-        <div class="select_div">
-            <select>
+        </script>
+        <!--追问详情页面-->
+        <script type="text/template7" id="more_question">
+            {{#each this}}
+            <!--main-->
+            <!--头部切换-->
+            <div class="buttons-row consult_tab">
+                <a class="btn_tab"><img src="../static/images/img/ask_03.png" alt="请教当地税局">请教当地税局</a>
+                <a class="btn_tab"><img src="../static/images/img/ask_06.png" alt="题库查询">题库查询</a>
+                <a class="btn_tab"><img src="../static/images/img/ask_08.png" alt="直问财税大咖">直问财税大咖</a>
+            </div>
+            <!--头部切换-->
+            <p class="nature_p"><span>!</span>问题属性：为使您的咨询得到最准确的答复</p>
+            <div class="select_div">
+                <select>
                 <option>{{tax_name}}</option>
             </select>
-            <select>
+                <select>
                 <option>{{tax_name1}}</option>
             </select>
-            <select>
+                <select>
                 <option>{{tax_name2}}</option>
             </select>
-            <select>
+                <select>
                 <option>{{tax_name3}}</option>
             </select>
-            <select>
+                <select>
                 <option>{{tax_name4}}</option>
             </select>
-        </div>
-        <div class="textarea_box">
-            <textarea id="question1">请输入您的问题，可以发送附件。</textarea>
-            <p class="input_p">
-                <img src="../static/images/img/answer_07.png" alt="上传图片" class="icon_sc">
-                <input type="file" class="file_input">
-                <a href="mailto:uej@163.com" class="emali_a"><img src="../static/images/img/answer_09.png" alt="邮箱"></a>
-                <input type=”text” speech x-webkit-speech class="voice_input" />
-            </p>
-            <p class="monery_p" id="mister_p">打赏金额&nbsp;&nbsp;<span>0.00元</span></p>
-            <p class="monery_p">您的储蓄卡余额为<span>{{balance}}10.00元</span></p>
-            <button class="button button-big button-fill color-main true_btn" id="askdi">确认提交</button>
-        </div>
-        {{/each}}
-    </script>
-    //个人最低价
-    <script type="text/template7" id="LowPrise">
-        <div class="list-block list-set">
-            <ul>
-                <li>
-                    <div class="item-content">
-                        <div class="item-inner">
-                            <div class="item-input">
-                                <input type="number" id="mum" placeholder="">
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-            <p class="list-block inset"><a href="#" class="button button-big button-fill color-main " id="srt-bu">确认</a></p>
-        </div>
-    </script>
-    <!-- 我的-问答-求助title -->
-    <script type="text/template7" id="seek_help_title_tpl">
-        <div class="col-55">
-            <div class="buttons-ro problem-top">
-                <i class="problem-lcon"></i><b>{{count}}</b>
-                </br><span>支付金额</span>
             </div>
-        </div>
-        <div class="col-45 problem-top problem-top-2 problem-top-right">
-            <div>进行中：<span>{{helpTotal}}</span> 条
+            <div class="textarea_box">
+                <textarea id="question1">请输入您的问题，可以发送附件。</textarea>
+                <p class="input_p">
+                    <img src="../static/images/img/answer_07.png" alt="上传图片" class="icon_sc">
+                    <input type="file" class="file_input">
+                    <a href="mailto:uej@163.com" class="emali_a"><img src="../static/images/img/answer_09.png" alt="邮箱"></a>
+                    <input type=”text” speech x-webkit-speech class="voice_input" />
+                </p>
+                <p class="monery_p" id="mister_p">打赏金额&nbsp;&nbsp;<span>0.00元</span></p>
+                <p class="monery_p">您的储蓄卡余额为<span>{{balance}}10.00元</span></p>
+                <button class="button button-big button-fill color-main true_btn" id="askdi">确认提交</button>
             </div>
-            <br/>
-            <div>已完成：<span>{{completeTotal}}</span> 条
-            </div>
-        </div>
-    </script>
-    <!-- 我的-问答-援助title -->
-    <script type="text/template7" id="help_title_tpl">
-        <div class="col-55">
-            <div class="buttons-ro problem-top">
-                <i class="problem-lcon"></i><b>{{count}}</b>
-                </br><span>获得金额</span>
-            </div>
-        </div>
-        <div class="col-45 problem-top problem-top-2 problem-top-right">
-            <div>进行中：<span>{{helpTotal}}</span> 条
-            </div>
-            <div>已完成：<span>{{completeTotal}}</span> 条
-            </div>
-        </div>
-    </script>
-    //设置提现密码
-    <script type="text/template7" id="PayPwd">
-        <div class="list-block list-set">
-            <ul>
-                <!-- Text inputs -->
-                <li id="pusedmi1">
-                    <div class="item-content item-pas">
-                        <div class="item-inner">
-                            <div class="item-input">
-                                <input type="password" placeholder="旧密码" id="pusedmi">
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="item-content item-pas">
-                        <div class="item-inner">
-                            <div class="item-input">
-                                <input type="password" placeholder="请输入6位数新密码" id="pnewmi">
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="item-content item-pas">
-                        <div class="item-inner">
-                            <div class="item-input">
-                                <input type="password" placeholder="确认密码" id="confirm">
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-            <div class="list-block inset" id="complete1">
-                <a class="button button-big button-fill color-main" href="">完成</a>
-            </div>
-        </div>
-    </script>
-    //昵称，签名的修改
-    <script type="text/template7" id="edituser_tpl">
-        <div class="list-block">
-            <ul>
-                <li>
-                    <div class="item-content">
-                        <div class="item-title label" style="width: 80px"><b>昵 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称</b></div>
-                        <div class="item-input">
-                            <input id="nick_name" type="text" style="background:#F3F3F3;height: 40px;border-radius:4px;width: 250px;" value="{{nick_name}}">
-                        </div>
-                    </div>
-                </li>
-                <br>
-                <li>
-                    <div class="item-content">
-                        <div class="item-title label" style="width: 80px"><b>个性签名</b></div>
-                        <div class="item-input">
-                            <input id="signa" type="text" style="background:#F3F3F3;height: 40px; border-radius:4px;width: 250px" value="{{signa}}">
-                        </div>
-                    </div>
-                </li>
-                <br>
-                <li><a href="index.html" class="item-link list-button sign-out" id="submitUser"><b class="button button-big button-fill color-main" style="width: 340px">保&nbsp;存</b></a></li>
-            </ul>
-        </div>
-    </script>
-    //申请解答者
-    <script type="text/template7" id="application_tpl">
-        <div class="list-block">
-            <ul>
-                <!-- Text inputs -->
-                <li>
-                    <div class="item-content">
-                        <div class="item-title label"><b>真实姓名</b></div>
-                        <div class="item-input">
-                            <input id="real_name" type="text" placeholder="" value="{{real_name}}" style="text-align: right">
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="item-content">
-                        <div class="item-title label">
-                            <div class="item-media">
-                                <i class="card-Inco" style="width: 30px; height: 25px;padding-left: 0px;"></i><b>身份证上传</b></div>
-                        </div>
-                        <div class="item-input">
-                            <input id="card_id" type="text" placeholder="" value="{{card_id}}" style="text-align: right">
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="item-content">
-                        <div class="image-item">
-                            <div class="about-img1"></div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="item-content">
-                        <div class="item-title label"><b>手机号</b></div>
-                        <div class="item-input">
-                            <input id="phone_number" type="text" placeholder="选填" value="{{phone_number}}" style="text-align: right">
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="item-content">
-                        <div class="item-title label"><b>工作地点</b></div>
-                        <div class="item-input">
-                            <input id="region_code" type="text" placeholder="精确到区县" required="required" value="{{region_code}}" style="text-align: right">
-                        </div>
-                    </div>
-                </li>
-                <!-- Select -->
-                <li>
-                    <div class="item-content">
-                        <div class="item-title label"><b>专业资格</b></div>
-                        <div class="item-input">
-                            <input id="major" type="text" placeholder="" required="required" value="{{major}}" style="text-align: right">
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="item-content">
-                        <div class="image-item">
-                            <div class="about-img1"></div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="item-content">
-                        <div class="item-title label"><b>工作单位及职称</b></div>
-                        <div class="item-input">
-                            <input id="company_post" type="text" placeholder="选填" value="{{company_post}}" style="text-align: right">
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="item-content">
-                        <div class="item-title label"><b>擅长的税务领域</b></div>
-                        <div class="item-input">
-                            <input type="text" placeholder="可多选" class="expert-input" id="taxproperty_code" readonly value="{{taxproperty_code}}" style="text-align: right">
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <label class="label-checkbox item-content" style="margin-top: 20px;">
-                        <input id="first" type="checkbox" name="my-checkbox" value="Books">
-                        <div class="item-media">
-                            <div class="row answer-gai " style="padding-right: 20px;">
-                                <div class="col-10 withdrawals-lcon">
-                                    <i class="icon icon-form-checkbox icon-checked"></i>
-                                </div>
-                                <div class="col-88">
-                                    <div class="item-title-row">
-                                        <b style="font-size:14px">我阅读并同意《税务在线服务协议》</b>
-                                    </div>
+            {{/each}}
+        </script>
+        //个人最低价
+        <script type="text/template7" id="LowPrise">
+            <div class="list-block list-set">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-inner">
+                                <div class="item-input">
+                                    <input type="number" id="mum" placeholder="" value="{{lowestAmt}}">
                                 </div>
                             </div>
-                        </div>
-                    </label>
-                    <b class="button button-big button-fill color-main" id="submit">提交确认</b>
-                </li>
-            </ul>
-        </div>
-    </script>
-    //申请线下服务者
-    <script type="text/template7" id="service_tpl">
-        <div class="list-block">
-            <ul>
-                <!-- Text inputs -->
-                <li>
-                    <div class="item-content">
-                        <div class="item-title label"><b>真实姓名</b></div>
-                        <div class="item-input">
-                            <input id="real_name1" type="text" placeholder="" value="{{real_name}}" style="text-align: right">
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="item-content">
-                        <div class="item-title label">
-                            <div class="item-media">
-                                <i class="card-Inco" style="width: 30px; height: 25px;padding-left: 0px;"></i><b>身份证上传</b>
-                            </div>
-                            <div class="item-input">
-                                <input id="card_id1" type="text" placeholder="" value="{{card_id}}" style="text-align: right">
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="item-content">
-                        <div class="image-item">
-                            <div class="about-img1"></div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="item-content">
-                        <div class="item-title label"><b>手机号</b></div>
-                        <div class="item-input">
-                            <input id="phone_number1" type="text" placeholder="" value="{{phone_number}}" style="text-align: right">
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="item-content">
-                        <div class="item-title label"><b>工作地点</b></div>
-                        <div class="item-input">
-                            <input id="region_code1" type="text" placeholder="精确到区县" readonly value="{{region_code}}" style="text-align: right">
-                        </div>
-                    </div>
-                </li>
-                <!-- Select -->
-                <li>
-                    <div class="item-content">
-                        <div class="item-title label"><b>专业资格</b></div>
-                        <div class="item-input">
-                            <input id="major1" type="text" placeholder="" required="required" value="{{major}}" style="text-align: right">
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="item-content">
-                        <div class="image-item">
-                            <div class="about-img1"></div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="item-content">
-                        <div class="item-title label"><b>线下服务口号</b></div>
-                        <div class="item-input">
-                            <input id="line_service_slogan" type="text" placeholder="" required="required" value="{{line_service_slogan}}" style="text-align: right">
-                        </div>
                         </div>
                     </li>
-
-                    <li>
-                        <div class="item-content">
-                            <div class="item-title label"><b>工作单位及职称</b></div>
-                            <div class="item-input">
-                                <input id="company_post1" type="text" placeholder="" value="{{company_post}}" style="text-align: right">
-                            </div>
-
-                    </div>
-                </li>
-                    <li>
-                        <div class="item-content">
-                            <div class="item-title label"><b>线下服务区域</b></div>
-                            <div class="item-input" >
-                                <input type="text" placeholder="可多选" class="expert-input" id="service_region_id" readonly value="{{service_region_id}}" style="text-align: right">
-                            </div>
-                    </div>
-                </li>
-                <li>
-                        <div class="item-content">
-                            <div class="item-title label"><b>擅长的税务领域</b></div>
-                            <div class="item-input" >
-                                <input type="text"  placeholder="可多选" class="expert-input" id="taxproperty_code1" readonly value="{{taxproperty_code}}" style="text-align: right">
-                            </div>
-                    </div>
-                </li>
-                <li>
-                    <label class="label-checkbox item-content" style="margin-top: 20px;">
-                        <input id="first1" type="checkbox" name="my-checkbox" value="Books">
-                        <div class="item-media">
-                            <div class="row answer-gai " style="padding-right: 20px;">
-                                <div class="col-10 withdrawals-lcon">
-                                    <i class="icon icon-form-checkbox icon-checked"></i>
-                                </div>
-                                <div class="col-88">
-                                    <div class="item-title-row">
-                                        <b style="font-size:14px">我阅读并同意《税务在线服务协议》</b>
-                                    </div>
+                </ul>
+                <p class="list-block inset"><a href="#" class="button button-big button-fill color-main " id="srt-bu">确认</a></p>
+            </div>
+        </script>
+        <!-- 我的-问答-求助title -->
+        <script type="text/template7" id="seek_help_title_tpl">
+            <div class="col-55">
+                <div class="buttons-ro problem-top">
+                    <i class="problem-lcon"></i><b>{{count}}</b>
+                    </br><span>支付金额</span>
+                </div>
+            </div>
+            <div class="col-45 problem-top problem-top-2 problem-top-right">
+                <div>进行中：<span>{{helpTotal}}</span> 条
+                </div>
+                <br/>
+                <div>已完成：<span>{{completeTotal}}</span> 条
+                </div>
+            </div>
+        </script>
+        <!-- 我的-问答-援助title -->
+        <script type="text/template7" id="help_title_tpl">
+            <div class="col-55">
+                <div class="buttons-ro problem-top">
+                    <i class="problem-lcon"></i><b>{{count}}</b>
+                    </br><span>获得金额</span>
+                </div>
+            </div>
+            <div class="col-45 problem-top problem-top-2 problem-top-right">
+                <div>进行中：<span>{{helpTotal}}</span> 条
+                </div>
+                <div>已完成：<span>{{completeTotal}}</span> 条
+                </div>
+            </div>
+        </script>
+        //设置提现密码
+        <script type="text/template7" id="PayPwd">
+            <div class="list-block list-set">
+                <ul>
+                    <!-- Text inputs -->
+                    <li id="pusedmi1">
+                        <div class="item-content item-pas">
+                            <div class="item-inner">
+                                <div class="item-input">
+                                    <input type="password" placeholder="旧密码" id="pusedmi">
                                 </div>
                             </div>
                         </div>
-                    </label>
-                    <b class="button button-big button-fill color-main " id="submitService">提交确认</b>
-                </li>
+                    </li>
+                    <li>
+                        <div class="item-content item-pas">
+                            <div class="item-inner">
+                                <div class="item-input">
+                                    <input type="password" placeholder="请输入6位数新密码" id="pnewmi">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="item-content item-pas">
+                            <div class="item-inner">
+                                <div class="item-input">
+                                    <input type="password" placeholder="确认密码" id="confirm">
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="list-block inset" id="complete1">
+                    <a class="button button-big button-fill color-main" href="">完成</a>
+                </div>
+            </div>
+        </script>
+        //昵称，签名的修改
+        <script type="text/template7" id="edituser_tpl">
+            <div class="list-block">
+                <ul>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-title label" style="width: 80px"><b>昵 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称</b></div>
+                            <div class="item-input">
+                                <input id="nick_name" type="text" style="background:#F3F3F3;height: 40px;border-radius:4px;width: 250px;" value="{{nick_name}}">
+                            </div>
+                        </div>
+                    </li>
+                    <br>
+                    <li>
+                        <div class="item-content">
+                            <div class="item-title label" style="width: 80px"><b>个性签名</b></div>
+                            <div class="item-input">
+                                <input id="signa" type="text" style="background:#F3F3F3;height: 40px; border-radius:4px;width: 250px" value="{{signa}}">
+                            </div>
+                        </div>
+                    </li>
+                    <br>
+                    <li><a href="index.html" class="item-link list-button sign-out" id="submitUser"><b class="button button-big button-fill color-main" style="width: 340px">保&nbsp;存</b></a></li>
+                </ul>
+            </div>
+        </script>
+        //消息模板
+        <script type="text/template7" id="msgTemplate">
+            <div class="list-block media-list home_msg">
+                <ul id="msgList">
+                    {{#each this}}
+                    <li class="swipeout">
+                        <div class="swipeout-content">
+                            <a href="#" class="item-link item-content">
+                                <div class="item-media">
+                                    <img src="{{this.msgImgUrl}}" width="80" />
+                                </div>
+                                <div class="item-text">{{this.content}}</div>
+                        </div>
+                        </a>
+            </div>
+
+            <div class="swipeout-actions-right">
+                <a href="#" data-confirm="你确定要删除此消息?" class="swipeout-delete">删除</a>
+            </div>
+            </li>
+            {{/each}}
             </ul>
-        </div>
-    </script>
+            </div>
+        </script>
+        <!-- 提问-查阅答案 -->
+        <script type="text/template7" id="ask_bank_detail_tpl">
+            <div>
+                <div class="item-title list-box-cont ques-fine" style="width: 100%;">
+                    <div style="float: left; width: 50%;">
+                        <div><span>编号:</span1>{{bank_id}}</span></div>
+                        <div><span>来源:</span><span>{{source}}</span></div>
+                        <div><span>入库时间:</span> <span>{{submit_time}}</span></div>
+                    </div>
+                    <div style="float: left; width: 50%;">
+                        <div><span>浏览数:</span1>{{adoption_count}}</span></div>
+                        <div><span>适用地区:</span><span>{{area}}</span></div>
+                        <div><span>类型:</span> <span>{{tax_type}}</span></div>
+                    </div>
+                </div>
+                <div class="ques-fine-cont">
+                    <img class="person-cont" src="/static/images/img/ques-fine.png" width="40"><span>{{ask_title}}</span>
+                </div>
+                <div class="ques-fine-cont ques-fine-swer">
+                    <img class="person-cont" src="/static/images/img/ques-fine-icon.png" width="40"><span>{{answer}}</span>
+                </div>
+            </div>
+        </script>
 </body>
 
 </html>
